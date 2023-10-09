@@ -1,0 +1,36 @@
+= MEMORIA
+
+:toc-title: ÍNDICE
+:figure-caption: Figura
+:table-caption: Taula
+:example-caption: Exemple
+:revnumber: 1.12
+:doctype: book
+:encoding: utf-8
+:lang: es
+:toc: left
+:toclevels: 5
+:sectnums:
+:icons: font
+
+== INTRODUCCIÓN
+//Introducción miembros del equipo
+=== Objetivo de la aplicación
+=== Target
+
+== PLANIFICACIÓN Y SEGUIMIENTO
+=== Semana 1
+=== Semana 2
+=== Semana 3
+=== Semana 4
+
+== DISEÑO
+=== Base de datos
+=== Interfícies
+=== Guía de estilos
+
+== DESARROLLO
+
+== CONCLUSIÓN
+=== Línias futuras
+=== Webgrafía
