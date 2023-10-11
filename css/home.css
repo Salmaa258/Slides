@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'Gabarito';
+    src: url('../fonts/Gabarito-VariableFont_wght.ttf') format('truetype');  /* Ajusta la ruta y el formato según tu archivo */
+}
+
+@font-face {
+    font-family: 'Open-Sans';
+    src: url('../fonts/OpenSans-VariableFont_wdthwght.ttf') format('truetype');  /* Ajusta la ruta y el formato según tu archivo */
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1D1E18;
+}
+
+button {
+    width: 300px;
+    height: 150px;
+    padding: 10px 20px;
+    font-size: 27px;
+    font-family: "Gabarito";
+    cursor: pointer;
+    background-color: #49C2FF;
+}
