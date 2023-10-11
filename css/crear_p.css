@@ -1,0 +1,47 @@
+.header {
+    height: 60px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* Estilo para el primer bloque en el header */
+.block1 {
+    width: 60%;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para el icono en el primer bloque */
+.icon {
+    width: 30px; /* Tamaño del icono (ajusta según necesites) */
+    height: 30px;
+    background-color: #fff; /* Cambia el color de fondo */
+    margin-right: 10px;
+}
+
+/* Estilo para los input text en el primer bloque */
+.input {
+    width: 40%; /* Ajusta el ancho según necesites */
+    margin-right: 10px;
+}
+
+/* Estilo para el segundo bloque en el header */
+.block2 {
+    width: 40%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Estilo para los botones en el segundo bloque */
+.button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #4caf50; /* Cambia el color de fondo */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
