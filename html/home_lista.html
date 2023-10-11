@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/home_lista.css">
+    <title>Pantalla d'inici</title>
+</head>
+<body>
+    <div id="presentaciones">
+        <div class="caja">
+            <p>Presentacion 1</p>
+            <button class="opciones-btn" onclick="mostrarOpciones()">Opciones</button>
+            <div class="opciones" id="opciones1">
+                <button>Editar</button>
+                <button>Eliminar</button>
+                <button>Clonar</button>
+            </div>
+        </div>
+        <div class="caja">
+            <p>Presentacion 2</p>
+            <button class="opciones-btn" onclick="mostrarOpciones()">Opciones</button>
+            <div class="opciones" id="opciones2">
+                <button>Editar</button>
+                <button>Eliminar</button>
+                <button>Clonar</button>
+            </div>
+        </div>
+        <div class="caja">
+            <p>Presentacion 3</p>
+            <button class="opciones-btn" onclick="mostrarOpciones()">Opciones</button>
+            <div class="opciones" id="opciones3">
+                <button>Editar</button>
+                <button>Eliminar</button>
+                <button>Clonar</button>
+            </div>
+        </div>
+    </div>
+
+    <a href="/html/crear_p.html">
+        <button id="crearPresentacion">Crear Presentacion</button>
+    </a>
+
+    <script>
+        function mostrarOpciones() {
+            var opciones = event.target.nextElementSibling;
+            if (opciones.style.display === "none" || opciones.style.display === "") {
+                opciones.style.display = "block";
+            } else {
+                opciones.style.display = "none";
+            }
+        }       
+    </script>
+   
+</body>
+</html>
