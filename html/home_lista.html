@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/home_lista.css">
+    <link rel="stylesheet" href="../css/home_lista.css">
     <title>Pantalla d'inici</title>
 </head>
 <body>
@@ -41,16 +41,7 @@
         <button id="crearPresentacion">Crear Presentacion</button>
     </a>
 
-    <script>
-        function mostrarOpciones() {
-            var opciones = event.target.nextElementSibling;
-            if (opciones.style.display === "none" || opciones.style.display === "") {
-                opciones.style.display = "block";
-            } else {
-                opciones.style.display = "none";
-            }
-        }       
-    </script>
+    <script src="../JS/home_lista.js"></script>
    
 </body>
 </html>
