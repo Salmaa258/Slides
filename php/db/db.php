@@ -1,5 +1,5 @@
 <?php
-include 'config.php'; // Incluye la configuración de la base de datos
+include(dirname(__FILE__) . '/../config.php');// Incluye la configuración de la base de datos
 
 // Establecer conexión con la base de datos
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
