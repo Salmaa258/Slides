@@ -13,18 +13,21 @@
 <body>
     <div class="header">
         <div class="block1">
-            <div class="icon"><!-- Aquí puedes colocar tu icono --></div>
+            <div class="icon">
+                <img src="../icons/presentacio.png">
+            </div>
             <form method="post" id="data_p">
                 <input type="text" class="input" placeholder="Título de la diapositiva" required>
                 <input type="text" class="input" placeholder="Descripción" required>
-                <button class="button" type="button" onclick="onSaveData()">Guardar</button>
             </form>
-
         </div>
         <div class="block2">
-
+            <div id="nova_diapositiva_button">
+                <button id="new_p_button" class="button">+</button>
+                <span>Nova Diapositiva</span>
+            </div>
             <button class="button">Cancelar</button>
-            <button class="button">Nueva diapositiva</button>
+            <button class="button">Crear</button>
         </div>
     </div>
     <script src="../js/save_p.js"></script>
