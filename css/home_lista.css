@@ -22,6 +22,21 @@ body {
     position: relative;
 }
 
+.imagen-overlay {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background-size: cover;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.caja:hover {
+    background-color: #bbbbbb;
+}
+
 p {
     text-align: center;
     font-size: 24px;
@@ -37,7 +52,8 @@ p {
     position: absolute;
     right: 10px;
     bottom: 10px;
-    font-size: 16px; 
+    font-size: 18px; 
+    font-weight: bold;
 }
 
 /* Caja de Botones dentro de opciones */
@@ -54,16 +70,19 @@ p {
 /* Botones dentro de la caja de opciones */
 button {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
     background-color: #49C2FF;
     color: #1D1E18;
     font-family: "Gabarito";
     border: none;
-    padding: 10px 20px; 
+    padding: 10px 20px;
     cursor: pointer;
     margin: 10px 0;
-    font-size: 16px; 
+    font-size: 16px;
+}
+
+button img {
+    margin-right: 10px;
 }
 
 button:hover {
@@ -77,7 +96,6 @@ button:hover {
     top: 20px;
     background-color: #49C2FF;
     color: #1D1E18;
-    border: none;
     padding: 10px 20px; 
     cursor: pointer;
     font-size: 16px; 
