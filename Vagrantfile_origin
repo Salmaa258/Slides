@@ -52,6 +52,9 @@ CREATE TABLE Diapositives (
     FOREIGN KEY (presentació_id) REFERENCES Presentacions(ID),
     FOREIGN KEY (diapositives_tipus_id) REFERENCES Diapositives_Tipus(ID)
 );
+
+-- Insertar los tipos en Diapositives_Tipus
+INSERT INTO Diapositives_Tipus (Tipus) VALUES ('T'), ('TC');
 EOF
 SCRIPT
 

@@ -1,38 +1,31 @@
-// Constantes
-const SUCCESS_MESSAGE = 'Datos guardados exitosamente';
-const ERROR_MESSAGE = 'Hubo un error al guardar los datos: ';
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("#data_p");
+    
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
 
-// Función para obtener datos del formulario
-const getFormData = () => {
-    return new FormData(document.querySelector('#data_p'));
-}
+        let p_titulo = document.querySelector("input[name='p_titulo']");
+        let p_descripcion = document.querySelector("input[name='p_descripcion']");
+        
+        // Obtenemos los tipos, títulos y textos de todas las diapositivas
+        let d_tipos = document.querySelectorAll("input[name='d_tipo[]']");
 
-// Función para enviar datos al servidor de manera síncrona
-const sendDataToServer = (url, data) => {
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', url, false);
-    xhr.send(data);
-    return xhr;
-}
+        // Validamos que el título esté completo y sean caracteres:
+        if (p_titulo.value.trim() === '' || !/^[a-zA-Z\s]+$/.test(p_titulo.value.trim())) {
+            console.log('Datos no válidos');
+            alert('Por favor, introduce un título válido.');
+            return;  // Salimos de la función si hay un error
+        } 
 
-// Función para manejar la respuesta del servidor
-const handleServerResponse = (xhr) => {
-    console.log(xhr.responseText)
-    if (xhr.status === 200) {
-        let response = JSON.parse(xhr.responseText);
-        if (response.success) {
-            alert(SUCCESS_MESSAGE);
-        } else {
-            alert(ERROR_MESSAGE + response.error);
-        }
-    } else {
-        console.error('Error en la solicitud:', xhr.status);
-    }
-}
+        // Logueamos la información de las diapositivas
+        d_tipos.forEach((tipo, index) => {
+            console.log(`Diapositiva ${index + 1}: Tipo=${tipo.value}`);
+        });
 
-// Función para enviar datos al servidor y guardar en la base de datos
-const onSaveData = () => {
-    const formData = getFormData();
-    const xhrResponse = sendDataToServer('../php/db/save/save_p.php', formData);
-    handleServerResponse(xhrResponse);
-}
+        console.log(`Se han introducido los siguientes datos: título=${p_titulo.value}, descripción=${p_descripcion.value}`);
+        console.log(`Se envían los datos...`);
+        
+        // Enviamos el formulario
+        this.submit();
+    });
+});
