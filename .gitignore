@@ -1,2 +1,4 @@
 Vagrantfile
+Vagrantfile_origin
 .vagrant
+.gitignore

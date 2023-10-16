@@ -1,47 +1,157 @@
+@font-face {
+    font-family: 'Gabarito';
+    src: url('../fonts/Gabarito-VariableFont_wght.ttf') format('truetype'); /* Ajusta la ruta y el formato según tu archivo */
+}
+
+@font-face {
+    font-family: 'Open-Sans';
+    src: url('../fonts/OpenSans-VariableFont_wdthwght.ttf') format('truetype'); /* Ajusta la ruta y el formato según tu archivo */
+}
+
+body {
+    font-family: Gabarito;
+    background-color: #1d1e18;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
 .header {
-    height: 60px;
-    background-color: #333;
+    display: flex;
     color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
+    padding: 10px;
+    height: 120px;
+    width: 90%;
 }
 
-/* Estilo para el primer bloque en el header */
 .block1 {
-    width: 60%;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
+    width: 60%;
+    border: solid 2px white;
+    border-end-start-radius: 8px;
+    border-top-left-radius: 8px;
 }
 
-/* Estilo para el icono en el primer bloque */
 .icon {
-    width: 30px; /* Tamaño del icono (ajusta según necesites) */
-    height: 30px;
-    background-color: #fff; /* Cambia el color de fondo */
-    margin-right: 10px;
+    margin: 0px 30px;
 }
 
-/* Estilo para los input text en el primer bloque */
 .input {
-    width: 40%; /* Ajusta el ancho según necesites */
-    margin-right: 10px;
+    width: 100%;
+    margin: 5px 0;
 }
 
-/* Estilo para el segundo bloque en el header */
-.block2 {
-    width: 40%;
-    display: flex;
-    justify-content: flex-end;
+input[type='text'] {
+    height: 25px;
 }
 
-/* Estilo para los botones en el segundo bloque */
 .button {
-    margin-left: 10px;
-    padding: 10px 20px;
-    background-color: #4caf50; /* Cambia el color de fondo */
+    background-color: #49c2ff;
     color: #fff;
     border: none;
     cursor: pointer;
+    margin: 2px 5px;
+    width: min-content;
+    height: min-content;
+    font-size: 17px;
+    border-radius: 4px;
+}
+
+.block2 {
+    box-sizing: border-box;
+    width: 40%;
+    display: flex;
+    padding: 20px;
+    border: solid 2px white;
+    border-left: 0;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#nova_diapositiva_button {
+    width: 100%;
+    align-self: flex-end;
+}
+
+#diapositivas {
+    width: 80%;
+}
+
+.d_content {
+    display: flex;
+    flex-direction: column;
+    height: 510px;
+    box-sizing: border-box;
+    padding: 1%;
+    border: solid 2px white;
+    border-radius: 8px;
+    justify-content: center;
+    /* align-items: center; */
+    margin-bottom: 15px;
+}
+
+.d_content input {
+    display: block;
+    height: auto;
+    width: 98%;
+    font-size: 40px;
+    font-family: Open-Sans;
+    margin: 15px 0px;
+    border-radius: 0;
+    box-sizing: border-box;
+    padding: 5px;
+    background: none;
+    color: white;
+    outline: none;
+    border-radius: 5px;
+    border: solid 2px white;
+}
+
+.d_content textarea {
+    height: 80%;
+    width: 98%;
+    resize: none;
+    font-size: 20px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+    background: none;
+    color: white;
+}
+
+.d_content .focus:focus {
+    border: solid 2px #49c2ff;
+    background-color: rgb(75, 75, 75);
+}
+
+.dropdown {
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    overflow: auto;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+    border-radius: 8px;
+}
+.dropdown-content span {
+    display: block;
+    color: #ffffff;
+    padding: 8px;
+    background-color: #add8e6;
+    color: black;
+}
+.dropdown-content span:hover {
+    color: #ffffff;
+    background-color: #00a4bd;
 }

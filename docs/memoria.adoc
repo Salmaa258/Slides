@@ -5,6 +5,7 @@
 :table-caption: Taula
 :example-caption: Exemple
 :revnumber: 1.12
+:author: Alfred Perez, Emilio Fernandez, Salma Picazo
 :doctype: book
 :encoding: utf-8
 :lang: es
@@ -64,8 +65,7 @@ La clase *tipoDiapositiva* está compuesta de:
 
 
 ==== Figma
- 
-https://www.figma.com/team_invite/redeem/RM69mgDaCtdKsgKBqfrjf1[Enlace a Figma aquí]
+Link a Figma https://www.figma.com/team_invite/redeem/RM69mgDaCtdKsgKBqfrjf1[aquí]
 
 [underline]#Pantalla Home#
 
