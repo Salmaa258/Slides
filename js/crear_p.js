@@ -13,7 +13,7 @@ const newDiapositivaTitulo = () => {
 const newDiapositivaTituloTexto = () => {
   const newDiapositiva = diapositivaTituloTexto.content.cloneNode(true);
   newDiapositiva.querySelector('input').name = `d_titulo_${numDiapositivas}`;
-  newDiapositiva.querySelector('textarea').name = `d_text_${numDiapositivas}`;
+  newDiapositiva.querySelector('textarea').name = `d_texto_${numDiapositivas}`;
   diapositivas.append(newDiapositiva);
   numDiapositivas++;
 };
