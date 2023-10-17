@@ -2,12 +2,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector("#data_p");
     
     form.addEventListener("submit", function(event) {
-        event.preventDefault();
-
+        //event.preventDefault();
         let p_titulo = document.querySelector("input[name='p_titulo']");
         let p_descripcion = document.querySelector("input[name='p_descripcion']");
         
-        // Obtenemos los tipos, títulos y textos de todas las diapositivas
+        // Obtenemos los tipos de todas las diapositivas
         let d_tipos = document.querySelectorAll("input[name='d_tipo[]']");
 
         // Validamos que el título esté completo y sean caracteres:

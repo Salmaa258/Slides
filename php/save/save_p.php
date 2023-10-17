@@ -1,59 +1,62 @@
 <?php
 
-// Incluye la configuración y la clase Database
+// Incluir la clase de base de datos
 require_once '../clases/db.php';
 
-// Instancia la clase y obtiene la conexión
+// Crear una nueva instancia de la base de datos
 $db = new Database();
+
+// Obtener la conexión a la base de datos
 $conn = $db->getConnection();
 
-// Verifica y recibe los datos del formulario
+// Recuperar el título y la descripción del formulario
 $titol = isset($_POST['p_titulo']) ? $_POST['p_titulo'] : '';
 $descripcio = isset($_POST['p_descripcion']) ? $_POST['p_descripcion'] : '';
 
-// Prepara la sentencia SQL usando PDO para insertar la presentación
+// Insertar la nueva presentación en la base de datos
 $stmt = $conn->prepare("INSERT INTO Presentacions (Títol, Descripció) VALUES (?, ?)");
 $stmt->bindParam(1, $titol);
 $stmt->bindParam(2, $descripcio);
 $stmt->execute();
 
-// Obtén el ID de la presentación insertada
+// Obtener el ID de la presentación que acabamos de insertar
 $presentacio_id = $conn->lastInsertId();
 
-// Mostrar el ID de la presentación
-echo "ID de la presentación: " . $presentacio_id . "<br>";
-
-var_dump($_POST);
-
-// Verifica si las claves existen y si son arrays
+// Recuperar todos los tipos de diapositivas del formulario
 $d_tipos = isset($_POST['d_tipo']) && is_array($_POST['d_tipo']) ? $_POST['d_tipo'] : array();
 
-// Recorrer todos los elementos en $d_tipos
-for ($i = 0; $i < count($d_tipos); $i++) {
-    // Obtener el tipo
-    $tipo = $d_tipos[$i];
+// Iterar sobre cada tipo de diapositiva
+foreach ($d_tipos as $index => $tipo) {
 
-    // Obtener el ID del tipo de Diapositives_Tipus
-    $stmtTipo = $conn->prepare("SELECT ID FROM Diapositives_Tipus WHERE Tipus = ?");
-    $stmtTipo->bindParam(1, $tipo);
-    $stmtTipo->execute();
-    $tipo_id = $stmtTipo->fetchColumn();
-
-    // Mostrar el ID del tipo
-    echo "ID del tipo (" . $tipo . "): " . $tipo_id . "<br>";
-
-    // Preparar sentencia SQL para insertar la diapositiva
-    $stmt = $conn->prepare("INSERT INTO Diapositives (presentació_id, diapositives_tipus_id) VALUES (?, ?)");
-
-    // Vincular los parámetros a la sentencia SQL
+    // Insertar la diapositiva en la base de datos con su tipo
+    $stmt = $conn->prepare("INSERT INTO Diapositives (presentació_id, Tipus) VALUES (?, ?)");
     $stmt->bindParam(1, $presentacio_id);
-    $stmt->bindParam(2, $tipo_id);
-
-    // Ejecutar la sentencia SQL
+    $stmt->bindParam(2, $tipo);
     $stmt->execute();
+
+    // Obtener el ID de la diapositiva que acabamos de insertar
+    $diapositives_id = $conn->lastInsertId();
+
+    // Comprobar el tipo de diapositiva y actuar en consecuencia
+    if ($tipo == 'T') {
+        // Si es de tipo 'T', recuperar el título y insertarlo en la tabla correspondiente
+        $titulo = $_POST['d_titulo_' . $index];
+        $stmt = $conn->prepare("INSERT INTO Diapositives_T (diapositives_id, Titulo) VALUES (?, ?)");
+        $stmt->bindParam(1, $diapositives_id);
+        $stmt->bindParam(2, $titulo);
+        $stmt->execute();
+    } elseif ($tipo == 'TC') {
+        // Si es de tipo 'TC', recuperar el título y el contenido y insertarlos en la tabla correspondiente
+        $titulo = $_POST['d_titulo_' . $index];
+        $contenido = $_POST['d_contenido_' . $index];
+        $stmt = $conn->prepare("INSERT INTO Diapositives_TC (diapositives_id, Titulo, Contenido) VALUES (?, ?, ?)");
+        $stmt->bindParam(1, $diapositives_id);
+        $stmt->bindParam(2, $titulo);
+        $stmt->bindParam(3, $contenido);
+        $stmt->execute();
+    }
 }
 
-// Redirige al usuario de nuevo a la página HTML original
+// Redirigir al usuario de vuelta a la página de creación de presentaciones
 header("Location: /grup4-alfred_emilio_salma/html/crear_p.html");
 exit;
-

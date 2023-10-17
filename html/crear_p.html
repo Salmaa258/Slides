@@ -49,13 +49,14 @@
             <div class="d_content">
                 <input type="hidden" form="data_p" name="d_tipo[]" value="TC">
                 <input class="focus" type="text" form="data_p" autocomplete="off" placeholder="Título">
-                <textarea class="focus" form="data_p" autocomplete="off"
-                    placeholder="Haz click para añadir un texto"></textarea>
+                <textarea class="focus" form="data_p" name="d_contenido_[]" autocomplete="off" placeholder="Haz click para añadir un texto"></textarea>
+
             </div>
         </template>
         <div class="d_content">
+            <<input type="hidden" form="data_p" name="d_tipo[]" value="T">
             <input class="focus" type="text" name="d_titulo_0" form="data_p" autocomplete="off" placeholder="Título">
-        </div>
+        </div>     
     </div>
     <script src="../js/save_p.js"></script>
     <script src="../js/crear_p.js"></script>
