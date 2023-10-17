@@ -14,7 +14,7 @@
             <div class="icon">
                 <img src="../icons/presentacio.svg" alt="Icono Presentación">
             </div>
-            <form method="post" id="data_p">
+            <form method="post" id="data_p" action="../php/save/save_p.php">
                 <input type="text" class="input" name="p_titulo" placeholder="Título de la diapositiva" required
                     autocomplete="off">
                 <input type="text" class="input" name="p_descripcion" placeholder="Descripción" autocomplete="off">
@@ -34,26 +34,29 @@
             <a href="../home.html">
                 <button class="button">Cancelar</button>
             </a>
-            <button class="button" type="submit" form="data_p" onclick="onSaveData()">Guardar</button>
+            <button class="button" type="submit" form="data_p">Guardar</button>
         </div>
     </div>
 
     <div id="diapositivas">
         <template id="d_titulo_template">
             <div class="d_content focus">
+                <input type="hidden" form="data_p" name="d_tipo[]" value="T">
                 <input type="text" form="data_p" autocomplete="off" placeholder="Título">
             </div>
         </template>
         <template id="d_titulo_texto_template">
             <div class="d_content">
+                <input type="hidden" form="data_p" name="d_tipo[]" value="TC">
                 <input class="focus" type="text" form="data_p" autocomplete="off" placeholder="Título">
-                <textarea class="focus" form="data_p" autocomplete="off"
-                    placeholder="Haz click para añadir un texto"></textarea>
+                <textarea class="focus" form="data_p" name="d_contenido_[]" autocomplete="off" placeholder="Haz click para añadir un texto"></textarea>
+
             </div>
         </template>
         <div class="d_content">
+            <<input type="hidden" form="data_p" name="d_tipo[]" value="T">
             <input class="focus" type="text" name="d_titulo_0" form="data_p" autocomplete="off" placeholder="Título">
-        </div>
+        </div>     
     </div>
     <script src="../js/save_p.js"></script>
     <script src="../js/crear_p.js"></script>
