@@ -17,4 +17,3 @@ const newDiapositivaTituloTexto = () => {
   diapositivas.append(newDiapositiva);
   numDiapositivas++;
 };
-
