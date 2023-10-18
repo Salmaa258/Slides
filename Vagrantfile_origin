@@ -32,29 +32,33 @@ sudo sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d
 sudo systemctl restart mysql
 
 # Crear tablas en la base de datos
-sudo mysql -uroot -p$ROOTPASSWD $DBNAME <<EOF
+sudo mysql -uroot -p$ROOTPASSWD $DBNAME <<EOF 
 CREATE TABLE Presentacions (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
-    Títol VARCHAR(255),
-    Descripció TEXT,
-    Data_de_Creació TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE Diapositives_Tipus (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
-    Tipus ENUM('T', 'TC')
+ID INT AUTO_INCREMENT PRIMARY KEY,
+Títol VARCHAR(255),
+Descripció TEXT,
+Data_de_Creació TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Diapositives (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
-    presentació_id INT,
-    diapositives_tipus_id INT,
-    FOREIGN KEY (presentació_id) REFERENCES Presentacions(ID),
-    FOREIGN KEY (diapositives_tipus_id) REFERENCES Diapositives_Tipus(ID)
+ID INT AUTO_INCREMENT PRIMARY KEY,
+presentació_id INT,
+Tipus ENUM('T', 'TC'),
+FOREIGN KEY (presentació_id) REFERENCES Presentacions(ID)
 );
 
--- Insertar los tipos en Diapositives_Tipus
-INSERT INTO Diapositives_Tipus (Tipus) VALUES ('T'), ('TC');
+CREATE TABLE Diapositives_T (
+diapositives_id INT PRIMARY KEY,
+Titulo VARCHAR(255),
+FOREIGN KEY (diapositives_id) REFERENCES Diapositives(ID)
+);
+
+CREATE TABLE Diapositives_TC (
+diapositives_id INT PRIMARY KEY,
+Titulo VARCHAR(255),
+Contenido TEXT,
+FOREIGN KEY (diapositives_id) REFERENCES Diapositives(ID)
+);
 EOF
 SCRIPT
 
