@@ -23,6 +23,13 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 
 == PLANIFICACIÓN Y SEGUIMIENTO
 === Semana 1
+==== Alfred
+- Creacion php (**save_p.php**) guardar presentaciones y diapositivas con su contenido y tipo.
+- Creacion archivo **Vagrantfile** junto con las tablas de la base de datos.
+- Creacion js (**save_p.js**) enviar datos al php para guardar presentaciones y diapositivas con su contenido y tipo.
+- Modificación js (**crear_p.js**) para crear las diapositivas dinamicamente.
+- Modificación html (**crear_p.html**) inputs y botones para enviar correctamente el formulario.
+- Añadir codigos en el css + archivos para las fuentes.
 
 
 === Semana 2
@@ -90,6 +97,40 @@ Por último, para poder *visualizar* estas presentaciones, solamente se tendria 
 === Guía de estilos
 
 == DESARROLLO
+=== Alfred
+[underline]#Vagrantfile#
+
+image::images/1vagrantfile.png[]
+
+image::images/2vagrantfile.png[]
+
+[underline]#crear_p.html#
+
+image::images/1crear_p.png[]
+
+image::images/2crear_p.png[]
+
+[underline]#save_p.js#
+
+image::images/save_p.png[]
+
+[underline]#crear_p.js#
+
+image::images/crear_p.png[]
+
+image::images/3crear_p.png[]
+
+[underline]#save_p.php#
+
+image::images/1save_p.png[]
+
+image::images/2save_p.png[]
+
+[underline]#Fuentes y css#
+
+image::images/fuentes.png[]
+
+image::images/css.png[]
 
 == CONCLUSIÓN
 === Línias futuras
