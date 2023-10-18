@@ -1,17 +1,58 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/home.css">
-
     <title>Pantalla d'inici</title>
 </head>
-<body>
 
-    <a href="html/crear_p.html">
-        <button>Crear Presentación</button>
-    </a>
-    
+<body>
+    <h2>Presentaciones</h2>
+    <div id="global">
+        <div id="añadirPresentacion">
+            <a href="html/crear_p.html">
+                <div class="caja_añadir">
+                    <img src="icons/crear.svg" alt="Crear">
+                </div>
+            </a>
+            <p id="añadir">AÑADIR</p>
+        </div>
+        <div class="caja" onmouseover="mostrarImagen(this)" onmouseout="ocultarImagen(this)">
+            <p>Título Presentacion 1</p>
+            <button class="opciones-btn" onclick="mostrarOpciones(event)">+</button>
+            <div class="opciones" id="opciones1">
+                <button class="editar"><img src="icons/editar.svg" alt="Editar">Editar</button>
+                <button class="clonar"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>
+                <button class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>
+            </div>
+            <div class="imagen-overlay"></div>
+        </div>
+        <div class="caja" onmouseover="mostrarImagen(this)" onmouseout="ocultarImagen(this)">
+            <p>Título Presentacion 2</p>
+            <button class="opciones-btn" onclick="mostrarOpciones(event)">+</button>
+            <div class="opciones" id="opciones2">
+                <button class="editar"><img src="icons/editar.svg" alt="Editar">Editar</button>
+                <button class="clonar"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>
+                <button class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>
+            </div>
+            <div class="imagen-overlay"></div>
+        </div>
+        <div class="caja" onmouseover="mostrarImagen(this)" onmouseout="ocultarImagen(this)">
+            <p>Título Presentacion 3</p>
+            <button class="opciones-btn" onclick="mostrarOpciones(event)">+</button>
+            <div class="opciones" id="opciones3">
+                <button class="editar"><img src="icons/editar.svg" alt="Editar">Editar</button>
+                <button class="clonar"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>
+                <button class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>
+            </div>
+            <div class="imagen-overlay"></div>
+        </div>
+    </div>
+
+    <script src="js/home.js"></script>
+
 </body>
+
 </html>
