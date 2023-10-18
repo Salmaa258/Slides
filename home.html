@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/home.css">
     <title>Pantalla d'inici</title>
 </head>
+
 <body>
     <h2>Presentaciones</h2>
-    <div id="añadirPresentacion">
-        <div class="caja_añadir"> 
-            <img src="icons/crear.svg" alt="Crear">
+    <div id="global">
+        <div id="añadirPresentacion">
+            <a href="html/crear_p.html">
+                <div class="caja_añadir">
+                    <img src="icons/crear.svg" alt="Crear">
+                </div>
+            </a>
+            <p id="añadir">AÑADIR</p>
         </div>
-        <p id="añadir">AÑADIR</p>
-    </div>
-    <div id="presentaciones">
-        <div class="caja" onmouseover="mostrarImagen(this)" onmouseout="ocultarImagen(this)"> 
+        <div class="caja" onmouseover="mostrarImagen(this)" onmouseout="ocultarImagen(this)">
             <p>Título Presentacion 1</p>
             <button class="opciones-btn" onclick="mostrarOpciones(event)">+</button>
             <div class="opciones" id="opciones1">
@@ -47,15 +51,8 @@
         </div>
     </div>
 
-    <a href="html/crear_p.html">
-        <button id="crearPresentacion">Crear Presentación</button>
-    </a>
-
-    <a href="html/crear_p.html">
-        <button id="btn-crearPresentacion">Crear Presentación</button>
-    </a>
-
     <script src="js/home.js"></script>
-   
+
 </body>
+
 </html>

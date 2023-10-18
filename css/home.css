@@ -21,11 +21,12 @@ h2{
     margin: 50px 30px;
 }
 
-#presentaciones {
+#global{
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
 }
+
 
 #añadirPresentacion{
     width: 280px;
@@ -36,21 +37,32 @@ h2{
     border-radius: 7px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    order: 1;
-    position: relative;
+    justify-content: center;
+    align-items: center;
+ 
 }
 
-.caja_añadir{
-    margin: 50px;
+.caja_añadir {
+    margin:50px;
     padding: 50px;
     background-color: #668DC0;
-    border-radius: 100px;
-    text-align: center;
+    border-radius: 100px; 
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 }
 
+#añadir {
+    font-size: 24px;
+    color: #EEF0F4;
+    margin-top: -20px;
+}
+
+.caja_añadir img {
+    height: 80px; 
+    width: 80px;
+}
 
 
 .caja {
