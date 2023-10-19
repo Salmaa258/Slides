@@ -85,7 +85,6 @@ Link a Figma https://www.figma.com/team_invite/redeem/RM69mgDaCtdKsgKBqfrjf1[aqu
 Link a Figma https://www.figma.com/team_invite/redeem/RM69mgDaCtdKsgKBqfrjf1[aquí]
 
 == DESARROLLO
-=== Alfred
 [underline]#Vagrantfile#
 
 image::images/1vagrantfile.png[]
@@ -119,6 +118,10 @@ image::images/2save_p.png[]
 image::images/fuentes.png[]
 
 image::images/css.png[]
+
+[underline]#Home.js#
+
+image::images/3js_home.png[]
 
 == CONCLUSIÓN
 === Línias futuras
