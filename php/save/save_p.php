@@ -3,8 +3,8 @@
 // Incluir la clase de base de datos
 require_once '../clases/db.php';
 
-// Crear una nueva instancia de la base de datos
-$db = new Database();
+// Obtener la única instancia de la base de datos
+$db = Database::getInstance();
 
 // Obtener la conexión a la base de datos
 $conn = $db->getConnection();
@@ -27,7 +27,6 @@ $d_tipos = isset($_POST['d_tipo']) && is_array($_POST['d_tipo']) ? $_POST['d_tip
 
 // Iterar sobre cada tipo de diapositiva
 foreach ($d_tipos as $index => $tipo) {
-
     // Insertar la diapositiva en la base de datos con su tipo
     $stmt = $conn->prepare("INSERT INTO Diapositives (presentació_id, Tipus) VALUES (?, ?)");
     $stmt->bindParam(1, $presentacio_id);

@@ -11,7 +11,11 @@ class Database {
     private $dbh; // Manejador de la base de datos
     private $error;
 
-    public function __construct() {
+    // Instancia estática para mantener la instancia de la base de datos
+    private static $instance = null;
+
+    // El constructor se hace privado para evitar la creación de nuevas instancias
+    private function __construct() {
         // Configurar la conexión DSN
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
         $options = array(
@@ -26,6 +30,14 @@ class Database {
             $this->error = $e->getMessage();
             die($this->error);
         }
+    }
+
+    // Método estático para obtener la instancia de la base de datos
+    public static function getInstance() {
+        if (!self::$instance) {
+            self::$instance = new Database();
+        }
+        return self::$instance;
     }
 
     // Método para obtener la conexión
