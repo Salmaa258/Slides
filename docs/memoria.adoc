@@ -31,6 +31,13 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 - Modificación html (**crear_p.html**) inputs y botones para enviar correctamente el formulario.
 - Añadir codigos en el css + archivos para las fuentes.
 
+==== Salma
+- Diseño Mockups
+- Diseño en Figma de la pantalla "home".
+- Creacion del html **home.php**.
+- Creacion del css **home.css** para darle estilo a la página.
+- Creacion del js **home.js** para añadir funciones sobre las presentaciones, como visualizar los botones de editar, eliminar y clonar y mostrar una imagen para visualizar dicha presentación.
+
 
 === Semana 2
 === Semana 3
@@ -74,27 +81,8 @@ La clase *tipoDiapositiva* está compuesta de:
 ==== Figma
 Link a Figma https://www.figma.com/team_invite/redeem/RM69mgDaCtdKsgKBqfrjf1[aquí]
 
-[underline]#Pantalla Home#
-
-image::images/1home.png[]
-
-Compuesta por un botón principal que permite la creación de una nueva presentación.
-
-[underline]#Pantalla Home Listado#
-
-image::images/2home_lista.png[]
-
-(Esta pantalla solo se mostrará una vez se hayan creado presentaciones).
-
-Compuesta por varias cajas que representan las diferentes presentaciones creadas, donde dentro de éstas se muestra el título que se la ha establecido a la presentación y un botón que al hacer clic en él, permite *editar*, *eliminar* o *clonar* la presentación. 
-
-Además del botón posicionado en la parte superior derecha para *añadir* una nueva presentación. 
-
-Por último, para poder *visualizar* estas presentaciones, solamente se tendria que hacer un clic en la "caja" de la presentación.  
-
-
-
 === Guía de estilos
+Link a Figma https://www.figma.com/team_invite/redeem/RM69mgDaCtdKsgKBqfrjf1[aquí]
 
 == DESARROLLO
 === Alfred
