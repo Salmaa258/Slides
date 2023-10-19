@@ -20,5 +20,3 @@ function ocultarImagen(c) {
     const imagenOverlay = c.querySelector('.imagen-overlay');
     imagenOverlay.style.display = 'none';
 }
-
-

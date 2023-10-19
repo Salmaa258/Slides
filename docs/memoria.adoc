@@ -47,7 +47,7 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 === Base de datos
 La base de datos se compone de 3 clases, presentacion, diapositiva y tipoDiapositiva.
 
-image::images/BD.png[]
+image::images/db.png[]
 
 La clase *presentacion* está compuesta de:
 
