@@ -3,8 +3,6 @@
 // Verificación para limitar el acceso directo
 defined('VALID_ENTRY_POINT') or die('Access denied');
 
-include '../config.php';
-
 class Database {
     private $host = DB_HOST;
     private $user = DB_USER;
@@ -23,7 +21,6 @@ class Database {
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
         $options = array(
             PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_EMULATE_PREPARES => false
         );
 
