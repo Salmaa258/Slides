@@ -1,66 +1,98 @@
 <!DOCTYPE html>
 <html lang="ca">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/crear_p.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/crear_p.css" />
     <title>Nueva Presentación</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="header">
-        <div class="block1">
-            <div class="icon">
-                <img src="../icons/presentacio.svg" alt="Icono Presentación">
-            </div>
-            <form method="post" id="data_p" action="../php/save/save_p.php">
-                <input type="text" class="input" name="p_titulo" placeholder="Título de la diapositiva" required
-                    autocomplete="off">
-                <input type="text" class="input" name="p_descripcion" placeholder="Descripción" autocomplete="off">
-            </form>
+      <div class="block1">
+        <div class="icon">
+          <img src="../icons/presentacio.svg" alt="Icono Presentación" />
         </div>
-        <div class="block2">
-            <div id="nova_diapositiva_button">
-                <div class="dropdown">
-                    <button class="button">+</button>
-                    <div class="dropdown-content">
-                        <span onclick="newDiapositivaTitulo()">Título</span>
-                        <span onclick="newDiapositivaTituloTexto()">Título + Texto</span>
-                    </div>
-                </div>
-                <span>Nova Diapositiva</span>
+        <form method="post" id="data_p" action="../php/save/save_p.php">
+          <input
+            type="text"
+            class="input"
+            name="p_titulo"
+            placeholder="Título de la diapositiva"
+            required
+            autocomplete="off"
+          />
+          <input
+            type="text"
+            class="input"
+            name="p_descripcion"
+            placeholder="Descripción"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+      <div class="block2">
+        <div id="nova_diapositiva_button">
+          <div class="dropdown">
+            <button class="button">+</button>
+            <div class="dropdown-content">
+              <span onclick="newDiapositivaTitulo()">Título</span>
+              <span onclick="newDiapositivaTituloTexto()">Título + Texto</span>
             </div>
-            <a href="../home.html">
-                <button class="button">Cancelar</button>
-            </a>
-            <button class="button" type="submit" form="data_p">Guardar</button>
+          </div>
+          <span>Nova Diapositiva</span>
         </div>
+        <a href="../home.php">
+          <button class="button">Cancelar</button>
+        </a>
+        <button class="button" type="submit" form="data_p">Guardar</button>
+      </div>
     </div>
 
     <div id="diapositivas">
-        <template id="d_titulo_template">
-            <div class="d_content focus">
-                <input type="hidden" form="data_p" name="d_tipo[]" value="T">
-                <input type="text" form="data_p" autocomplete="off" placeholder="Título">
-            </div>
-        </template>
-        <template id="d_titulo_texto_template">
-            <div class="d_content">
-                <input type="hidden" form="data_p" name="d_tipo[]" value="TC">
-                <input class="focus" type="text" form="data_p" autocomplete="off" placeholder="Título">
-                <textarea class="focus" form="data_p" name="d_contenido_[]" autocomplete="off" placeholder="Haz click para añadir un texto"></textarea>
-
-            </div>
-        </template>
+      <template id="d_titulo_template">
+        <div class="d_content focus">
+          <input type="hidden" form="data_p" name="d_tipo[]" value="T" />
+          <input
+            type="text"
+            form="data_p"
+            autocomplete="off"
+            placeholder="Título"
+          />
+        </div>
+      </template>
+      <template id="d_titulo_texto_template">
         <div class="d_content">
-            <input type="hidden" form="data_p" name="d_tipo[]" value="T">
-            <input class="focus" type="text" name="d_titulo_0" form="data_p" autocomplete="off" placeholder="Título">
-        </div>     
+          <input type="hidden" form="data_p" name="d_tipo[]" value="TC" />
+          <input
+            class="focus"
+            type="text"
+            form="data_p"
+            autocomplete="off"
+            placeholder="Título"
+          />
+          <textarea
+            class="focus"
+            form="data_p"
+            name="d_contenido_[]"
+            autocomplete="off"
+            placeholder="Haz click para añadir un texto"
+          ></textarea>
+        </div>
+      </template>
+      <div class="d_content">
+        <input type="hidden" form="data_p" name="d_tipo[]" value="T" />
+        <input
+          class="focus"
+          type="text"
+          name="d_titulo_0"
+          form="data_p"
+          autocomplete="off"
+          placeholder="Título"
+        />
+      </div>
     </div>
     <script src="../js/save_p.js"></script>
     <script src="../js/crear_p.js"></script>
-
-</body>
-
+  </body>
 </html>

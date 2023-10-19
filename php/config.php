@@ -8,3 +8,5 @@ define('DB_NAME', 'db_Presentaciones'); // Nombre de la base de datos
 
 // Verificación para limitar el acceso directo
 defined('VALID_ENTRY_POINT') or die('Access denied');
+
+define('ROOT_PATH', realpath(dirname(__FILE__) . '/..') . '/');

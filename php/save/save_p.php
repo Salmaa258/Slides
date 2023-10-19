@@ -3,8 +3,10 @@
 // Punto de entrada principal
 define('VALID_ENTRY_POINT', true);
 
+include '../config.php';
+
 // Incluir la clase de base de datos
-require_once '../clases/db.php';
+require_once ROOT_PATH . 'php/clases/db.php';
 
 // Obtener la única instancia de la base de datos
 $db = Database::getInstance();
