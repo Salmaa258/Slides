@@ -1,188 +1,173 @@
 @font-face {
-    font-family: 'Gabarito';
-    src: url('../fonts/Gabarito-VariableFont_wght.ttf') format('truetype');
+  font-family: 'Gabarito';
+  src: url('../fonts/Gabarito-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
-    font-family: 'Open-Sans';
-    src: url('../fonts/OpenSans-VariableFont_wdthwght.ttf') format('truetype');
+  font-family: 'Open-Sans';
+  src: url('../fonts/OpenSans-VariableFont_wdthwght.ttf') format('truetype');
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #18191F;
-
+  background-color: #18191f;
+  padding: 50px 108px;
 }
 
-h2{
-    text-transform: uppercase;
-    font-size: 34px;
-    color: white;
-    margin: 50px 30px;
+h2 {
+  font-family: Gabarito;
+  text-transform: uppercase;
+  font-size: 40px;
+  color: #eef0f4;
+  margin: 0;
 }
 
-#global{
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+#global {
+  font-family: Open-Sans;
+  display: flex;
+  padding-top: 3%;
+  flex-wrap: wrap;
 }
 
-
-#añadirPresentacion{
-    width: 280px;
-    height: 280px;
-    background-color: #304A6E;
-    padding: 10px;
-    margin: 30px;
-    border-radius: 7px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
- 
+#añadirPresentacion {
+  width: 225px;
+  height: 225px;
+  background-color: #304a6e;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 25px 25px 0px;
+  gap: 25px;
 }
 
 .caja_añadir {
-    margin:50px;
-    padding: 50px;
-    background-color: #668DC0;
-    border-radius: 100px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+  background-color: #668dc0;
+  border-radius: 100%;
+  width: 94px;
+  height: 94px;
 }
 
 #añadir {
-    font-size: 24px;
-    color: #EEF0F4;
-    margin-top: -20px;
+  font-size: 24px;
+  color: #eef0f4;
+  margin: 0;
 }
 
 .caja_añadir img {
-    height: 80px; 
-    width: 80px;
+  height: 94px;
+  width: 94px;
 }
 
-
 .caja {
-    width: 280px;
-    height: 280px;
-    background-color: #EEF0F4;
-    padding: 10px;
-    margin: 30px;
-    border-radius: 7px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: relative;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: #eef0f4;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  width: 225px;
+  height: 225px;
+  margin: 0 25px 25px 0px;
+  flex-direction: column;
+  gap: 75px;
 }
 
 .imagen-overlay {
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    background-size: cover;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background-size: cover;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  background-image: url('icons/ver.png');
 }
 
 .caja:hover {
-    background-color: #bbbbbb;
+  background-color: #bbbbbb;
 }
 
 p {
-    text-align: center;
-    font-size: 24px;
+  text-align: center;
+  font-size: 24px;
 }
 
 /* Boton de opciones */
 .opciones-btn {
-    width: 40px;
-    height: 50px;
-    background-color: #304A6E;
-    color: #EEF0F4;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    right: 15px;
-    bottom: 5px;
-    font-size: 18px; 
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
+  align-self: end;
 }
 
 /* Caja de Botones dentro de opciones */
 .opciones {
-    display: none;
-    position: absolute;
-    left: 100%;
-    bottom: 0px;
-    background-color: #304A6E;
-    padding: 10px;
-    z-index: 1;
+  display: none;
+  position: absolute;
+  left: 103%;
+  bottom: 0px;
+  background-color: #304a6e;
+  z-index: 1;
+  padding: 0;
+  border-radius: 8px;
 }
 
 /* Botones dentro de la caja de opciones */
 button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: #304A6E;
-    color: #EEF0F4;
-    font-family: "Gabarito";
-    border: none;
-    cursor: pointer;
-    margin: 10px 0;
-    font-size: 16px;
+  display: flex;
+  background-color: #304a6e;
+  color: #eef0f4;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  font-size: 24px;
+  height: 29.5px;
+  width: 29.5px;
+  justify-content: center;
 }
 
-.editar, 
+.editar,
 .clonar,
-.eliminar{
-    width: 135px;
-    height: 40px;
+.eliminar {
+  font-family: Open-Sans;
+  width: max-content;
+  padding: 0;
+  margin: 10px;
+  align-items: center;
 }
 
 button img {
-    margin-right: 10px;
+  margin-right: 10px;
 }
-
 
 /* Estilo para el botón "Crear Presentación" */
 #crearPresentacion {
-    position: absolute;
-    right: 20px;
-    top: 50px;
-    background-color: #304A6E;
-    color: #EEF0F4;
-    padding: 10px 20px; 
-    cursor: pointer;
-    font-size: 16px; 
+  position: absolute;
+  right: 20px;
+  top: 50px;
+  background-color: #304a6e;
+  color: #eef0f4;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 #btn-crearPresentacion {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px 30px; 
-    font-size: 24px; 
-    font-family: "Gabarito";
-    cursor: pointer;
-    background-color: #304A6E;
-
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 30px;
+  font-size: 24px;
+  font-family: 'Gabarito';
+  cursor: pointer;
+  background-color: #304a6e;
 }
 
 button:hover {
-    background-color: #223650;
+  background-color: #223650;
 }
 
-#crearPresentacion:hover, #btn-crearPresentacion:hover {
-    background-color: #223650;
+#crearPresentacion:hover,
+#btn-crearPresentacion:hover {
+  background-color: #223650;
 }
