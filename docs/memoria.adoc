@@ -19,8 +19,6 @@
 === Objetivo de la aplicación
 El objetivo es crear una aplicación que permita crear una o más presentaciones con diferentes tipos de diapositivas.
 
-=== Target
-
 == PLANIFICACIÓN Y SEGUIMIENTO
 === Semana 1
 ==== Alfred
@@ -37,6 +35,15 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 - Creacion del html **home.php**.
 - Creacion del css **home.css** para darle estilo a la página.
 - Creacion del js **home.js** para añadir funciones sobre las presentaciones, como visualizar los botones de editar, eliminar y clonar y mostrar una imagen para visualizar dicha presentación.
+
+==== Emilio
+- Generación de paleta de colores, fuentes e iconos.
+- Diseño de Mockups.
+- Diseño en Figma de las pantallas "home" y "crear_p".
+- Creación del html **crear_p.html**.
+- Creacion del css **crear_p.css** para darle estilo a la página.
+- Creación del js **crear_p.js** para la generación dinámica de diapositivas.
+- Actualización de los css **home.css** y **crear_p.css** para diseño final.
 
 
 === Semana 2
@@ -79,10 +86,10 @@ La clase *tipoDiapositiva* está compuesta de:
 
 
 ==== Figma
-Link a Figma https://www.figma.com/team_invite/redeem/RM69mgDaCtdKsgKBqfrjf1[aquí]
+Link a Figma https://www.figma.com/file/aAWb0YlNiNHMsdyzinLiPz/Home?type=design&node-id=0%3A1&mode=design&t=BGmqAhu9DtudaGBT-1[aquí]
 
 === Guía de estilos
-Link a Figma https://www.figma.com/team_invite/redeem/RM69mgDaCtdKsgKBqfrjf1[aquí]
+Link a Figma https://www.figma.com/file/aAWb0YlNiNHMsdyzinLiPz/Home?type=design&node-id=0%3A1&mode=design&t=BGmqAhu9DtudaGBT-1[aquí]
 
 == DESARROLLO
 [underline]#Vagrantfile#
