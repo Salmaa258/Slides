@@ -48,7 +48,7 @@ CREATE TABLE diapositiva (
   tipo              ENUM('T', 'TC'),
   PRIMARY KEY(id),
   FOREIGN KEY (presentacion_id) 
-    REFERENCES presentacion(id)
+    REFERENCES presentacion(id) DELETE ON CASCADE
 );
 
 CREATE TABLE diapositivaTitulo (
@@ -56,7 +56,7 @@ CREATE TABLE diapositivaTitulo (
   titulo            VARCHAR(255),
   PRIMARY KEY (PRIMARY KEY),
   FOREIGN KEY (diapositiva_id) 
-    REFERENCES diapositiva(id)
+    REFERENCES diapositiva(id) DELETE ON CASCADE
 );
 
 CREATE TABLE diapositivaTituloContenido (
@@ -65,7 +65,7 @@ CREATE TABLE diapositivaTituloContenido (
   contenido TEXT,
   PRIMARY KEY(diapositiva_id),
   FOREIGN KEY (diapositiva_id) 
-    REFERENCES diapositiva(id)
+    REFERENCES diapositiva(id) DELETE ON CASCADE
 );
 EOF
 SCRIPT
