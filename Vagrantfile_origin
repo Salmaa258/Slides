@@ -32,32 +32,40 @@ sudo sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d
 sudo systemctl restart mysql
 
 # Crear tablas en la base de datos
-sudo mysql -uroot -p$ROOTPASSWD $DBNAME <<EOF 
-CREATE TABLE Presentacions (
-ID INT AUTO_INCREMENT PRIMARY KEY,
-Títol VARCHAR(255),
-Descripció TEXT,
-Data_de_Creació TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+sudo mysql -uroot -p$ROOTPASSWD $DBNAME <<EOF
+
+CREATE TABLE presentacion(
+  id              INT      AUTO_INCREMENT,
+  titulo          VARCHAR(255),
+  descripcion     TEXT,
+  fechaCreacion   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id)
 );
 
-CREATE TABLE Diapositives (
-ID INT AUTO_INCREMENT PRIMARY KEY,
-presentació_id INT,
-Tipus ENUM('T', 'TC'),
-FOREIGN KEY (presentació_id) REFERENCES Presentacions(ID)
+CREATE TABLE diapositiva (
+  id                INT AUTO_INCREMENT,
+  presentacion_id   INT,
+  tipo              ENUM('T', 'TC'),
+  PRIMARY KEY(id),
+  FOREIGN KEY (presentacion_id) 
+    REFERENCES presentacion(id)
 );
 
-CREATE TABLE Diapositives_T (
-diapositives_id INT PRIMARY KEY,
-Titulo VARCHAR(255),
-FOREIGN KEY (diapositives_id) REFERENCES Diapositives(ID)
+CREATE TABLE diapositivaTitulo (
+  diapositiva_id    INT,
+  titulo            VARCHAR(255),
+  PRIMARY KEY (PRIMARY KEY),
+  FOREIGN KEY (diapositiva_id) 
+    REFERENCES diapositiva(id)
 );
 
-CREATE TABLE Diapositives_TC (
-diapositives_id INT PRIMARY KEY,
-Titulo VARCHAR(255),
-Contenido TEXT,
-FOREIGN KEY (diapositives_id) REFERENCES Diapositives(ID)
+CREATE TABLE diapositivaTituloContenido (
+  diapositiva_id INT,
+  titulo VARCHAR(255),
+  contenido TEXT,
+  PRIMARY KEY(diapositiva_id),
+  FOREIGN KEY (diapositiva_id) 
+    REFERENCES diapositiva(id)
 );
 EOF
 SCRIPT
@@ -65,6 +73,12 @@ SCRIPT
 Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/mantic64"
+
+  config.vm.provider "virtualbox" do |vb| 
+	  vb.name = "Slides DB" 
+    vb.memory = "1024" 
+    vb.cpus = 2 
+  end
 
   config.vm.define "db-server" do |db|
       db.vm.network "private_network", ip: "192.168.56.1"

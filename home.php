@@ -35,15 +35,15 @@
             $conn = $db->getConnection();
 
             // Consultar todas las presentaciones
-            $query = "SELECT ID, Títol FROM Presentacions";
+            $query = "SELECT id, titulo FROM presentacion";
             $result = $conn->query($query);
 
             // Generar dinámicamente los divs con class="caja"
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 echo '<div class="caja" onmouseover="mostrarImagen(this)" onmouseout="ocultarImagen(this)">';
-                echo '<p>' . htmlspecialchars($row['Títol']) . '</p>';
+                echo '<p>' . htmlspecialchars($row['titulo']) . '</p>';
                 echo '<button class="opciones-btn" onclick="mostrarOpciones(event)">+</button>';
-                echo '<div class="opciones" id="opciones' . $row['ID'] . '">';
+                echo '<div class="opciones" id="opciones' . $row['id'] . '">';
                 echo '<button class="editar"><img src="icons/editar.svg" alt="Editar">Editar</button>';
                 echo '<button class="clonar"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>';
                 echo '<button class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>';

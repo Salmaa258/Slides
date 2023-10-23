@@ -24,7 +24,7 @@ if (empty($titol) || !preg_match("/^[<a-zA-Z>s]+$/", $titol)) {
 }
 
 // Insertar la nueva presentación en la base de datos
-$stmt = $conn->prepare("INSERT INTO Presentacions (Títol, Descripció) VALUES (?, ?)");
+$stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
 $stmt->bindParam(1, $titol);
 $stmt->bindParam(2, $descripcio);
 $stmt->execute();
@@ -44,7 +44,7 @@ foreach ($d_tipos as $index => $tipo) {
     }
 
     // Insertar la diapositiva en la base de datos con su tipo
-    $stmt = $conn->prepare("INSERT INTO Diapositives (presentació_id, Tipus) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO diapositiva(presentacion_id, tipo) VALUES (?, ?)");
     $stmt->bindParam(1, $presentacio_id);
     $stmt->bindParam(2, $tipo);
     $stmt->execute();
@@ -55,14 +55,14 @@ foreach ($d_tipos as $index => $tipo) {
     // Comprobar el tipo de diapositiva y actuar en consecuencia
     if ($tipo == 'T') {
         // Si es de tipo 'T', recuperar el título y insertarlo en la tabla correspondiente
-        $stmt = $conn->prepare("INSERT INTO Diapositives_T (diapositives_id, Titulo) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO diapositivaTitulo(diapositiva_id, titulo) VALUES (?, ?)");
         $stmt->bindParam(1, $diapositives_id);
         $stmt->bindParam(2, $titulo_diapositiva);
         $stmt->execute();
     } elseif ($tipo == 'TC') {
         // Si es de tipo 'TC', recuperar el título y el contenido y insertarlos en la tabla correspondiente
         $contenido = $_POST['d_contenido_' . $index];
-        $stmt = $conn->prepare("INSERT INTO Diapositives_TC (diapositives_id, Titulo, Contenido) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO diapositivaTituloContenido(diapositiva_id, titulo, contenido) VALUES (?, ?, ?)");
         $stmt->bindParam(1, $diapositives_id);
         $stmt->bindParam(2, $titulo_diapositiva);
         $stmt->bindParam(3, $contenido);
@@ -71,5 +71,5 @@ foreach ($d_tipos as $index => $tipo) {
 }
 
 // Redirigir al usuario de vuelta a la página de creación de presentaciones
-header("Location: /grup4-alfred_emilio_salma/html/crear_p.html");
+header("Location: /../../html/crear_p.html");
 exit;
