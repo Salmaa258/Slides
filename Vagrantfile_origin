@@ -42,30 +42,33 @@ CREATE TABLE presentacion(
   PRIMARY KEY(id)
 );
 
-CREATE TABLE diapositiva (
+CREATE TABLE diapositiva(
   id                INT AUTO_INCREMENT,
   presentacion_id   INT,
   tipo              ENUM('T', 'TC'),
   PRIMARY KEY(id),
   FOREIGN KEY (presentacion_id) 
-    REFERENCES presentacion(id) DELETE ON CASCADE
+    REFERENCES presentacion(id) 
+    ON DELETE CASCADE
 );
 
-CREATE TABLE diapositivaTitulo (
+CREATE TABLE diapositivaTitulo(
   diapositiva_id    INT,
   titulo            VARCHAR(255),
-  PRIMARY KEY (PRIMARY KEY),
+  PRIMARY KEY (diapositiva_id),
   FOREIGN KEY (diapositiva_id) 
-    REFERENCES diapositiva(id) DELETE ON CASCADE
+    REFERENCES diapositiva(id) 
+    ON DELETE CASCADE
 );
 
-CREATE TABLE diapositivaTituloContenido (
+CREATE TABLE diapositivaTituloContenido(
   diapositiva_id INT,
   titulo VARCHAR(255),
   contenido TEXT,
   PRIMARY KEY(diapositiva_id),
   FOREIGN KEY (diapositiva_id) 
-    REFERENCES diapositiva(id) DELETE ON CASCADE
+    REFERENCES diapositiva(id)
+    ON DELETE CASCADE
 );
 EOF
 SCRIPT

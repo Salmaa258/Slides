@@ -92,6 +92,11 @@ input[name='p_descripcion'] {
   font-size: 16px;
   border-radius: 8px;
   padding-left: 3%;
+  border-color: transparent;
+}
+
+input[name='p_descripcion']:focus {
+  background: #eef0f4;
 }
 
 #nova-diapositiva {
@@ -142,7 +147,7 @@ a {
   display: contents;
 }
 
-.d_titulo {
+.d-container {
   display: flex;
   aspect-ratio: 16/9;
   flex-direction: column;
@@ -150,34 +155,18 @@ a {
   justify-content: center;
   border-radius: 8px;
   border: 2px solid #eef0f4;
-  width: 100%;
+  width: 92%;
   min-width: 615px;
   box-sizing: border-box;
-  padding: 23% 3.9%;
+  padding: 4%;
 }
 
-.d_titulo_contenido {
-  display: flex;
-  aspect-ratio: 16/9;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  border: 2px solid #eef0f4;
-  width: 100%;
-  min-width: 615px;
-  box-sizing: border-box;
-  padding: 4.2% 3.9%;
-}
-
-.d_titulo input {
+.d-container input {
   display: block;
-  height: 70%;
-  width: 98%;
-  font-size: 40px;
+  width: 100%;
+  font-size: 240%;
   font-family: Open-Sans;
   margin: 15px 0px;
-  border-radius: 0;
   box-sizing: border-box;
   padding: 5px;
   background: none;
@@ -185,28 +174,12 @@ a {
   outline: none;
   border-radius: 5px;
   border: solid 2px white;
-}
-
-.d_titulo_contenido input {
-  display: block;
   height: 15%;
-  width: 98%;
-  font-size: 40px;
-  font-family: Open-Sans;
-  margin: 15px 0px;
-  border-radius: 0;
-  box-sizing: border-box;
-  padding: 5px;
-  background: none;
-  color: white;
-  outline: none;
-  border-radius: 5px;
-  border: solid 2px white;
 }
 
-.d_titulo_contenido textarea {
+.d-container textarea {
   height: 80%;
-  width: 98%;
+  width: 100%;
   resize: none;
   font-size: 20px;
   padding: 10px;
@@ -230,16 +203,15 @@ a {
   display: none;
   position: absolute;
   overflow: auto;
+  margin-top: 1%;
 }
-.dropdown:hover .dropdown-content {
-  display: block;
+.dropdown-content {
   border-radius: 8px;
 }
 .dropdown-content span {
   display: block;
-  color: #ffffff;
   padding: 8px;
-  background-color: #add8e6;
+  background-color: #eef0f4;
   color: black;
 }
 .dropdown-content span:hover {

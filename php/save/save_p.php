@@ -19,7 +19,7 @@ $titol = isset($_POST['p_titulo']) ? trim($_POST['p_titulo']) : '';
 $descripcio = isset($_POST['p_descripcion']) ? trim($_POST['p_descripcion']) : '';
 
 // Validar el título de la presentación
-if (empty($titol) || !preg_match("/^[<a-zA-Z>s]+$/", $titol)) {
+if (empty($titol)) {
     die("El título de la presentación no es válido.");
 }
 
@@ -39,9 +39,9 @@ $d_tipos = isset($_POST['d_tipo']) && is_array($_POST['d_tipo']) ? $_POST['d_tip
 foreach ($d_tipos as $index => $tipo) {
     // Validar el título de las diapositivas
     $titulo_diapositiva = isset($_POST['d_titulo_' . $index]) ? trim($_POST['d_titulo_' . $index]) : '';
-    if (empty($titulo_diapositiva) || !preg_match("/^[a-zA-Z\s]+$/", $titulo_diapositiva)) {
-        die("El título de la diapositiva no es válido.");
-    }
+    // if (empty($titulo_diapositiva)) {
+    //     die("El título de la diapositiva no es válido.");
+    // }
 
     // Insertar la diapositiva en la base de datos con su tipo
     $stmt = $conn->prepare("INSERT INTO diapositiva(presentacion_id, tipo) VALUES (?, ?)");

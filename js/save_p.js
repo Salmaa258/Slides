@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let d_tipos = document.querySelectorAll("input[name='d_tipo[]']");
 
         // Validamos que el título esté completo y sean caracteres:
-        if (p_titulo.value.trim() === '' || !/^[a-zA-Z\s]+$/.test(p_titulo.value.trim())) {
+        if (p_titulo.value.trim() === '') {
             alert('Por favor, introduce un título válido.');
             return;  // Salimos de la función si hay un error
         } 

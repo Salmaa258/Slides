@@ -10,22 +10,22 @@
 
 <body>
   <div class="header">
-    <input id="inputTitulo" type="text" class="input" name="p_titulo" placeholder="Añade un título..." required
-      autocomplete="off" />
+    <input id="inputTitulo" type="text" form="data_p" class="input" name="p_titulo" placeholder="Añade un título..."
+      required autocomplete="off" />
     <div class="headerButtons">
       <div class="descripcion-container">
         <div id="icon-presentaciones">
           <img src="../icons/presentacio.svg" alt="Icono Presentación" />
         </div>
-        <form method="get" id="data_p">
-          <input type="text" class="input" name="p_descripcion" placeholder="Escribe una descripción..."
+        <form method="post" id="data_p" action="../php/save/save_p.php">
+          <input type="text" class="input focus" name="p_descripcion" placeholder="Escribe una descripción..."
             autocomplete="off" />
         </form>
       </div>
       <div id="nova-diapositiva">
-        <div class="dropdown">
+        <div class="dropdown" onclick="showDropdown()">
           <button id="nova-diapositiva-button" class="button">
-            <img src="../icons/add.svg" />
+            <img id="nueva-diapositiva" src="../icons/add.svg" />
           </button>
           <div class="dropdown-content">
             <span onclick="newDiapositivaTitulo()">Título</span>
@@ -45,14 +45,14 @@
 
   <div id="diapositivas">
     <template id="d_titulo_template">
-      <div class="d_titulo">
+      <div class="d-container">
         <input class="focus" type="hidden" form="data_p" name="d_tipo[]" value="T" />
         <input class="focus" type="text" form="data_p" autocomplete="off"
           placeholder="Haz click para añadir un título..." />
       </div>
     </template>
     <template id="d_titulo_texto_template">
-      <div class="d_titulo_contenido">
+      <div class="d-container">
         <input type="hidden" form="data_p" name="d_tipo[]" value="TC" />
         <input class="focus" type="text" form="data_p" autocomplete="off"
           placeholder="Haz click para añadir un título..." />
@@ -60,14 +60,14 @@
           placeholder="Haz click para añadir un texto"></textarea>
       </div>
     </template>
-    <div class="d_titulo">
+    <div class="d-container">
       <input class="focus" type="hidden" form="data_p" name="d_tipo[]" value="T" />
       <input class="focus" type="text" form="data_p" autocomplete="off"
         placeholder="Haz click para añadir un título..." />
     </div>
   </div>
-  <script src="../js/save_p.js"></script>
   <script src="../js/crear_p.js"></script>
+  <script src="../js/save_p.js"></script>
 </body>
 
 </html>
