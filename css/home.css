@@ -74,15 +74,21 @@ h2 {
 }
 
 .imagen-overlay {
+  display: none;
   position: absolute;
-  width: 50%;
-  height: 50%;
-  background-size: cover;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  left: 25%;
+  top: 28%;
   cursor: pointer;
-  background-image: url('icons/ver.png');
+}
+
+.imagen-overlay img {
+  height: 115px;
+}
+
+.caja:hover .imagen-overlay {
+  display: flex;
 }
 
 .caja:hover {
@@ -106,7 +112,7 @@ p {
   left: 103%;
   bottom: 0px;
   background-color: #304a6e;
-  z-index: 1;
+  z-index: 5;
   padding: 0;
   border-radius: 8px;
 }
