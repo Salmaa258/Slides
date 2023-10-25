@@ -11,10 +11,12 @@ function mostrarOpciones(cajaElement) {
     }
 }
 
-const optionsBtn = document.querySelector('.opciones-btn');
+const cajaContainer = document.getElementById('global');
 
-optionsBtn.addEventListener('click', (e) => {
-    mostrarOpciones(e.target.parentNode);
+cajaContainer.addEventListener('click', (e) => {
+    if (e.target.className.includes('opciones-btn')) {
+        mostrarOpciones(e.target.parentNode);
+    }
 });
 
 document.addEventListener('click', (e) => {
