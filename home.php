@@ -46,22 +46,19 @@
                 <div class="imagen-overlay">
                     <img src="../icons/ver.png" alt="">
                 </div>
-                <button class="opciones-btn" onclick="mostrarOpciones(event)">+</button>
-                <div class="opciones" id="opciones<?= $row['id'] ?>">
-                    <button class="editar"><img src="icons/editar.svg" alt="Editar">Editar</button>
-                    <button class="clonar"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>
+                <button class="opciones-btn clickable">+</button>
+                <div class="opciones clickable" id="opciones<?= $row['id'] ?>">
+                    <button class="editar clickable"><img src="icons/editar.svg" alt="Editar">Editar</button>
+                    <button class="clonar clickable"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>
                     <form action="php/delete/eliminar.php" method="POST" onsubmit="return confirmarEliminacion()">
                         <input type="hidden" name="presentation_id" value="<?= $row['id'] ?>">
-                        <button type="submit" class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>
+                        <button type="submit clickable" class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>
                     </form>
                 </div>
             </div>
         <?php endwhile; ?>
     </div>
-
-
     <script src="js/home.js"></script>
-
 </body>
 
 </html>

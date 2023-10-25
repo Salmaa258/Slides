@@ -131,9 +131,7 @@ button {
   justify-content: center;
 }
 
-.editar,
-.clonar,
-.eliminar {
+.opciones button {
   font-family: Open-Sans;
   width: max-content;
   padding: 0;
