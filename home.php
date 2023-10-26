@@ -43,7 +43,9 @@
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) : ?>
             <div class="caja">
                 <p><?= htmlspecialchars($row['titulo']) ?></p>
-                <div class="imagen-overlay">
+                <input type="hidden" name="id_presentacion" form="previewForm_<?= $row['id'] ?>" value="<?= $row['id'] ?>">
+                <form hidden id="previewForm_<?= $row['id'] ?>" action="php/preview/preview.php" method="POST" hidden></form>
+                <div class="imagen-overlay" onclick="document.forms['previewForm_<?= $row['id'] ?>'].submit();">
                     <img src="../icons/ver.png" alt="">
                 </div>
                 <button class="opciones-btn clickable">+</button>

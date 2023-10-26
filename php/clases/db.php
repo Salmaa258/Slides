@@ -3,7 +3,8 @@
 // Verificación para limitar el acceso directo
 defined('VALID_ENTRY_POINT') or die('Access denied');
 
-class Database {
+class Database
+{
     private $host = DB_HOST;
     private $user = DB_USER;
     private $pass = DB_PASS;
@@ -16,7 +17,8 @@ class Database {
     private static $instance = null;
 
     // El constructor se hace privado para evitar la creación de nuevas instancias
-    private function __construct() {
+    private function __construct()
+    {
         // Configurar la conexión DSN
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
         $options = array(
@@ -35,7 +37,8 @@ class Database {
     }
 
     // Método estático para obtener la instancia de la base de datos
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (!self::$instance) {
             self::$instance = new Database();
         }
@@ -43,7 +46,20 @@ class Database {
     }
 
     // Método para obtener la conexión
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->dbh;
+    }
+
+    public function getDiapositivas($conn, $id_presentacion)
+    {
+        $query = "SELECT diapo.id as id, diapo.tipo as tipo
+        FROM diapositiva diapo
+        WHERE diapo.presentacion_id = ?;";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $id_presentacion);
+        $stmt->execute();
+        return $stmt;
     }
 }
