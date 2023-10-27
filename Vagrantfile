@@ -38,36 +38,46 @@ CREATE TABLE presentacion(
   id              INT      AUTO_INCREMENT,
   titulo          VARCHAR(255),
   descripcion     VARCHAR(255),
-  fechaCreacion   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
   PRIMARY KEY(id)
 );
 
 CREATE TABLE diapositiva(
   id                INT AUTO_INCREMENT,
   presentacion_id   INT,
-  tipo              ENUM('T', 'TC'),
-  PRIMARY KEY(id),
+
+  PRIMARY KEY(id, presentacion_id),
   FOREIGN KEY (presentacion_id) 
     REFERENCES presentacion(id) 
     ON DELETE CASCADE
 );
 
-CREATE TABLE diapositivaTitulo(
+CREATE TABLE tipoTitulo(
   diapositiva_id    INT,
+  presentacion_id   INT,
   titulo            VARCHAR(255),
-  PRIMARY KEY (diapositiva_id),
+
+  PRIMARY KEY (diapositiva_id, presentacion_id),
   FOREIGN KEY (diapositiva_id) 
     REFERENCES diapositiva(id) 
+    ON DELETE CASCADE,
+  FOREIGN KEY (presentacion_id) 
+    REFERENCES presentacion(id) 
     ON DELETE CASCADE
 );
 
-CREATE TABLE diapositivaTituloContenido(
-  diapositiva_id INT,
-  titulo VARCHAR(255),
-  contenido VARCHAR(255),
-  PRIMARY KEY(diapositiva_id),
+CREATE TABLE tipoContenido(
+  diapositiva_id  INT,
+  presentacion_id INT,
+  titulo          VARCHAR(255),
+  contenido       VARCHAR(255),
+
+  PRIMARY KEY(diapositiva_id, presentacion_id),
   FOREIGN KEY (diapositiva_id) 
     REFERENCES diapositiva(id)
+    ON DELETE CASCADE,
+  FOREIGN KEY (presentacion_id) 
+    REFERENCES presentacion(id)
     ON DELETE CASCADE
 );
 EOF
