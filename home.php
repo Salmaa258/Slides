@@ -52,7 +52,7 @@
                 <div class="opciones clickable" id="opciones<?= $row['id'] ?>">
                     <button class="editar clickable"><img src="icons/editar.svg" alt="Editar">Editar</button>
                     <button class="clonar clickable"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>
-                    <form action="php/delete/eliminar.php" method="POST" onsubmit="return confirmarEliminacion()">
+                    <form action="php/eliminar/eliminar.php" method="POST" onsubmit="return confirmarEliminacion()">
                         <input type="hidden" name="presentation_id" value="<?= $row['id'] ?>">
                         <button type="submit clickable" class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>
                     </form>

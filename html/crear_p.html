@@ -18,7 +18,7 @@
         <div id="icon-presentaciones">
           <img src="../icons/presentacio.svg" alt="Icono Presentación" />
         </div>
-        <form method="post" id="data_p" action="../php/save/save_p.php">
+        <form method="POST" id="data_p" action="../php/save/save_p.php" -->
           <input type="text" class="input focus" name="p_descripcion" placeholder="Escribe una descripción..."
             autocomplete="off" />
         </form>
@@ -47,23 +47,20 @@
   <div id="diapositivas">
     <template id="d_titulo_template">
       <div class="d-container">
-        <input class="focus" type="hidden" form="data_p" name="d_tipo[]" value="T" />
         <input class="focus" type="text" form="data_p" autocomplete="off"
           placeholder="Haz click para añadir un título..." />
       </div>
     </template>
     <template id="d_titulo_texto_template">
       <div class="d-container">
-        <input type="hidden" form="data_p" name="d_tipo[]" value="TC" />
         <input class="focus" type="text" form="data_p" autocomplete="off"
           placeholder="Haz click para añadir un título..." />
-        <textarea class="focus" form="data_p" name="d_contenido_[]" autocomplete="off"
+        <textarea class="focus" form="data_p" autocomplete="off"
           placeholder="Haz click para añadir un texto"></textarea>
       </div>
     </template>
     <div class="d-container">
-      <input class="focus" type="hidden" form="data_p" name="d_tipo[]" value="T" />
-      <input class="focus" type="text" form="data_p" autocomplete="off"
+      <input class="focus" name="d_titulo_0" type="text" form="data_p" autocomplete="off"
         placeholder="Haz click para añadir un título..." />
     </div>
   </div>

@@ -50,16 +50,4 @@ class Database
     {
         return $this->dbh;
     }
-
-    public function getDiapositivas($conn, $id_presentacion)
-    {
-        $query = "SELECT diapo.id as id, diapo.tipo as tipo
-        FROM diapositiva diapo
-        WHERE diapo.presentacion_id = ?;";
-
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(1, $id_presentacion);
-        $stmt->execute();
-        return $stmt;
-    }
 }
