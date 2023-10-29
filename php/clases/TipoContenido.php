@@ -20,7 +20,7 @@ class TipoContenido extends Diapositiva
 
         $id_diapositiva = $conn->lastInsertId();
 
-        $stmt = $conn->prepare("INSERT INTO tipoTitulo(diapositiva_id, presentacion_id, titulo, contenido) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO tipoContenido(diapositiva_id, presentacion_id, titulo, contenido) VALUES (?, ?, ?, ?)");
         $stmt->bindParam(1, $id_diapositiva);
         $stmt->bindParam(2, $id_presentacion);
         $stmt->bindParam(3, $this->titulo);

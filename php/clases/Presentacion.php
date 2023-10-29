@@ -69,7 +69,8 @@ class Presentacion
         }
     }
 
-    public function nuevaPresentacion(PDO $conn){
+    public function nuevaPresentacion(PDO $conn)
+    {
         $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
         $stmt->bindParam(1, $this->titulo);
         $stmt->bindParam(2, $this->descripcion);
@@ -106,26 +107,27 @@ class Presentacion
 
         $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], []);
 
-        $stmt = $conn->prepare("SELECT (diapositiva_id, titulo) FROM tipoTitulo WHERE presentacion_id = ?");
+        $stmt = $conn->prepare(
+            "SELECT dt.id as diapositiva_id, COALESCE(tt.titulo, tc.titulo) AS titulo, tc.contenido
+            FROM presentacion p 
+                LEFT JOIN diapositiva dt ON p.id = dt.presentacion_id
+                LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
+                LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
+            WHERE p.id = ?;"
+        );
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
         $diapositivas = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $diapositivas[$row["diapositiva_id"]] = new TipoTitulo($row['diapositiva_id'], $row['titulo']);
+            if ($row['contenido'] === null) {
+                $diapositivas[$row["diapositiva_id"]] = new TipoTitulo($row['diapositiva_id'], $row['titulo']);
+            } else {
+                $diapositivas[$row["diapositiva_id"]] = new TipoContenido($row['diapositiva_id'], $row['titulo'], $row['contenido']);
+            }
         }
-
-        $stmt = $conn->prepare("SELECT (diapositiva_id, titulo) FROM tipoContenido WHERE presentacion_id = ?");
-        $stmt->bindParam(1, $id_presentacion);
-        $stmt->execute();
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $diapositivas[$row["diapositiva_id"]] = new TipoContenido($row['diapositiva_id'], $row['titulo'], $row['contenido']);
-        }
-
         $presentacion->setDiapositivas($diapositivas);
-
         return $presentacion;
     }
 
