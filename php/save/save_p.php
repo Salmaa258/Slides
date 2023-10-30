@@ -18,7 +18,7 @@ if (!empty($_POST['presentacion_id'])) {
     $presentacionBD = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
 
     foreach ($presentacionBD->getDiapositivas() as $diapositiva) {
-        if (isset($_POST[''])) {
+        if (isset($_POST['d_contenido'. $diapositiva-> .''])) {
             # code...
         }
     }
