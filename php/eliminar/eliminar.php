@@ -7,7 +7,7 @@ require_once ROOT_PATH . 'php/clases/db.php';
 
 //var_dump($_POST);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $presentation_id = $_POST['presentation_id'];
+    $presentation_id = $_POST['id_presentacion'];
 
     // Obtén la conexión a la base de datos
     $db = Database::getInstance();
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->beginTransaction();
 
         // Finalmente, elimina la presentación de la tabla Presentacions
-        $query = "DELETE FROM Presentacions WHERE ID = ?";
+        $query = "DELETE FROM presentacion WHERE id = ?";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(1, $presentation_id);
         $stmt->execute();

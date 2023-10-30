@@ -60,10 +60,9 @@
                         <button class="editar clickable"><img src="icons/editar.svg" alt="Editar">Editar</button>
                     </form>
                     <button class="clonar clickable"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>
-                    <form action="php/delete/eliminar.php" method="POST" onclick="mostrarConfirmacionEliminar(event, this)">
-                        <input type="hidden" name="presentation_id" value="<?= $row['ID'] ?>">
-                        <button type="submit" class="eliminar"><img src="icons/eliminar.svg"
-                                alt="Eliminar">Eliminar</button>
+                    <form action="php/eliminar/eliminar.php" method="POST" onclick="mostrarConfirmacionEliminar(event, this)">
+                        <input type="hidden" name="id_presentacion" value="<?= $row['id'] ?>">
+                        <button type="submit" class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>
                     </form>
                 </div>
             </div>
