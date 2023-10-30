@@ -25,9 +25,31 @@ class Presentacion
         return $this->titulo;
     }
 
+    public static function getTituloBD(PDO $conn, int $id): string
+    {
+        $stmt = $conn->prepare("SELECT titulo FROM presentacion WHERE id = ?");
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row["titulo"];
+    }
+
     public function getDescripcion(): string
     {
         return $this->descripcion;
+    }
+
+    public static function getDescripcionBD(PDO $conn, int $id): string
+    {
+        $stmt = $conn->prepare("SELECT descripcion FROM presentacion WHERE id = ?");
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row["descripcion"];
     }
 
     public function getDiapositivas(): array
@@ -43,8 +65,7 @@ class Presentacion
                 LEFT JOIN diapositiva dt ON p.id = dt.presentacion_id
                 LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
                 LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
-            WHERE p.id = ?
-            ORDER BY dt.id;"
+            WHERE p.id = ?;"
         );
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
@@ -96,13 +117,19 @@ class Presentacion
         }
     }
 
-    public function nuevaPresentacion(PDO $conn): void
-    {
-        $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
-        $stmt->bindParam(1, $this->titulo);
-        $stmt->bindParam(2, $this->descripcion);
+    public function exists(PDO $conn, int $id): bool {
+        $id_presentacion = $this->getId();
+        $stmt = $conn->prepare("SELECT * FROM presentacion WHERE presentacion_id = ?");
+        $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return empty($result);
+    }
+
+    public function nuevaPresentacion(PDO $conn): void
+    {
         $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
         $stmt->bindParam(1, $this->titulo);
         $stmt->bindParam(2, $this->descripcion);
@@ -160,7 +187,7 @@ class Presentacion
 
     public static function getPresentacionBD(PDO $conn, int $id_presentacion): Presentacion
     {
-        $stmt = $conn->prepare("SELECT (id, titulo, descripcion) FROM presentacion WHERE id = ?");
+        $stmt = $conn->prepare("SELECT id, titulo, descripcion FROM presentacion WHERE id = ?");
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 

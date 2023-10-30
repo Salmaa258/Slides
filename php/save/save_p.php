@@ -14,12 +14,15 @@ require_once ROOT_PATH . 'php/clases/TipoContenido.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
+if (!empty($_POST['presentacion_id'])) {
+    if (Presentacion::exists($conn, $_POST['presentacion_id'])) {
+        Presentacion::
+    }
+}
+
+
 $titulo = isset($_POST['p_titulo']) ? trim($_POST['p_titulo']) : '';
 $descripcion = isset($_POST['p_descripcion']) ? trim($_POST['p_descripcion']) : '';
-
-if (empty($titulo)) {
-    die("El título de la presentación no es válido.");
-}
 
 $presentacio_id = $conn->lastInsertId();
 

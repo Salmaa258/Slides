@@ -18,7 +18,7 @@ class TipoTitulo extends Diapositiva
     public function exists($conn, $id_presentacion): bool
     {
         $id_diapositiva = $this->getId();
-        $stmt = $conn->prepare("SELECT FROM tipoTitulo WHERE presentacion_id = ? AND diapositiva_id = ?");
+        $stmt = $conn->prepare("SELECT * FROM tipoTitulo WHERE presentacion_id = ? AND diapositiva_id = ?");
         $stmt->bindParam(1, $id_presentacion);
         $stmt->bindParam(2, $id_diapositiva);
         $stmt->execute();
@@ -83,8 +83,7 @@ class TipoTitulo extends Diapositiva
 
     public function getDiapositivaHTML(): string
     {
-        return '
-      <div class="d-container">
+        return '<div class="d-container">
         <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
           placeholder="Haz click para añadir un título..." />
       </div>';
