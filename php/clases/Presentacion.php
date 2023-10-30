@@ -117,10 +117,10 @@ class Presentacion
         }
     }
 
-    public function exists(PDO $conn, int $id): bool {
-        $id_presentacion = $this->getId();
+    public static function exists(PDO $conn, int $id): bool
+    {
         $stmt = $conn->prepare("SELECT * FROM presentacion WHERE presentacion_id = ?");
-        $stmt->bindParam(1, $id_presentacion);
+        $stmt->bindParam(1, $id);
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
