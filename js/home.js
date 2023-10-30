@@ -36,3 +36,32 @@ document.addEventListener('click', (e) => {
         mostrarOpciones(optionsDisplayTrue);
     }
 });
+
+// Función para mostrar el diálogo al hacer clic en el botón de eliminar
+function mostrarConfirmacionEliminar(event, form) {
+    event.preventDefault();
+    const dialog = document.getElementById("confirmarEliminar");
+    // Muestra el diálogo
+    dialog.style.display = "block";
+
+    // Agrega un event listener al botón "Aceptar" en el diálogo
+    const btnAceptar = document.getElementById("btn-aceptar");
+    btnAceptar.addEventListener("click", function () {
+
+        // Cuando el usuario hace clic en "Aceptar", envía el formulario
+        form.submit();
+        
+        // Oculta el diálogo
+        dialog.style.display = "none";
+        
+    });
+
+    // Agrega un event listener al botón "Cancelar" en el diálogo
+    const btnCancelar = document.getElementById("btn-cancelar");
+    btnCancelar.addEventListener("click", function () {
+        // Oculta el diálogo sin enviar el formulario
+        dialog.style.display = "none";
+    });
+
+    return false; // Evita que el formulario se envíe automáticamente
+}
