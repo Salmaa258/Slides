@@ -65,3 +65,4 @@ if (!empty($_POST['presentacion_id'])) {
 // Redirigir al usuario de vuelta a la página de creación de presentaciones
 header("Location: /../../html/crear_p.html");
 exit;
+

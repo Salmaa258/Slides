@@ -102,23 +102,6 @@ p {
 
 /* Boton de opciones */
 .opciones-btn {
-  align-self: end;
-}
-
-/* Caja de Botones dentro de opciones */
-.opciones {
-  display: none;
-  position: absolute;
-  left: 103%;
-  bottom: 0px;
-  background-color: #304a6e;
-  z-index: 5;
-  padding: 0;
-  border-radius: 8px;
-}
-
-/* Botones dentro de la caja de opciones */
-button {
   display: flex;
   background-color: #304a6e;
   color: #eef0f4;
@@ -129,15 +112,45 @@ button {
   height: 29.5px;
   width: 29.5px;
   justify-content: center;
+  align-self: end;
 }
 
-.opciones button {
+/* Caja de Botones dentro de opciones */
+.opciones {
+  display: none;
+  position: absolute;
+  left: 103%;
+  bottom: 0px;
+  background-color: #304a6e;
+  z-index: 1;
+  padding: 0;
+  border-radius: 8px;
+}
+
+/* Botones dentro de la caja de opciones */
+.editar,
+.clonar,
+.eliminar {
+  display: flex;
+  background-color: #304a6e;
+  font-family: 'Gabarito';
+  color: #eef0f4;
+  cursor: pointer;
+  border: none;
+  width: max-content;
+  padding: 5px;
+  margin: 10px;
+  font-size: 24px;
+  align-items: center;
+}
+
+/*.opciones button {
   font-family: Open-Sans;
   width: max-content;
   padding: 0;
   margin: 10px;
   align-items: center;
-}
+}*/
 
 button img {
   margin-right: 10px;
@@ -174,4 +187,46 @@ button:hover {
 #crearPresentacion:hover,
 #btn-crearPresentacion:hover {
   background-color: #223650;
+}
+
+/*Dialog*/
+dialog {
+  background-color: #858585;
+  border-radius: 10px;
+  position: fixed;
+  bottom: 50%;
+  left: 0%;
+  z-index: 9999;
+}
+
+#btn-aceptar,
+#btn-cancelar {
+  background-color: #304a6e;
+  font-size: 17px;
+  padding: 10px 20px;
+  color: #eef0f4;
+  border: none;
+  margin-right: 20px;
+  float: right;
+}
+
+#btn-aceptar:hover,
+#btn-cancelar:hover {
+  background-color: #223650;
+  cursor: pointer;
+}
+
+#btn-aceptar-exito {
+  background-color: #304a6e;
+  font-size: 17px;
+  padding: 10px 20px;
+  color: #eef0f4;
+  border: none;
+  margin-right: 20px;
+  float: right;
+}
+
+#btn-aceptar-exito:hover {
+  background-color: #223650;
+  cursor: pointer;
 }

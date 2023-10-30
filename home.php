@@ -20,6 +20,8 @@
             <p id="añadir">AÑADIR</p>
         </div>
         <?php
+        session_start();
+
         // Punto de entrada principal
         define('VALID_ENTRY_POINT', true);
 
@@ -58,16 +60,56 @@
                         <button class="editar clickable"><img src="icons/editar.svg" alt="Editar">Editar</button>
                     </form>
                     <button class="clonar clickable"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>
-                    <form action="php/eliminar/eliminar.php" method="POST" onsubmit="return confirmarEliminacion()">
-                        <input type="hidden" name="presentation_id" value="<?= $row['id'] ?>">
-                        <button type="submit clickable" class="eliminar"><img src="icons/eliminar.svg"
-                                alt="Eliminar">Eliminar</button>
+                    <form action="php/eliminar/eliminar.php" method="POST" onclick="mostrarConfirmacionEliminar(event, this)">
+                        <input type="hidden" name="id_presentacion" value="<?= $row['id'] ?>">
+                        <button type="submit" class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>
                     </form>
                 </div>
             </div>
         <?php endwhile; ?>
     </div>
+
+    <!--Mensaje para confirmar la eliminación de una presentación-->
+    <dialog id="confirmarEliminar">
+        <p>¿Estás seguro de que deseas eliminar esta presentación?</p>
+        <form method="dialog">
+            <button id="btn-aceptar">Aceptar</button>
+            <button id="btn-cancelar">Cancelar</button>
+        </form>
+    </dialog>
+
+    <dialog id="exito_eliminar">
+        <p>La presentación se ha eliminado correctamente</p>
+        <form method="dialog">
+            <button id="btn-aceptar-exito">Aceptar</button>
+        </form>
+    </dialog>
+
     <script src="js/home.js"></script>
+
+    <script>
+        mostrarExitoEliminar();
+        // Función para mostrar el diálogo de éxito al eliminar
+        function mostrarExitoEliminar() {
+            const exitoEliminarDialog = document.getElementById("exito_eliminar");
+            <?php
+            if (isset($_SESSION['eliminacion_exitosa']) && $_SESSION['eliminacion_exitosa'] === true) {
+                echo 'exitoEliminarDialog.style.display = "block";';
+                // Elimina la variable de sesión para evitar que se muestre nuevamente al recargar la página.
+                unset($_SESSION['eliminacion_exitosa']);
+            }
+            ?>
+
+            // Agrega un event listener al botón "Aceptar" en el diálogo de éxito
+            const btnExitoAceptar = document.getElementById("btn-aceptar-exito");
+            btnExitoAceptar.addEventListener("click", function () {
+                // Oculta el diálogo de éxito
+                exitoEliminarDialog.style.display = "none";
+
+            });
+        }
+    </script>
+
 </body>
 
 </html>
