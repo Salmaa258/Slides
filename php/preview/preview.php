@@ -32,7 +32,7 @@
         WHERE p.id = ?;";
     $queryDataDiapositivaActual
 
-    $data_presentacion = $data_presentacion->fetch(PDO::FETCH_ASSOC);
+    // $data_presentacion = $data_presentacion->fetch(PDO::FETCH_ASSOC);
 
     $diapositiva_actual = $data_presentacion['id'];
     $tipo_diapositiva_actual = $data_presentacion['tipo'];
