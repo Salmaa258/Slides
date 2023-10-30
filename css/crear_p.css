@@ -14,8 +14,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.6% 18.1%;
+  padding: 1.1% 10.9%;
   gap: 30px;
+  overflow-x: hidden;
 }
 
 .material-symbols-outlined {
@@ -29,7 +30,6 @@ body {
   font-family: Gabarito;
   font-size: 32px;
   width: max-content;
-  border-radius: 8px;
   border: solid 2px transparent;
   margin: 0;
 }
@@ -43,7 +43,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 7px;
-  width: 90%;
+  width: 100%;
   color: #eef0f4;
   min-width: min-content;
   transform: scale(1);
@@ -83,6 +83,7 @@ body {
 
 .input {
   width: 100%;
+  border-radius: 8px;
   margin: 5px 0;
 }
 
@@ -90,7 +91,6 @@ input[name='p_descripcion'] {
   height: 30px;
   font-family: Open-Sans;
   font-size: 16px;
-  border-radius: 8px;
   padding-left: 3%;
   border-color: transparent;
 }
@@ -107,6 +107,21 @@ input[name='p_descripcion']:focus {
 }
 
 #nova-diapositiva-button {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
+}
+
+#tema-seleccion{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+#tema-button {
   display: flex;
   width: 28px;
   height: 28px;
@@ -138,7 +153,6 @@ a {
   width: max-content;
   height: max-content;
   font-size: 16px;
-  border-radius: 8px;
   background: #eef0f4;
 }
 
@@ -153,9 +167,8 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
   border: 2px solid #eef0f4;
-  width: 92%;
+  width: 83%;
   min-width: 615px;
   box-sizing: border-box;
   padding: 4%;
@@ -172,7 +185,6 @@ a {
   background: none;
   color: white;
   outline: none;
-  border-radius: 5px;
   border: solid 2px white;
   height: 15%;
 }
@@ -184,7 +196,6 @@ a {
   font-size: 20px;
   padding: 10px;
   border: 2px solid #ccc;
-  border-radius: 5px;
   outline: none;
   box-sizing: border-box;
   background: none;
