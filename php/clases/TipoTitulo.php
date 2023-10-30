@@ -15,7 +15,7 @@ class TipoTitulo extends Diapositiva
         return $this->titulo;
     }
 
-    public function exists($conn, $id_presentacion): bool
+    public function existsDiapositiva($conn, $id_presentacion): bool
     {
         $id_diapositiva = $this->getId();
         $stmt = $conn->prepare("SELECT * FROM tipoTitulo WHERE presentacion_id = ? AND diapositiva_id = ?");
