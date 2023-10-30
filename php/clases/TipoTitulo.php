@@ -85,7 +85,7 @@ class TipoTitulo extends Diapositiva
     {
         return '<div class="d-container">
         <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
-          placeholder="Haz click para añadir un título..." />
+          name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
       </div>';
     }
 }

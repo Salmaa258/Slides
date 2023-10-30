@@ -17,8 +17,10 @@ $conn = $db->getConnection();
 if (!empty($_POST['presentacion_id'])) {
     $presentacionBD = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
 
-    foreach ($diapositivas as $value) {
-        # code...
+    foreach ($presentacionBD->getDiapositivas() as $diapositiva) {
+        if (isset($_POST[''])) {
+            # code...
+        }
     }
     
 } else {

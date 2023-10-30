@@ -108,7 +108,7 @@ class TipoContenido extends Diapositiva
         <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
           placeholder="Haz click para añadir un título..." />
         <textarea class="focus" form="data_p" autocomplete="off"
-          placeholder="Haz click para añadir un texto">' . $this->getContenido() . '</textarea>
+        name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un texto">' . $this->getContenido() . '</textarea>
       </div>';
     }
 }
