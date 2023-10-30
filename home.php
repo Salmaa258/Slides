@@ -40,21 +40,28 @@
 
 
         // Generar dinámicamente los divs con class="caja"
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) : ?>
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
             <div class="caja">
-                <p><?= htmlspecialchars($row['titulo']) ?></p>
+                <p>
+                    <?= htmlspecialchars($row['titulo']) ?>
+                </p>
                 <input type="hidden" name="id_presentacion" form="previewForm_<?= $row['id'] ?>" value="<?= $row['id'] ?>">
-                <form hidden id="previewForm_<?= $row['id'] ?>" action="php/preview/preview.php" method="POST" hidden></form>
+                <form hidden id="previewForm_<?= $row['id'] ?>" action="php/preview/preview.php" method="POST" hidden>
+                </form>
                 <div class="imagen-overlay" onclick="document.forms['previewForm_<?= $row['id'] ?>'].submit();">
                     <img src="../icons/ver.png" alt="">
                 </div>
                 <button class="opciones-btn clickable">+</button>
                 <div class="opciones clickable" id="opciones<?= $row['id'] ?>">
-                    <button class="editar clickable"><img src="icons/editar.svg" alt="Editar">Editar</button>
+                    <form action="php/editar/editar.php" method="POST">
+                        <input type="hidden" name="presentacion_id" value="<?= $row['id'] ?>">
+                        <button class="editar clickable"><img src="icons/editar.svg" alt="Editar">Editar</button>
+                    </form>
                     <button class="clonar clickable"><img src="icons/clonar.svg" alt="Clonar">Clonar</button>
                     <form action="php/eliminar/eliminar.php" method="POST" onsubmit="return confirmarEliminacion()">
                         <input type="hidden" name="presentation_id" value="<?= $row['id'] ?>">
-                        <button type="submit clickable" class="eliminar"><img src="icons/eliminar.svg" alt="Eliminar">Eliminar</button>
+                        <button type="submit clickable" class="eliminar"><img src="icons/eliminar.svg"
+                                alt="Eliminar">Eliminar</button>
                     </form>
                 </div>
             </div>
