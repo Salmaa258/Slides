@@ -35,6 +35,33 @@ class Presentacion
         return $this->diapositivas;
     }
 
+    public static function getDiapositivasBD(PDO $conn, int $id_presentacion): array
+    {
+        $stmt = $conn->prepare(
+            "SELECT dt.id as diapositiva_id, COALESCE(tt.titulo, tc.titulo) AS titulo, tc.contenido
+            FROM presentacion p 
+                LEFT JOIN diapositiva dt ON p.id = dt.presentacion_id
+                LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
+                LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
+            WHERE p.id = ?
+            ORDER BY dt.id;"
+        );
+        $stmt->bindParam(1, $id_presentacion);
+        $stmt->execute();
+
+        $diapositivas = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($row['contenido'] === null) {
+                array_push($diapositivas, new TipoTitulo($row['diapositiva_id'], $row['titulo']));
+            } else {
+                array_push($diapositivas, new TipoContenido($row['diapositiva_id'], $row['titulo'], $row['contenido']));
+            }
+        }
+
+        return $diapositivas;
+    }
+
     public function setId(int $id)
     {
         $this->id = $id;
@@ -76,10 +103,44 @@ class Presentacion
         $stmt->bindParam(2, $this->descripcion);
         $stmt->execute();
 
+        $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
+        $stmt->bindParam(1, $this->titulo);
+        $stmt->bindParam(2, $this->descripcion);
+        $stmt->execute();
+
         $id_presentacion = $conn->lastInsertId();
 
         foreach ($this->diapositivas as $index => $diapositiva) {
             $diapositiva->nuevaDiapositivaBD($conn, $id_presentacion);
+        }
+    }
+
+    public function actualizaPresentacion(PDO $conn)
+    {
+        $id_presentacion = $this->getId();
+
+        $stmt = $conn->prepare("SELECT FROM presentacion(titulo, descripcion) VALUES (?)");
+        $stmt->bindParam(1, $id_presentacion);
+        $stmt->execute();
+
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($row['titulo'] !== $this->getTitulo()) {
+            $this->setTitulo($row['titulo']);
+        }
+
+        if ($row['descripcion'] !== $this->getTitulo()) {
+            $this->setTitulo($row['titulo']);
+        }
+
+        $diapositivas = $this->diapositivas;
+
+        foreach ($diapositivas as $index => $diapositiva) {
+            if ($diapositiva->exists()) {
+                $diapositiva->actualizaDiapositiva($conn, $id_presentacion);
+            } else {
+                $diapositiva->nuevaDiapositiva($conn, $id_presentacion);
+            }
         }
     }
 
@@ -107,26 +168,7 @@ class Presentacion
 
         $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], []);
 
-        $stmt = $conn->prepare(
-            "SELECT dt.id as diapositiva_id, COALESCE(tt.titulo, tc.titulo) AS titulo, tc.contenido
-            FROM presentacion p 
-                LEFT JOIN diapositiva dt ON p.id = dt.presentacion_id
-                LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
-                LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
-            WHERE p.id = ?;"
-        );
-        $stmt->bindParam(1, $id_presentacion);
-        $stmt->execute();
-
-        $diapositivas = [];
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if ($row['contenido'] === null) {
-                $diapositivas[$row["diapositiva_id"]] = new TipoTitulo($row['diapositiva_id'], $row['titulo']);
-            } else {
-                $diapositivas[$row["diapositiva_id"]] = new TipoContenido($row['diapositiva_id'], $row['titulo'], $row['contenido']);
-            }
-        }
+        $diapositivas = Presentacion::getDiapositivasBD($conn, $id_presentacion);
         $presentacion->setDiapositivas($diapositivas);
         return $presentacion;
     }

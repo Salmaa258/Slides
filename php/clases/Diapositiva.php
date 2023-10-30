@@ -9,7 +9,7 @@ abstract class Diapositiva extends Presentacion
         $this->id = $id;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
