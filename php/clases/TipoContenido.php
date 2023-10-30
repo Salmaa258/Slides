@@ -35,7 +35,7 @@ class TipoContenido extends Diapositiva
         return empty($result);
     }
 
-    public function nuevaDiapositiva(PDO $conn, int $id_presentacion)
+    public function nuevaDiapositiva(PDO $conn, int $id_presentacion): void
     {
         $stmt = $conn->prepare("INSERT INTO diapositiva(presentacion_id) VALUES (?)");
         $stmt->bindParam(1, $id_presentacion);
@@ -51,7 +51,7 @@ class TipoContenido extends Diapositiva
         $stmt->execute();
     }
 
-    public function actualizaDiapositiva(PDO $conn, int $id_presentacion)
+    public function actualizaDiapositiva(PDO $conn, int $id_presentacion): void
     {
         $id_diapositiva = $this->getId();
 
@@ -85,7 +85,7 @@ class TipoContenido extends Diapositiva
         }
     }
 
-    public static function nuevaDiapositivaBD(PDO $conn, int $id_presentacion, string $titulo, string $contenido)
+    public static function nuevaDiapositivaBD(PDO $conn, int $id_presentacion, string $titulo, string $contenido): void
     {
         $stmt = $conn->prepare("INSERT INTO diapositiva(presentacion_id) VALUES (?)");
         $stmt->bindParam(1, $id_presentacion);

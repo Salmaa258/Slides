@@ -15,22 +15,22 @@ class Presentacion
         $this->diapositivas = $diapositivas;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTitulo()
+    public function getTitulo(): string
     {
         return $this->titulo;
     }
 
-    public function getDescripcion()
+    public function getDescripcion(): string
     {
         return $this->descripcion;
     }
 
-    public function getDiapositivas()
+    public function getDiapositivas(): array
     {
         return $this->diapositivas;
     }
@@ -62,32 +62,32 @@ class Presentacion
         return $diapositivas;
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    public function setTitulo(string $titulo)
+    public function setTitulo(string $titulo): void
     {
         $this->titulo = $titulo;
     }
 
-    public function setDescripcion(string $descripcion)
+    public function setDescripcion(string $descripcion): void
     {
         $this->descripcion = $descripcion;
     }
 
-    public function setDiapositivas(array $diapositivas)
+    public function setDiapositivas(array $diapositivas): void
     {
         $this->diapositivas = $diapositivas;
     }
 
-    public function añadirDiapositiva(Diapositiva $diapositiva)
+    public function añadirDiapositiva(Diapositiva $diapositiva): void
     {
         array_push($this->diapositivas, $diapositiva);
     }
 
-    public function eliminarDiapositiva(int $id_diapositiva)
+    public function eliminarDiapositiva(int $id_diapositiva): void
     {
         foreach ($this->diapositivas as $key => $diapositiva) {
             if ($diapositiva->getId() === $id_diapositiva) {
@@ -96,7 +96,7 @@ class Presentacion
         }
     }
 
-    public function nuevaPresentacion(PDO $conn)
+    public function nuevaPresentacion(PDO $conn): void
     {
         $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
         $stmt->bindParam(1, $this->titulo);
@@ -115,7 +115,7 @@ class Presentacion
         }
     }
 
-    public function actualizaPresentacion(PDO $conn)
+    public function actualizaPresentacion(PDO $conn): void
     {
         $id_presentacion = $this->getId();
 
@@ -144,7 +144,7 @@ class Presentacion
         }
     }
 
-    public static function nuevaPresentacionBD(PDO $conn, string $titulo, string $descripcion, array $diapositivas)
+    public static function nuevaPresentacionBD(PDO $conn, string $titulo, string $descripcion, array $diapositivas): void
     {
         $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
         $stmt->bindParam(1, $titulo);
@@ -173,7 +173,7 @@ class Presentacion
         return $presentacion;
     }
 
-    public static function eliminarPresentacionBD(PDO $conn, int $id)
+    public static function eliminarPresentacionBD(PDO $conn, int $id): string
     {
         try {
             $conn->beginTransaction();

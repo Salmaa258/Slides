@@ -23,7 +23,8 @@ abstract class Diapositiva extends Presentacion
 
     // abstract public static function nuevaDiapositivaBD(PDO $conn, int $id_presentacion);
 
-    public static function eliminarDipositivaBD(PDO $conn, int $id_presentacion, int $id_diapositiva) {
+    public static function eliminarDipositivaBD(PDO $conn, int $id_presentacion, int $id_diapositiva): string
+    {
         try {
             $conn->beginTransaction();
 
