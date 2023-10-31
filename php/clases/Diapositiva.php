@@ -19,9 +19,9 @@ abstract class Diapositiva extends Presentacion
         $this->id = $id;
     }
 
-    // abstract public function nuevaDiapositiva(PDO $conn, int $id_presentacion);
+    abstract public function nuevaDiapositiva(PDO $conn, int $id_presentacion);
 
-    // abstract public static function nuevaDiapositivaBD(PDO $conn, int $id_presentacion);
+    abstract public static function existsDiapositiva(PDO $conn, int $id_presentacion, int $id_diapositiva);
 
     public static function eliminarDipositivaBD(PDO $conn, int $id_presentacion, int $id_diapositiva): string
     {
@@ -30,8 +30,8 @@ abstract class Diapositiva extends Presentacion
 
             $query = "DELETE FROM diapositiva WHERE id = ? AND presentacion_id = ?";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(1, $id_presentacion);
             $stmt->bindParam(2, $id_diapositiva);
+            $stmt->bindParam(1, $id_presentacion);
             $stmt->execute();
 
             $conn->commit();

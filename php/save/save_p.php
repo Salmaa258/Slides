@@ -14,27 +14,45 @@ require_once ROOT_PATH . 'php/clases/TipoContenido.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-if (!isset($_POST['presentacion_id'])) {
+if (isset($_POST['presentacion_id'])) {
     $presentacionBD = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
     $id_presentacion = $presentacionBD->getId();
 
+    $presentacionBD->setTitulo($_POST['p_titulo']);
+    $presentacionBD->setDescripcion($_POST['p_descripcion']);
+
+    $presentacionBD->actualizarInfo($conn);
+
+    $lastDiapositivaId = $presentacionBD->getLastDiapositivaId($conn);
+
     foreach ($presentacionBD->getDiapositivas() as $diapositiva) {
-        if ($diapositiva->existsDiapositiva($conn, $id_presentacion, $diapositiva->getId())) {
-            $titulo = $_POST['d_titulo_' . $diapositiva->getId() . ''];
-            $contenido = $_POST['d_contenido_' . $diapositiva->getId() . ''];
+        $toUpdate = false;
+        if (isset($_POST['d_contenido_' . $diapositiva->getId() . ''])) {
+            $diapositiva->setContenido($_POST['d_contenido_' . $diapositiva->getId() . '']);
+        }
 
-            if (isset($contenido)) {
-                $diapositiva->setTitulo($diapositiva->getContenido() !== $contenido ? $contenido : $diapositiva->getContenido());
-            }
-
-            if (isset($titulo)) {
-                $diapositiva->setDiapositiva($diapositiva->getTitulo() !== $titulo ? $titulo : $diapositiva->getTitulo());
-            }
+        if (isset($_POST['d_titulo_' . $diapositiva->getId() . ''])) {
+            $diapositiva->setTitulo($_POST['d_titulo_' . $diapositiva->getId() . '']);
 
             $diapositiva->actualizaDiapositiva($conn, $id_presentacion);
+        } else {
+            $diapositiva->eliminarDiapositivaBD($conn, $id_presentacion, $diapositiva->getId());
         }
     }
 
+    while (isset($_POST['d_titulo_' . $lastDiapositivaId])) {
+        if (isset($_POST['d_contenido_' . $diapositiva->getId() . ''])) {
+            $contenido = $_POST['d_contenido_' . $lastDiapositivaId];
+            $newDiapositiva = new TipoContenido(null, '', $contenido);
+        } else {
+            $newDiapositiva = new TipoTitulo(null, '');
+        }
+
+        $titulo = $_POST['d_titulo_' . $lastDiapositivaId];
+        $newDiapositiva->setTitulo($titulo);
+
+        $newDiapositiva->nuevaDiapositiva($conn, $id_presentacion);
+    }
 } else {
     $titulo = isset($_POST['p_titulo']) ? trim($_POST['p_titulo']) : '';
     $descripcion = isset($_POST['p_descripcion']) ? trim($_POST['p_descripcion']) : '';
@@ -67,7 +85,7 @@ if (!isset($_POST['presentacion_id'])) {
         $count_diapositiva++;
     }
 
-    Presentacion::nuevaPresentacionBD($conn, $titulo, $descripcion, $diapositivas);
+    $newPresentacion = new Presentacion(null, $titulo, $descripcion, $diapositivas);
 
 }
 

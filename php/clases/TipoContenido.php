@@ -5,7 +5,7 @@ class TipoContenido extends Diapositiva
     private string $titulo;
     private string $contenido;
 
-    public function __construct(int $id_diapositiva, string $titulo, string $contenido)
+    public function __construct(int | null $id_diapositiva, string $titulo, string $contenido)
     {
         parent::__construct($id_diapositiva);
         $this->titulo = $titulo;
@@ -22,17 +22,12 @@ class TipoContenido extends Diapositiva
         return $this->contenido;
     }
 
-    public function existsDiapositiva(PDO $conn, int $id_presentacion): bool
-    {
-        $id_diapositiva = $this->getId();
-        $stmt = $conn->prepare("SELECT FROM tipoContenido WHERE presentacion_id = ? AND diapositiva_id = ?");
-        $stmt->bindParam(1, $id_presentacion);
-        $stmt->bindParam(2, $id_diapositiva);
-        $stmt->execute();
+    public function setTitulo(string $titulo): void {
+        $this->titulo = $titulo;
+    }
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return empty($result);
+    public function setContenido(string $contenido): void {
+        $this->contenido = $contenido;
     }
 
     public function nuevaDiapositiva(PDO $conn, int $id_presentacion): void
@@ -42,6 +37,7 @@ class TipoContenido extends Diapositiva
         $stmt->execute();
 
         $id_diapositiva = $conn->lastInsertId();
+        $this->setId($id_diapositiva);
 
         $stmt = $conn->prepare("INSERT INTO tipoContenido(diapositiva_id, presentacion_id, titulo, contenido) VALUES (?, ?, ?, ?)");
         $stmt->bindParam(1, $id_diapositiva);
@@ -55,7 +51,7 @@ class TipoContenido extends Diapositiva
     {
         $id_diapositiva = $this->getId();
 
-        $stmt = $conn->prepare("SELECT FROM tipoContenido(titulo, contenido) WHERE presentacion_id = ? AND diapositiva_id = ?");
+        $stmt = $conn->prepare("SELECT titulo, contenido FROM tipoContenido(titulo, contenido) WHERE presentacion_id = ? AND diapositiva_id = ?;");
         $stmt->bindParam(1, $id_presentacion);
         $stmt->bindParam(2, $id_diapositiva);
         $stmt->execute();
@@ -65,7 +61,7 @@ class TipoContenido extends Diapositiva
         if ($row['titulo'] !== $this->getTitulo()) {
             $newTitulo = $this->getTitulo();
 
-            $stmt = $conn->prepare("UPDATE tipoTitulo SET titulo = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
+            $stmt = $conn->prepare("UPDATE tipoTitulo SET titulo = ? WHERE presentacion_id = ? AND diapositiva_id = ?;");
 
             $stmt->bindParam(1, $newTitulo);
             $stmt->bindParam(1, $id_presentacion);
@@ -76,29 +72,13 @@ class TipoContenido extends Diapositiva
         if ($row['contenido'] !== $this->getContenido()) {
             $newTitulo = $this->getContenido();
 
-            $stmt = $conn->prepare("UPDATE tipoContenido SET contenido = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
+            $stmt = $conn->prepare("UPDATE tipoContenido SET contenido = ? WHERE presentacion_id = ? AND diapositiva_id = ?;");
 
             $stmt->bindParam(1, $newTitulo);
             $stmt->bindParam(1, $id_presentacion);
             $stmt->bindParam(2, $id_diapositiva);
             $stmt->execute();
         }
-    }
-
-    public static function nuevaDiapositivaBD(PDO $conn, int $id_presentacion, string $titulo, string $contenido): void
-    {
-        $stmt = $conn->prepare("INSERT INTO diapositiva(presentacion_id) VALUES (?)");
-        $stmt->bindParam(1, $id_presentacion);
-        $stmt->execute();
-
-        $id_diapositiva = $conn->lastInsertId();
-
-        $stmt = $conn->prepare("INSERT INTO tipoTitulo(diapositiva_id, presentacion_id, titulo, contenido) VALUES (?, ?, ?, ?)");
-        $stmt->bindParam(1, $id_diapositiva);
-        $stmt->bindParam(2, $id_presentacion);
-        $stmt->bindParam(3, $titulo);
-        $stmt->bindParam(4, $contenido);
-        $stmt->execute();
     }
 
     public function getDiapositivaHTML(): string
@@ -110,5 +90,17 @@ class TipoContenido extends Diapositiva
         <textarea class="focus" form="data_p" autocomplete="off"
         name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un texto">' . $this->getContenido() . '</textarea>
       </div>';
+    }
+
+    public static function existsDiapositiva(PDO $conn, int $id_presentacion, int $id_diapositiva): bool
+    {
+        $stmt = $conn->prepare("SELECT * FROM tipoContenido WHERE presentacion_id = ? AND diapositiva_id = ?");
+        $stmt->bindParam(1, $id_presentacion);
+        $stmt->bindParam(2, $id_diapositiva);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return empty($result);
     }
 }

@@ -25,7 +25,7 @@ $conn = $db->getConnection();
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../css/editar.css" />
+    <link rel="stylesheet" href="../../css/crear_p.css" />
     <title>Nueva Presentación</title>
 </head>
 
@@ -41,15 +41,15 @@ $conn = $db->getConnection();
                 <div id="icon-presentaciones">
                     <img src="../../icons/presentacio.svg" alt="Icono Presentación" />
                 </div>
-                <form method="POST" id="data_p" action="editar.controller.php">
+                <form method="POST" id="data_p" action="../save/save_p.php">
                     <input type="text" class="input focus" name="p_descripcion"
                         value="<?= Presentacion::getTituloBD($conn, $_POST['presentacion_id']) ?>"
                         placeholder="Escribe una descripción..." autocomplete="off" />
                 </form>
             </div>
             <div id="nova-diapositiva">
-                <div class="dropdown" onclick="showDropdown()">
-                    <button id="nova-diapositiva-button" class="button">
+                <div class="dropdown">
+                    <button id="nova-diapositiva-button" class="button" onclick="showDropdown()">
                         <img id="nueva-diapositiva" src="../../icons/add.svg" />
                     </button>
                     <div class="dropdown-content">
@@ -58,6 +58,18 @@ $conn = $db->getConnection();
                     </div>
                 </div>
                 <span>Añadir diapositiva</span>
+            </div>
+            <div id="tema-seleccion">
+                <div class="dropdown" onclick="showDropdown(event)">
+                    <button id="tema-button" class="button">
+                        <img id="icono-tema" src="../../icons/white_black_box.svg" />
+                    </button>
+                    <div class="dropdown-content">
+                        <span onclick="setTemaClaro()"><img id="icono-tema" src="../../icons/white.svg" />Claro</span>
+                        <span onclick="setTemaOscuro()"><img id="icono-tema" src="../../icons/black.svg" />Oscuro</span>
+                    </div>
+                </div>
+                <span>Seleccionar Tema</span>
             </div>
             <div class="actionButtons">
                 <a href="../../home.php">

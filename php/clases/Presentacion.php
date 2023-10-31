@@ -7,7 +7,7 @@ class Presentacion
     private string $descripcion;
     private array $diapositivas;
 
-    public function __construct(int $id, string $titulo, string $descripcion, array $diapositivas)
+    public function __construct(?int $id, string $titulo, string $descripcion, array $diapositivas)
     {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -98,6 +98,35 @@ class Presentacion
         $this->descripcion = $descripcion;
     }
 
+    public function actualizarInfo(PDO $conn): void
+    {
+        $id_presentacion = $this->getId();
+
+        $stmt = $conn->prepare("SELECT titulo, descripcion FROM presentacion WHERE id = ?");
+        $stmt->bindParam(1, $id_presentacion);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($this->getTitulo() !== $row['titulo']) {
+            $newTitulo = $this->getTitulo();
+
+            $stmt = $conn->prepare("UPDATE presentacion SET titulo = ? WHERE id = ?");
+            $stmt->bindParam(1, $newTitulo);
+            $stmt->bindParam(2, $id_presentacion);
+            $stmt->execute();
+        }
+
+        if ($this->getDescripcion() !== $row['descripcion']) {
+            $newDescripcion = $this->getDescripcion();
+
+            $stmt = $conn->prepare("UPDATE presentacion SET descripcion = ? WHERE id = ?");
+            $stmt->bindParam(1, $newDescripcion);
+            $stmt->bindParam(2, $id_presentacion);
+            $stmt->execute();
+        }
+    }
+
     public function setDiapositivas(array $diapositivas): void
     {
         $this->diapositivas = $diapositivas;
@@ -119,13 +148,25 @@ class Presentacion
 
     public static function exists(PDO $conn, int $id): bool
     {
-        $stmt = $conn->prepare("SELECT * FROM presentacion WHERE presentacion_id = ?");
+        $stmt = $conn->prepare("SELECT id FROM presentacion WHERE id = ?");
         $stmt->bindParam(1, $id);
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return empty($result);
+    }
+
+    public function getLastDiapositivaId($conn): int
+    {
+        $stmt = $conn->prepare("SELECT id FROM diapositiva WHERE presentacion_id = ? ORDER BY id DESC");
+        $stmt->bindParam(1, $this->getId());
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        
+        return $result['id'];
     }
 
     public function nuevaPresentacion(PDO $conn): void
@@ -135,10 +176,10 @@ class Presentacion
         $stmt->bindParam(2, $this->descripcion);
         $stmt->execute();
 
-        $id_presentacion = $conn->lastInsertId();
+        $this->id = $conn->lastInsertId();
 
         foreach ($this->diapositivas as $index => $diapositiva) {
-            $diapositiva->nuevaDiapositivaBD($conn, $id_presentacion);
+            $diapositiva->nuevaDiapositivaBD($conn, $this->id);
         }
     }
 
@@ -168,20 +209,6 @@ class Presentacion
             } else {
                 $diapositiva->nuevaDiapositiva($conn, $id_presentacion);
             }
-        }
-    }
-
-    public static function nuevaPresentacionBD(PDO $conn, string $titulo, string $descripcion, array $diapositivas): void
-    {
-        $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
-        $stmt->bindParam(1, $titulo);
-        $stmt->bindParam(2, $descripcion);
-        $stmt->execute();
-
-        $id_presentacion = $conn->lastInsertId();
-
-        foreach ($diapositivas as $index => $diapositiva) {
-            $diapositiva->nuevaDiapositiva($conn, $id_presentacion);
         }
     }
 
