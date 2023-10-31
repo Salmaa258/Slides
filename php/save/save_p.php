@@ -14,15 +14,27 @@ require_once ROOT_PATH . 'php/clases/TipoContenido.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 
-if (!empty($_POST['presentacion_id'])) {
+if (!isset($_POST['presentacion_id'])) {
     $presentacionBD = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
+    $id_presentacion = $presentacionBD->getId();
 
     foreach ($presentacionBD->getDiapositivas() as $diapositiva) {
-        if (isset($_POST['d_contenido'. $diapositiva-> .''])) {
-            # code...
+        if ($diapositiva->existsDiapositiva($conn, $id_presentacion, $diapositiva->getId())) {
+            $titulo = $_POST['d_titulo_' . $diapositiva->getId() . ''];
+            $contenido = $_POST['d_contenido_' . $diapositiva->getId() . ''];
+
+            if (isset($contenido)) {
+                $diapositiva->setTitulo($diapositiva->getContenido() !== $contenido ? $contenido : $diapositiva->getContenido());
+            }
+
+            if (isset($titulo)) {
+                $diapositiva->setDiapositiva($diapositiva->getTitulo() !== $titulo ? $titulo : $diapositiva->getTitulo());
+            }
+
+            $diapositiva->actualizaDiapositiva($conn, $id_presentacion);
         }
     }
-    
+
 } else {
     $titulo = isset($_POST['p_titulo']) ? trim($_POST['p_titulo']) : '';
     $descripcion = isset($_POST['p_descripcion']) ? trim($_POST['p_descripcion']) : '';

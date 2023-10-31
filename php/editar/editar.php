@@ -91,6 +91,7 @@ $conn = $db->getConnection();
         foreach ($diapositivas as $diapositiva) {
             echo $diapositiva->getDiapositivaHTML();
         }
+
         ?>
     </div>
     <script src="../../js/crear_p.js"></script>

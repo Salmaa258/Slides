@@ -22,7 +22,7 @@ class TipoContenido extends Diapositiva
         return $this->contenido;
     }
 
-    public function existsDiapositiva($conn, $id_presentacion): bool
+    public function existsDiapositiva(PDO $conn, int $id_presentacion): bool
     {
         $id_diapositiva = $this->getId();
         $stmt = $conn->prepare("SELECT FROM tipoContenido WHERE presentacion_id = ? AND diapositiva_id = ?");
