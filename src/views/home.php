@@ -12,7 +12,7 @@
     <h2>Presentaciones</h2>
     <div id="global">
         <div id="añadirPresentacion">
-            <a href="editar.php">
+            <a href="editor.php">
                 <div class="caja_añadir">
                     <img src="../assets/icons/crear.svg" alt="Crear">
                 </div>
@@ -52,7 +52,7 @@
                 </div>
                 <button class="opciones-btn clickable">+</button>
                 <div class="opciones clickable" id="opciones<?= $row['id'] ?>">
-                    <form action="editar.php" method="GET">
+                    <form action="editor.php" method="GET">
                         <input type="hidden" name="presentacion_id" value="<?= $row['id'] ?>">
                         <button class="editar clickable"><img src="../assets/icons/editar.svg" alt="Editar">Editar</button>
                     </form>

@@ -25,7 +25,7 @@ $conn = $db->getConnection();
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../assets/css/crear_p.css" />
+    <link rel="stylesheet" href="../assets/css/editor.css" />
     <title>Editor de Presentaciones</title>
 </head>
 
@@ -72,21 +72,21 @@ if (isset($_GET['presentacion_id'])) {
                         <img id="nueva-diapositiva" src="../assets/icons/add.svg" />
                     </button>
                     <div class="dropdown-content">
-                        <span onclick="newDiapositivaTitulo()">Título</span>
-                        <span onclick="newDiapositivaTituloTexto()">Título + Texto</span>
+                        <span onclick="newTipoTitulo()">Título</span>
+                        <span onclick="newTipoContenido()">Título + Texto</span>
                     </div>
                 </div>
                 <span>Añadir diapositiva</span>
             </div>
             <div id="tema-seleccion">
-                <div class="dropdown" onclick="showDropdown(event)">
-                    <button id="tema-button" class="button">
+                <div class="dropdown">
+                    <button id="tema-button" class="button" onclick="showDropdown(event)">
                         <img id="icono-tema" src="../assets/icons/white_black_box.svg" />
                     </button>
                     <div class="dropdown-content">
-                        <span onclick="setTemaClaro()"><img id="icono-tema"
+                        <span onclick="setClaro()"><img id="icono-tema"
                                 src="../assets/icons/white.svg" />Claro</span>
-                        <span onclick="setTemaOscuro()"><img id="icono-tema"
+                        <span onclick="setOscuro()"><img id="icono-tema"
                                 src="../assets/icons/black.svg" />Oscuro</span>
                     </div>
                 </div>
@@ -101,7 +101,7 @@ if (isset($_GET['presentacion_id'])) {
         </div>
     </div>
 
-    <div id="diapositivas" lastDiapositivaId="<?= $lastDiapositivaId ?>">
+    <div id="diapositivas" tema="oscuro" lastDiapositivaId="<?= $lastDiapositivaId ?>">
         <template id="d_titulo_template">
             <div class="d-container">
                 <input class="focus" type="text" form="data_p" autocomplete="off"
