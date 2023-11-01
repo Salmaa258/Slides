@@ -93,16 +93,4 @@ class TipoContenido extends Diapositiva
         name="d_contenido_' . $this->getId() . '" placeholder="Haz click para añadir un texto">' . $this->getContenido() . '</textarea>
       </div>';
     }
-
-    public static function existsDiapositiva(PDO $conn, int $id_presentacion, int $id_diapositiva): bool
-    {
-        $stmt = $conn->prepare("SELECT diapositiva_id FROM tipoContenido WHERE presentacion_id = ? AND diapositiva_id = ?");
-        $stmt->bindParam(1, $id_presentacion);
-        $stmt->bindParam(2, $id_diapositiva);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return empty($result);
-    }
 }

@@ -35,7 +35,7 @@ if (isset($_POST['presentacion_id'])) {
 
             $diapositiva->actualizaDiapositiva($conn, $id_presentacion);
         } else {
-            $diapositiva->eliminarDiapositivaBD($conn, $id_presentacion, $diapositiva->getId());
+            $diapositiva->eliminarDiapositiva($conn, $id_presentacion);
         }
     }
 

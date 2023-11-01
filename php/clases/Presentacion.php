@@ -137,26 +137,6 @@ class Presentacion
         array_push($this->diapositivas, $diapositiva);
     }
 
-    public function eliminarDiapositiva(int $id_diapositiva): void
-    {
-        foreach ($this->diapositivas as $key => $diapositiva) {
-            if ($diapositiva->getId() === $id_diapositiva) {
-                unset($this->diapositivas[$key]);
-            }
-        }
-    }
-
-    public static function exists(PDO $conn, int $id): bool
-    {
-        $stmt = $conn->prepare("SELECT id FROM presentacion WHERE id = ?");
-        $stmt->bindParam(1, $id);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return empty($result);
-    }
-
     public function getLastDiapositivaId($conn): int
     {
         $id_presentacion = $this->getId();
