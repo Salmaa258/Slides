@@ -126,7 +126,7 @@ if (isset($_GET['presentacion_id'])) {
         }
         ?>
     </div>
-    <script src="../js/crear_p.js"></script>
+    <script src="../js/editor.js"></script>
 </body>
 
 </html>
