@@ -2,12 +2,12 @@
 
 class Presentacion
 {
-    private int $id;
+    private int|null $id;
     private string $titulo;
     private string $descripcion;
     private array $diapositivas;
 
-    public function __construct(?int $id, string $titulo, string $descripcion, array $diapositivas)
+    public function __construct(int|null $id, string $titulo, string $descripcion, array $diapositivas)
     {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -159,8 +159,9 @@ class Presentacion
 
     public function getLastDiapositivaId($conn): int
     {
+        $id_presentacion = $this->getId();
         $stmt = $conn->prepare("SELECT id FROM diapositiva WHERE presentacion_id = ? ORDER BY id DESC");
-        $stmt->bindParam(1, $this->getId());
+        $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -178,8 +179,8 @@ class Presentacion
 
         $this->id = $conn->lastInsertId();
 
-        foreach ($this->diapositivas as $index => $diapositiva) {
-            $diapositiva->nuevaDiapositivaBD($conn, $this->id);
+        foreach ($this->diapositivas as $diapositiva) {
+            $diapositiva->nuevaDiapositiva($conn, $this->id);
         }
     }
 
@@ -191,7 +192,7 @@ class Presentacion
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
-        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row['titulo'] !== $this->getTitulo()) {
             $this->setTitulo($row['titulo']);

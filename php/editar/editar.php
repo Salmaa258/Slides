@@ -29,13 +29,17 @@ $conn = $db->getConnection();
     <title>Nueva Presentación</title>
 </head>
 
+<?php
+$presentacion = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
+
+?>
 
 <body>
     <div class="header">
         <input hidden type="text" form="data_p" name="presentacion_id" value="<?= $_POST['presentacion_id'] ?>">
         <input id="inputTitulo" type="text" form="data_p" class="input" name="p_titulo"
-            value="<?= Presentacion::getDescripcionBD($conn, $_POST['presentacion_id']) ?>"
-            placeholder="Añade un título..." required autocomplete="off" />
+            value="<?= $presentacion->getTitulo() ?>" placeholder="Añade un título..." required
+            autocomplete="off" />
         <div class="headerButtons">
             <div class="descripcion-container">
                 <div id="icon-presentaciones">
@@ -43,13 +47,13 @@ $conn = $db->getConnection();
                 </div>
                 <form method="POST" id="data_p" action="../save/save_p.php">
                     <input type="text" class="input focus" name="p_descripcion"
-                        value="<?= Presentacion::getTituloBD($conn, $_POST['presentacion_id']) ?>"
-                        placeholder="Escribe una descripción..." autocomplete="off" />
+                        value="<?= $presentacion->getDescripcion() ?>" placeholder="Escribe una descripción..."
+                        autocomplete="off" />
                 </form>
             </div>
             <div id="nova-diapositiva">
                 <div class="dropdown">
-                    <button id="nova-diapositiva-button" class="button" onclick="showDropdown()">
+                    <button id="nova-diapositiva-button" class="button" onclick="showDropdown(event)">
                         <img id="nueva-diapositiva" src="../../icons/add.svg" />
                     </button>
                     <div class="dropdown-content">
@@ -80,7 +84,7 @@ $conn = $db->getConnection();
         </div>
     </div>
 
-    <div id="diapositivas">
+    <div id="diapositivas" lastDiapositivaId="<?= $presentacion->getLastDiapositivaId($conn) ?>">
         <template id="d_titulo_template">
             <div class="d-container">
                 <input class="focus" type="text" form="data_p" autocomplete="off"
@@ -97,7 +101,6 @@ $conn = $db->getConnection();
         </template>
 
         <?php
-        $presentacion = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
         $diapositivas = $presentacion->getDiapositivas();
 
         foreach ($diapositivas as $diapositiva) {

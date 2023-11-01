@@ -45,7 +45,7 @@ class TipoTitulo extends Diapositiva
         $stmt->bindParam(2, $id_diapositiva);
         $stmt->execute();
 
-        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row['titulo'] !== $this->getTitulo()) {
             $newTitulo = $this->getTitulo();

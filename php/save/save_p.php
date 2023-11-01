@@ -23,10 +23,9 @@ if (isset($_POST['presentacion_id'])) {
 
     $presentacionBD->actualizarInfo($conn);
 
-    $lastDiapositivaId = $presentacionBD->getLastDiapositivaId($conn);
+    $lastDiapositivaId = $presentacionBD->getLastDiapositivaId($conn) + 1;
 
     foreach ($presentacionBD->getDiapositivas() as $diapositiva) {
-        $toUpdate = false;
         if (isset($_POST['d_contenido_' . $diapositiva->getId() . ''])) {
             $diapositiva->setContenido($_POST['d_contenido_' . $diapositiva->getId() . '']);
         }
@@ -41,7 +40,7 @@ if (isset($_POST['presentacion_id'])) {
     }
 
     while (isset($_POST['d_titulo_' . $lastDiapositivaId])) {
-        if (isset($_POST['d_contenido_' . $diapositiva->getId() . ''])) {
+        if (isset($_POST['d_contenido_' . $lastDiapositivaId . ''])) {
             $contenido = $_POST['d_contenido_' . $lastDiapositivaId];
             $newDiapositiva = new TipoContenido(null, '', $contenido);
         } else {
@@ -52,12 +51,12 @@ if (isset($_POST['presentacion_id'])) {
         $newDiapositiva->setTitulo($titulo);
 
         $newDiapositiva->nuevaDiapositiva($conn, $id_presentacion);
+
+        $lastDiapositivaId++;
     }
 } else {
     $titulo = isset($_POST['p_titulo']) ? trim($_POST['p_titulo']) : '';
     $descripcion = isset($_POST['p_descripcion']) ? trim($_POST['p_descripcion']) : '';
-
-    $presentacio_id = $conn->lastInsertId();
 
     $diapositivas = [];
 
@@ -87,10 +86,9 @@ if (isset($_POST['presentacion_id'])) {
 
     $newPresentacion = new Presentacion(null, $titulo, $descripcion, $diapositivas);
 
+    $newPresentacion->nuevaPresentacion($conn);
+
 }
-
-
-
 
 // Redirigir al usuario de vuelta a la página de creación de presentaciones
 header("Location: /../../html/crear_p.html");

@@ -2,9 +2,9 @@
 
 abstract class Diapositiva extends Presentacion
 {
-    private int $id;
+    private int|null $id;
 
-    public function __construct(int $id)
+    public function __construct(int|null $id)
     {
         $this->id = $id;
     }
@@ -20,8 +20,6 @@ abstract class Diapositiva extends Presentacion
     }
 
     abstract public function nuevaDiapositiva(PDO $conn, int $id_presentacion);
-
-    abstract public static function existsDiapositiva(PDO $conn, int $id_presentacion, int $id_diapositiva);
 
     public static function eliminarDipositivaBD(PDO $conn, int $id_presentacion, int $id_diapositiva): string
     {
