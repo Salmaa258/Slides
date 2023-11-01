@@ -57,7 +57,7 @@
                         <button class="editar clickable"><img src="../assets/icons/editar.svg" alt="Editar">Editar</button>
                     </form>
                     <button class="clonar clickable"><img src="../assets/icons/clonar.svg" alt="Clonar">Clonar</button>
-                    <form action="../controllers/eliminar.php" method="POST" onclick="mostrarConfirmacionEliminar(event, this)">
+                    <form action="../controllers/eliminar.controller.php" method="POST" onclick="mostrarConfirmacionEliminar(event, this)">
                         <input type="hidden" name="id_presentacion" value="<?= $row['id'] ?>">
                         <button type="submit" class="eliminar"><img src="../assets/icons/eliminar.svg" alt="Eliminar">Eliminar</button>
                     </form>

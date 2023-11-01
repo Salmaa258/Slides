@@ -64,7 +64,7 @@ if (isset($_GET['presentacion_id'])) {
                 <div id="icon-presentaciones">
                     <img src="../assets/icons/presentacio.svg" alt="Icono Presentación" />
                 </div>
-                <form method="POST" id="data_p" action="../controllers/save_p.php">
+                <form method="POST" id="data_p" action="../controllers/editor.controller.php">
                     <input type="text" class="input focus" name="p_descripcion" value="<?= $descripcion ?>"
                         placeholder="Escribe una descripción..." autocomplete="off" />
                 </form>
