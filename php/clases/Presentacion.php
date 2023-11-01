@@ -25,62 +25,14 @@ class Presentacion
         return $this->titulo;
     }
 
-    public static function getTituloBD(PDO $conn, int $id): string
-    {
-        $stmt = $conn->prepare("SELECT titulo FROM presentacion WHERE id = ?");
-        $stmt->bindParam(1, $id);
-        $stmt->execute();
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $row["titulo"];
-    }
-
     public function getDescripcion(): string
     {
         return $this->descripcion;
     }
 
-    public static function getDescripcionBD(PDO $conn, int $id): string
-    {
-        $stmt = $conn->prepare("SELECT descripcion FROM presentacion WHERE id = ?");
-        $stmt->bindParam(1, $id);
-        $stmt->execute();
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $row["descripcion"];
-    }
-
     public function getDiapositivas(): array
     {
         return $this->diapositivas;
-    }
-
-    public static function getDiapositivasBD(PDO $conn, int $id_presentacion): array
-    {
-        $stmt = $conn->prepare(
-            "SELECT dt.id as diapositiva_id, COALESCE(tt.titulo, tc.titulo) AS titulo, tc.contenido
-            FROM presentacion p 
-                LEFT JOIN diapositiva dt ON p.id = dt.presentacion_id
-                LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
-                LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
-            WHERE p.id = ?;"
-        );
-        $stmt->bindParam(1, $id_presentacion);
-        $stmt->execute();
-
-        $diapositivas = [];
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if ($row['contenido'] === null) {
-                array_push($diapositivas, new TipoTitulo($row['diapositiva_id'], $row['titulo']));
-            } else {
-                array_push($diapositivas, new TipoContenido($row['diapositiva_id'], $row['titulo'], $row['contenido']));
-            }
-        }
-
-        return $diapositivas;
     }
 
     public function setId(int $id): void
@@ -132,11 +84,6 @@ class Presentacion
         $this->diapositivas = $diapositivas;
     }
 
-    public function añadirDiapositiva(Diapositiva $diapositiva): void
-    {
-        array_push($this->diapositivas, $diapositiva);
-    }
-
     public function getLastDiapositivaId($conn): int
     {
         $id_presentacion = $this->getId();
@@ -150,7 +97,7 @@ class Presentacion
         return $result['id'];
     }
 
-    public function nuevaPresentacion(PDO $conn): void
+    public function guardarNuevaPresentacion(PDO $conn): void
     {
         $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
         $stmt->bindParam(1, $this->titulo);
@@ -164,33 +111,30 @@ class Presentacion
         }
     }
 
-    public function actualizaPresentacion(PDO $conn): void
+    private static function getDiapositivasBD(PDO $conn, int $id_presentacion): array
     {
-        $id_presentacion = $this->getId();
-
-        $stmt = $conn->prepare("SELECT FROM presentacion(titulo, descripcion) VALUES (?)");
+        $stmt = $conn->prepare(
+            "SELECT dt.id as diapositiva_id, COALESCE(tt.titulo, tc.titulo) AS titulo, tc.contenido
+            FROM presentacion p 
+                LEFT JOIN diapositiva dt ON p.id = dt.presentacion_id
+                LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
+                LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
+            WHERE p.id = ?;"
+        );
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $diapositivas = [];
 
-        if ($row['titulo'] !== $this->getTitulo()) {
-            $this->setTitulo($row['titulo']);
-        }
-
-        if ($row['descripcion'] !== $this->getTitulo()) {
-            $this->setTitulo($row['titulo']);
-        }
-
-        $diapositivas = $this->diapositivas;
-
-        foreach ($diapositivas as $index => $diapositiva) {
-            if ($diapositiva->exists()) {
-                $diapositiva->actualizaDiapositiva($conn, $id_presentacion);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($row['contenido'] === null) {
+                array_push($diapositivas, new TipoTitulo($row['diapositiva_id'], $row['titulo']));
             } else {
-                $diapositiva->nuevaDiapositiva($conn, $id_presentacion);
+                array_push($diapositivas, new TipoContenido($row['diapositiva_id'], $row['titulo'], $row['contenido']));
             }
         }
+
+        return $diapositivas;
     }
 
     public static function getPresentacionBD(PDO $conn, int $id_presentacion): Presentacion

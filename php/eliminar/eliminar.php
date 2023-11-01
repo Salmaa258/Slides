@@ -20,7 +20,6 @@ $db = Database::getInstance();
 // Obtener la conexión a la base de datos
 $conn = $db->getConnection();
 
-//var_dump($_POST);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $presentation_id = $_POST['id_presentacion'];
 

@@ -19,7 +19,9 @@ abstract class Diapositiva extends Presentacion
         $this->id = $id;
     }
 
-    abstract public function nuevaDiapositiva(PDO $conn, int $id_presentacion);
+    abstract public function nuevaDiapositiva(PDO $conn, int $id_presentacion): void;
+    abstract public function actualizaDiapositiva(PDO $conn, int $id_presentacion): void;
+    abstract public function getDiapositivaHTML(): string;
 
     public function eliminarDiapositiva(PDO $conn, int $id_presentacion): string
     {

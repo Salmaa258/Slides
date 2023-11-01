@@ -86,7 +86,7 @@ if (isset($_POST['presentacion_id'])) {
 
     $newPresentacion = new Presentacion(null, $titulo, $descripcion, $diapositivas);
 
-    $newPresentacion->nuevaPresentacion($conn);
+    $newPresentacion->guardarNuevaPresentacion($conn);
 
 }
 

@@ -4,9 +4,8 @@ const diapositivaTituloTexto = document.getElementById(
     'd_titulo_texto_template'
 );
 
-let numDiapositivas = document
-    .getElementById('diapositivas')
-    .getAttribute('lastDiapositivaId');
+let numDiapositivas = document.getElementById('diapositivas');
+numDiapositivas = numDiapositivas.getAttribute('lastDiapositivaId');
 numDiapositivas = numDiapositivas === null ? 1 : parseInt(numDiapositivas) + 1;
 
 // Cierra todos los desplegables (dropdowns) en la página.
