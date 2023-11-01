@@ -6,7 +6,7 @@ define('VALID_ENTRY_POINT', true);
 include '../../config.php';
 
 // Incluir la clases.
-require_once '../controllers/db.php';
+require_once '../models/db.php';
 require_once '../models/Presentacion.php';
 require_once '../models/Diapositiva.php';
 require_once '../models/TipoTitulo.php';

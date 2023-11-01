@@ -26,7 +26,7 @@
         define('VALID_ENTRY_POINT', true);
 
         include '../../config.php';
-        require_once '../controllers/db.php';
+        require_once '../models/db.php';
 
         // Obtener la única instancia de la base de datos
         $db = Database::getInstance();
