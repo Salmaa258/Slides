@@ -50,6 +50,16 @@ class Presentacion
         $this->descripcion = $descripcion;
     }
 
+    public function setDiapositivas(array $diapositivas): void
+    {
+        $this->diapositivas = $diapositivas;
+    }
+
+    /**
+     * Funcion que actualiza la informacion de la presentacion.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @return void
+     */
     public function actualizarInfo(PDO $conn): void
     {
         $id_presentacion = $this->getId();
@@ -79,11 +89,11 @@ class Presentacion
         }
     }
 
-    public function setDiapositivas(array $diapositivas): void
-    {
-        $this->diapositivas = $diapositivas;
-    }
-
+    /**
+     * Funcion que obtiene el último ID de las diapositivas de la presentación.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @return int
+     */
     public function getLastDiapositivaId($conn): int
     {
         $id_presentacion = $this->getId();
@@ -93,10 +103,15 @@ class Presentacion
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        
+
         return $result['id'];
     }
 
+    /**
+     * Funcion que crea una nueva presentacion en la BD.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @return void
+     */
     public function guardarNuevaPresentacion(PDO $conn): void
     {
         $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
@@ -111,6 +126,12 @@ class Presentacion
         }
     }
 
+    /**
+     * Funcion que obtiene el array de diapositivas de una presentacion.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @param int $id_presentacion ID de la presentacion que queremos consultar.
+     * @return array
+     */
     private static function getDiapositivasBD(PDO $conn, int $id_presentacion): array
     {
         $stmt = $conn->prepare(
@@ -137,6 +158,12 @@ class Presentacion
         return $diapositivas;
     }
 
+    /**
+     * Funcion que retorna una presentacion instanciada de la BD.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @param int $id_presentacion ID de la presentacion que queremos instanciar.
+     * @return Presentacion
+     */
     public static function getPresentacionBD(PDO $conn, int $id_presentacion): Presentacion
     {
         $stmt = $conn->prepare("SELECT id, titulo, descripcion FROM presentacion WHERE id = ?");
@@ -152,6 +179,12 @@ class Presentacion
         return $presentacion;
     }
 
+    /**
+     * Funcion que elimina una presentacion de la BD.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @param int $id_presentacion ID de la presentacion a eliminar.
+     * @return string
+     */
     public static function eliminarPresentacionBD(PDO $conn, int $id): string
     {
         try {

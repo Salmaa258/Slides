@@ -19,10 +19,34 @@ abstract class Diapositiva extends Presentacion
         $this->id = $id;
     }
 
+    /**
+     * Funcion que añade a la BD la diapositiva instanciada.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @param int $id_presentacion Id de la presentacion a la que pertenece la diapositiva.
+     * @return void
+     */
     abstract public function nuevaDiapositiva(PDO $conn, int $id_presentacion): void;
+
+    /**
+     * Funcion que actualiza en la BD la informacion diapositiva instanciada.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @param int $id_presentacion Id de la presentacion a la que pertenece la diapositiva.
+     * @return void
+     */
     abstract public function actualizaDiapositiva(PDO $conn, int $id_presentacion): void;
+
+    /**
+     * Funcion que genera la vista HTML de la diapositiva instanciada.
+     * @return string
+     */
     abstract public function getDiapositivaHTML(): string;
 
+    /**
+     * Funcion que elimina en la BD una diapositiva instanciada.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @param int $id_presentacion Id de la presentacion a la que pertenece la diapositiva.
+     * @return string Mensaje resultado de la operacion.
+     */
     public function eliminarDiapositiva(PDO $conn, int $id_presentacion): string
     {
         $id_diapositiva = $this->id;
