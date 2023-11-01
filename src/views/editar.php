@@ -3,14 +3,14 @@
 define('VALID_ENTRY_POINT', true);
 
 // Incluir archivo de configuración
-include '../config.php';
+include '../../config.php';
 
 // Incluir la clases.
-require_once '../clases/db.php';
-require_once '../clases/Presentacion.php';
-require_once '../clases/Diapositiva.php';
-require_once '../clases/TipoTitulo.php';
-require_once '../clases/TipoContenido.php';
+require_once '../controllers/db.php';
+require_once '../models/Presentacion.php';
+require_once '../models/Diapositiva.php';
+require_once '../models/TipoTitulo.php';
+require_once '../models/TipoContenido.php';
 
 // Obtener la única instancia de la base de datos
 $db = Database::getInstance();
@@ -25,36 +25,51 @@ $conn = $db->getConnection();
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../css/crear_p.css" />
-    <title>Nueva Presentación</title>
+    <link rel="stylesheet" href="../assets/css/crear_p.css" />
+    <title>Editor de Presentaciones</title>
 </head>
 
 <?php
-$presentacion = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
+
+$presentacion = null;
+$id_presentacion = null;
+$disabled = 'disabled';
+$titulo = null;
+$descripcion = null;
+$lastDiapositivaId = 0;
+$diapositivas = null;
+
+if (isset($_GET['presentacion_id'])) {
+    $presentacion = Presentacion::getPresentacionBD($conn, $_GET['presentacion_id']);
+    $id_presentacion = $presentacion->getId();
+    $titulo = $presentacion->getTitulo();
+    $descripcion = $presentacion->getDescripcion();
+    $lastDiapositivaId = $presentacion->getLastDiapositivaId($conn);
+    $diapositivas = $presentacion->getDiapositivas();
+    $disabled = '';
+}
 
 ?>
 
 <body>
     <div class="header">
-        <input hidden type="text" form="data_p" name="presentacion_id" value="<?= $_POST['presentacion_id'] ?>">
-        <input id="inputTitulo" type="text" form="data_p" class="input" name="p_titulo"
-            value="<?= $presentacion->getTitulo() ?>" placeholder="Añade un título..." required
-            autocomplete="off" />
+        <input hidden <?= $disabled ?> type="text" form="data_p" name="presentacion_id" value="<?= $id_presentacion ?>">
+        <input id="inputTitulo" type="text" form="data_p" class="input" name="p_titulo" value="<?= $titulo ?>"
+            placeholder="Añade un título..." required autocomplete="off" />
         <div class="headerButtons">
             <div class="descripcion-container">
                 <div id="icon-presentaciones">
-                    <img src="../../icons/presentacio.svg" alt="Icono Presentación" />
+                    <img src="../assets/icons/presentacio.svg" alt="Icono Presentación" />
                 </div>
-                <form method="POST" id="data_p" action="../save/save_p.php">
-                    <input type="text" class="input focus" name="p_descripcion"
-                        value="<?= $presentacion->getDescripcion() ?>" placeholder="Escribe una descripción..."
-                        autocomplete="off" />
+                <form method="POST" id="data_p" action="../controllers/save_p.php">
+                    <input type="text" class="input focus" name="p_descripcion" value="<?= $descripcion ?>"
+                        placeholder="Escribe una descripción..." autocomplete="off" />
                 </form>
             </div>
             <div id="nova-diapositiva">
                 <div class="dropdown">
                     <button id="nova-diapositiva-button" class="button" onclick="showDropdown(event)">
-                        <img id="nueva-diapositiva" src="../../icons/add.svg" />
+                        <img id="nueva-diapositiva" src="../assets/icons/add.svg" />
                     </button>
                     <div class="dropdown-content">
                         <span onclick="newDiapositivaTitulo()">Título</span>
@@ -66,17 +81,19 @@ $presentacion = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']
             <div id="tema-seleccion">
                 <div class="dropdown" onclick="showDropdown(event)">
                     <button id="tema-button" class="button">
-                        <img id="icono-tema" src="../../icons/white_black_box.svg" />
+                        <img id="icono-tema" src="../assets/icons/white_black_box.svg" />
                     </button>
                     <div class="dropdown-content">
-                        <span onclick="setTemaClaro()"><img id="icono-tema" src="../../icons/white.svg" />Claro</span>
-                        <span onclick="setTemaOscuro()"><img id="icono-tema" src="../../icons/black.svg" />Oscuro</span>
+                        <span onclick="setTemaClaro()"><img id="icono-tema"
+                                src="../assets/icons/white.svg" />Claro</span>
+                        <span onclick="setTemaOscuro()"><img id="icono-tema"
+                                src="../assets/icons/black.svg" />Oscuro</span>
                     </div>
                 </div>
                 <span>Seleccionar Tema</span>
             </div>
             <div class="actionButtons">
-                <a href="../../home.php">
+                <a href="home.php">
                     <button class="button">Cancelar</button>
                 </a>
                 <button class="button" type="submit" form="data_p">Guardar</button>
@@ -84,7 +101,7 @@ $presentacion = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']
         </div>
     </div>
 
-    <div id="diapositivas" lastDiapositivaId="<?= $presentacion->getLastDiapositivaId($conn) ?>">
+    <div id="diapositivas" lastDiapositivaId="<?= $lastDiapositivaId ?>">
         <template id="d_titulo_template">
             <div class="d-container">
                 <input class="focus" type="text" form="data_p" autocomplete="off"
@@ -101,16 +118,14 @@ $presentacion = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']
         </template>
 
         <?php
-        $diapositivas = $presentacion->getDiapositivas();
-
-        foreach ($diapositivas as $diapositiva) {
-            echo $diapositiva->getDiapositivaHTML();
+        if ($lastDiapositivaId !== 0) {
+            foreach ($diapositivas as $diapositiva) {
+                echo $diapositiva->getDiapositivaHTML();
+            }
         }
-
         ?>
     </div>
-    <script src="../../js/crear_p.js"></script>
-    <script src="../../js/save_p.js"></script>
+    <script src="../js/crear_p.js"></script>
 </body>
 
 </html>

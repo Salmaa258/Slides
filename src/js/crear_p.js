@@ -6,9 +6,8 @@ const diapositivaTituloTexto = document.getElementById(
 
 let numDiapositivas = document.getElementById('diapositivas');
 numDiapositivas = numDiapositivas.getAttribute('lastDiapositivaId');
-numDiapositivas = numDiapositivas === null ? 1 : parseInt(numDiapositivas) + 1;
 
-// Cierra todos los desplegables (dropdowns) en la página.
+// Cierra todos los desplegables.
 const closeAllDropdowns = () => {
     const allDropdownContents = document.querySelectorAll('.dropdown-content');
     allDropdownContents.forEach((content) => {
@@ -16,8 +15,7 @@ const closeAllDropdowns = () => {
     });
 };
 
-// Cierra todos los desplegables y abre el desplegable específico en el que se hizo clic.
-// Detiene la propagación del evento.
+// Cierra todos los desplegables y abre el desplegable específico.
 const showDropdown = (event) => {
     const dropdownButton = event.target.closest('.dropdown');
     const dropdownContent = dropdownButton.querySelector('.dropdown-content');
@@ -36,21 +34,26 @@ const showDropdown = (event) => {
 };
 
 // Crea y añade una nueva diapositiva de tipo "título" al contenedor principal.
-// Aplica el tema actual a la nueva diapositiva.
 const newDiapositivaTitulo = () => {
-    const newDiapositivaFragment = diapositivaTitulo.content.cloneNode(true);
-    const newDiapositivaNode =
-        newDiapositivaFragment.querySelector('.d-container');
+    const diapositiva = diapositivaTitulo.content.cloneNode(true);
+    const diapositivaContainer = diapositiva.querySelector('.d-container');
 
-    newDiapositivaNode.querySelector('input[type="text"]').name =
+    diapositivaContainer.querySelector('input[type="text"]').name =
         'd_titulo_' + numDiapositivas;
 
-    diapositivas.append(newDiapositivaNode);
+    diapositivas.append(diapositivaContainer);
     numDiapositivas++;
 };
 
+// Comprobamos si estamos creando una diapositiva nueva o editando una existente.
+if (numDiapositivas === '0') {
+    newDiapositivaTitulo();
+    numDiapositivas = 1;
+} else {
+    numDiapositivas = parseInt(numDiapositivas) + 1;
+}
+
 // Crea y añade una nueva diapositiva que tiene un título y un área de texto.
-// Aplica el tema actual a la nueva diapositiva.
 const newDiapositivaTituloTexto = () => {
     const diapositiva = diapositivaTituloTexto.content.cloneNode(true);
     const diapositivaContainer = diapositiva.querySelector('.d-container');

@@ -3,16 +3,13 @@ session_start();
 
 // Punto de entrada principal
 define('VALID_ENTRY_POINT', true);
-include '../config.php';
+include '../../config.php';
 
-require_once ROOT_PATH . 'php/clases/db.php';
-require_once ROOT_PATH . 'php/clases/Presentacion.php';
-require_once ROOT_PATH . 'php/clases/Diapositiva.php';
-require_once ROOT_PATH . 'php/clases/TipoTitulo.php';
-require_once ROOT_PATH . 'php/clases/TipoContenido.php';
-
-// Incluir la clase de base de datos
-require_once ROOT_PATH . 'php/clases/db.php';
+require_once 'db.php';
+require_once '../models/Presentacion.php';
+require_once '../models/Diapositiva.php';
+require_once '../models/TipoTitulo.php';
+require_once '../models/TipoContenido.php';
 
 // Obtener la única instancia de la base de datos
 $db = Database::getInstance();
@@ -29,5 +26,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['eliminacion_exitosa'] = true;
 }
 
-header("Location: ../../home.php");
+header("Location: ../views/home.php");
 ?>

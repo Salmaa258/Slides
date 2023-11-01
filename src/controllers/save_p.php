@@ -3,16 +3,17 @@
 // Punto de entrada principal
 define('VALID_ENTRY_POINT', true);
 
-include '../config.php';
+include '../../config.php';
 
-require_once ROOT_PATH . 'php/clases/db.php';
-require_once ROOT_PATH . 'php/clases/Presentacion.php';
-require_once ROOT_PATH . 'php/clases/Diapositiva.php';
-require_once ROOT_PATH . 'php/clases/TipoTitulo.php';
-require_once ROOT_PATH . 'php/clases/TipoContenido.php';
+require_once 'db.php';
+require_once '../models/Presentacion.php';
+require_once '../models/Diapositiva.php';
+require_once '../models/TipoTitulo.php';
+require_once '../models/TipoContenido.php';
 
 $db = Database::getInstance();
 $conn = $db->getConnection();
+$id_presentacion;
 
 if (isset($_POST['presentacion_id'])) {
     $presentacionBD = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
@@ -85,12 +86,12 @@ if (isset($_POST['presentacion_id'])) {
     }
 
     $newPresentacion = new Presentacion(null, $titulo, $descripcion, $diapositivas);
-
     $newPresentacion->guardarNuevaPresentacion($conn);
+    $id_presentacion = $newPresentacion->getId();
 
 }
 
 // Redirigir al usuario de vuelta a la página de creación de presentaciones
-header("Location: /../../html/crear_p.html");
+header("Location: ../views/editar.php?presentacion_id=" . $id_presentacion);
 exit;
 
