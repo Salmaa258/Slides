@@ -36,6 +36,7 @@ $id_presentacion = null;
 $disabled = 'disabled';
 $titulo = null;
 $descripcion = null;
+$tema = 'oscuro';
 $lastDiapositivaId = 0;
 $diapositivas = null;
 
@@ -45,6 +46,7 @@ if (isset($_GET['presentacion_id'])) {
     $titulo = $presentacion->getTitulo();
     $descripcion = $presentacion->getDescripcion();
     $lastDiapositivaId = $presentacion->getLastDiapositivaId($conn);
+    $tema = $presentacion->getTema();
     $diapositivas = $presentacion->getDiapositivas();
     $disabled = '';
 }
@@ -54,6 +56,7 @@ if (isset($_GET['presentacion_id'])) {
 <body>
     <div class="header">
         <input hidden <?= $disabled ?> type="text" form="data_p" name="presentacion_id" value="<?= $id_presentacion ?>">
+        <input hidden type="text" form="data_p" name="tema" value="<?= $tema ?>">
         <input id="inputTitulo" type="text" form="data_p" class="input" name="p_titulo" value="<?= $titulo ?>"
             placeholder="Añade un título..." required autocomplete="off" />
         <div class="headerButtons">
@@ -84,10 +87,8 @@ if (isset($_GET['presentacion_id'])) {
                         <img id="icono-tema" src="../assets/icons/white_black_box.svg" />
                     </button>
                     <div class="dropdown-content">
-                        <span onclick="setClaro()"><img id="icono-tema"
-                                src="../assets/icons/white.svg" />Claro</span>
-                        <span onclick="setOscuro()"><img id="icono-tema"
-                                src="../assets/icons/black.svg" />Oscuro</span>
+                        <span onclick="setClaro()"><img id="icono-tema" src="../assets/icons/white.svg" />Claro</span>
+                        <span onclick="setOscuro()"><img id="icono-tema" src="../assets/icons/black.svg" />Oscuro</span>
                     </div>
                 </div>
                 <span>Seleccionar Tema</span>
@@ -101,7 +102,7 @@ if (isset($_GET['presentacion_id'])) {
         </div>
     </div>
 
-    <div id="diapositivas" tema="oscuro" lastDiapositivaId="<?= $lastDiapositivaId ?>">
+    <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
         <template id="d_titulo_template">
             <div class="d-container">
                 <input class="focus" type="text" form="data_p" autocomplete="off"

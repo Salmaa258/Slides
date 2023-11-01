@@ -5,13 +5,15 @@ class Presentacion
     private int|null $id;
     private string $titulo;
     private string $descripcion;
+    private string $tema;
     private array $diapositivas;
 
-    public function __construct(int|null $id, string $titulo, string $descripcion, array $diapositivas)
+    public function __construct(int|null $id, string $titulo, string $descripcion, string $tema, array $diapositivas)
     {
         $this->id = $id;
         $this->titulo = $titulo;
         $this->descripcion = $descripcion;
+        $this->tema = $tema;
         $this->diapositivas = $diapositivas;
     }
 
@@ -28,6 +30,11 @@ class Presentacion
     public function getDescripcion(): string
     {
         return $this->descripcion;
+    }
+
+    public function getTema(): string
+    {
+        return $this->tema;
     }
 
     public function getDiapositivas(): array
@@ -50,6 +57,11 @@ class Presentacion
         $this->descripcion = $descripcion;
     }
 
+    public function setTema(string $tema): void
+    {
+        $this->tema = $tema;
+    }
+
     public function setDiapositivas(array $diapositivas): void
     {
         $this->diapositivas = $diapositivas;
@@ -64,7 +76,7 @@ class Presentacion
     {
         $id_presentacion = $this->getId();
 
-        $stmt = $conn->prepare("SELECT titulo, descripcion FROM presentacion WHERE id = ?");
+        $stmt = $conn->prepare("SELECT titulo, descripcion, tema FROM presentacion WHERE id = ?");
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
@@ -84,6 +96,15 @@ class Presentacion
 
             $stmt = $conn->prepare("UPDATE presentacion SET descripcion = ? WHERE id = ?");
             $stmt->bindParam(1, $newDescripcion);
+            $stmt->bindParam(2, $id_presentacion);
+            $stmt->execute();
+        }
+
+        if ($this->getTema() !== $row['tema']) {
+            $newTema = $this->getTema();
+
+            $stmt = $conn->prepare("UPDATE presentacion SET tema = ? WHERE id = ?");
+            $stmt->bindParam(1, $newTema);
             $stmt->bindParam(2, $id_presentacion);
             $stmt->execute();
         }
@@ -114,9 +135,10 @@ class Presentacion
      */
     public function guardarNuevaPresentacion(PDO $conn): void
     {
-        $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion, tema) VALUES (?, ?, ?)");
         $stmt->bindParam(1, $this->titulo);
         $stmt->bindParam(2, $this->descripcion);
+        $stmt->bindParam(3, $this->tema);
         $stmt->execute();
 
         $this->id = $conn->lastInsertId();
@@ -166,13 +188,13 @@ class Presentacion
      */
     public static function getPresentacionBD(PDO $conn, int $id_presentacion): Presentacion
     {
-        $stmt = $conn->prepare("SELECT id, titulo, descripcion FROM presentacion WHERE id = ?");
+        $stmt = $conn->prepare("SELECT id, titulo, descripcion, tema FROM presentacion WHERE id = ?");
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], []);
+        $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], $row['tema'], []);
 
         $diapositivas = Presentacion::getDiapositivasBD($conn, $id_presentacion);
         $presentacion->setDiapositivas($diapositivas);

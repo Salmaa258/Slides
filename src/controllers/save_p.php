@@ -22,6 +22,8 @@ if (isset($_POST['presentacion_id'])) {
     $presentacionBD->setTitulo($_POST['p_titulo']);
     $presentacionBD->setDescripcion($_POST['p_descripcion']);
 
+    $presentacionBD->setTema($_POST['tema']);
+
     $presentacionBD->actualizarInfo($conn);
 
     $lastDiapositivaId = $presentacionBD->getLastDiapositivaId($conn) + 1;
@@ -58,6 +60,7 @@ if (isset($_POST['presentacion_id'])) {
 } else {
     $titulo = isset($_POST['p_titulo']) ? trim($_POST['p_titulo']) : '';
     $descripcion = isset($_POST['p_descripcion']) ? trim($_POST['p_descripcion']) : '';
+    $tema = $_POST['tema'];
 
     $diapositivas = [];
 
@@ -85,13 +88,13 @@ if (isset($_POST['presentacion_id'])) {
         $count_diapositiva++;
     }
 
-    $newPresentacion = new Presentacion(null, $titulo, $descripcion, $diapositivas);
+    $newPresentacion = new Presentacion(null, $titulo, $descripcion, $tema, $diapositivas);
     $newPresentacion->guardarNuevaPresentacion($conn);
     $id_presentacion = $newPresentacion->getId();
 
 }
 
 // Redirigir al usuario de vuelta a la página de creación de presentaciones
-header("Location: ../views/editar.php?presentacion_id=" . $id_presentacion);
+header("Location: ../views/editor.php?presentacion_id=" . $id_presentacion);
 exit;
 

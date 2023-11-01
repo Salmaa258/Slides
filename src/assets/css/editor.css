@@ -11,11 +11,13 @@
 #diapositivas[tema='oscuro'] {
     --background: #1d1e18;
     --border: #eef0f4;
+    --focus: #26272D;
 }
 
 #diapositivas[tema='claro'] {
     --background: #eef0f4;
     --border: #1d1e18;
+    --focus: #D1D1D1;
 }
 
 body {
@@ -200,22 +202,24 @@ a {
     height: 15%;
 }
 
+
+
 .d-container textarea {
     height: 80%;
     width: 100%;
     resize: none;
     font-size: 20px;
     padding: 10px;
-    border: 2px solid #ccc;
+    border: solid 2px var(--border);
     outline: none;
     box-sizing: border-box;
     background: none;
-    color: white;
+    color: var(--border);
 }
 
 .focus:focus {
-    border: solid 2px #49c2ff;
-    background-color: #292a25;
+    border: solid 2px #304a6e;
+    background-color: var(--focus);
 }
 
 .dropdown {

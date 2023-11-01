@@ -71,11 +71,14 @@ const showDropdown = (event) => {
 };
 
 // Funcion que aplica el tema claro.
+inputTema = document.querySelector('input[name="tema"]');
 const setClaro = () => {
     diapositivasContainer.setAttribute('tema', 'claro');
+    inputTema.value = 'claro';
 };
 
 // Funcion que aplica el tema oscuro.
 const setOscuro = () => {
     diapositivasContainer.setAttribute('tema', 'oscuro');
+    inputTema.value = 'oscuro';
 };

@@ -34,12 +34,24 @@ sudo systemctl restart mysql
 # Crear tablas en la base de datos
 sudo mysql -uroot -p$ROOTPASSWD $DBNAME <<EOF
 
+CREATE TABLE tema(
+  id  VARCHAR(10),
+
+  PRIMARY KEY(id)
+);
+
+INSERT INTO tema VALUES('oscuro');
+INSERT INTO tema VALUES('claro');
+
 CREATE TABLE presentacion(
   id              INT      AUTO_INCREMENT,
   titulo          VARCHAR(255),
   descripcion     VARCHAR(255),
+  tema            VARCHAR(10),
 
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  FOREIGN KEY (tema) 
+    REFERENCES tema(id)
 );
 
 CREATE TABLE diapositiva(
