@@ -47,6 +47,21 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 
 
 === Semana 2
+==== Alfred
+
+
+==== Salma
+- Función de Eliminar Presentaciones desde home, **eliminar.php**.
+- Despliegue de la aplicación en un servidor (Isard).
+- Eliminar diapositivas exitentes desde la pantalla **crear_p**.
+- Reordenar diapositivas. 
+- Creación de la guía de estilos en Figma.
+
+
+==== Emilio
+
+
+
 === Semana 3
 === Semana 4
 
@@ -129,6 +144,10 @@ image::images/css.png[]
 [underline]#Home.js#
 
 image::images/3js_home.png[]
+
+[underline]#Eliminar.php#
+
+image::images/eliminar.png[]
 
 == CONCLUSIÓN
 === Línias futuras
