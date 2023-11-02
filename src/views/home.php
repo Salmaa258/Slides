@@ -51,7 +51,10 @@
                 <form hidden id="previewForm_<?= $row['id'] ?>" action="preview.php" method="POST" hidden>
                 </form>
                 <div class="imagen-overlay" onclick="document.forms['previewForm_<?= $row['id'] ?>'].submit();">
-                    <img src="../assets/icons/ver.png" alt="">
+                    <form action="preview.php" method="get">
+                        <input type="hidden" name="id_presentacion" value="<?= $row['id'] ?>">
+                        <img src="../assets/icons/ver.png" alt="">
+                    </form>
                 </div>
                 <button class="opciones-btn clickable">+</button>
                 <div class="opciones clickable" id="opciones<?= $row['id'] ?>">
@@ -60,9 +63,11 @@
                         <button class="editar clickable"><img src="../assets/icons/editar.svg" alt="Editar">Editar</button>
                     </form>
                     <button class="clonar clickable"><img src="../assets/icons/clonar.svg" alt="Clonar">Clonar</button>
-                    <form action="../controllers/eliminar.controller.php" method="POST" onclick="mostrarConfirmacionEliminar(event, this)">
+                    <form action="../controllers/eliminar.controller.php" method="POST"
+                        onclick="mostrarConfirmacionEliminar(event, this)">
                         <input type="hidden" name="id_presentacion" value="<?= $row['id'] ?>">
-                        <button type="submit" class="eliminar"><img src="../assets/icons/eliminar.svg" alt="Eliminar">Eliminar</button>
+                        <button type="submit" class="eliminar"><img src="../assets/icons/eliminar.svg"
+                                alt="Eliminar">Eliminar</button>
                     </form>
                 </div>
             </div>
