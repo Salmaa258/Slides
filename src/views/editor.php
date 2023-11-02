@@ -29,6 +29,10 @@ $conn = $db->getConnection();
     <title>Editor de Presentaciones</title>
 </head>
 
+<!-- Capa de superposición -->
+<div class="overlay" id="overlay"></div>
+
+
 <?php
 
 $presentacion = null;
@@ -75,8 +79,8 @@ if (isset($_GET['presentacion_id'])) {
                         <img id="nueva-diapositiva" src="../assets/icons/add.svg" />
                     </button>
                     <div class="dropdown-content">
-                        <span onclick="newTipoTitulo()">Título</span>
-                        <span onclick="newTipoContenido()">Título + Texto</span>
+                        <span onclick="mostrarConfirmacionNuevaDiapositivaTitulo(event)">Título</span>
+                        <span onclick="mostrarConfirmacionNuevaDiapositivaTituloTexto(event)">Título + Texto</span>
                     </div>
                 </div>
                 <span>Añadir diapositiva</span>
@@ -97,7 +101,7 @@ if (isset($_GET['presentacion_id'])) {
                 <a href="home.php">
                     <button class="button">Cancelar</button>
                 </a>
-                <button class="button" type="submit" form="data_p">Guardar</button>
+                <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
             </div>
         </div>
     </div>
@@ -126,6 +130,26 @@ if (isset($_GET['presentacion_id'])) {
         }
         ?>
     </div>
+
+
+    <!--Contenedores para la funcionalidad de feedback-->
+    <dialog id="confirmarGuardar">
+        <p>¿Quieres guardar tu progreso?</p>
+        <form method="dialog">
+            <button id="btn-aceptar" type="submit" form="data_p">Aceptar</button>
+            <button id="btn-cancelar">Cancelar</button>
+        </form>
+    </dialog>
+
+    <dialog id="exito_guardar">
+        <p>Se ha guardado la presentación correctamente</p>
+        <form method="dialog">
+            <button id="btn-aceptar-exito" type="submit" form="data_p">Aceptar</button>
+        </form>
+    </dialog>
+
+
+
     <script src="../js/editor.js"></script>
 </body>
 

@@ -41,8 +41,11 @@ document.addEventListener('click', (e) => {
 function mostrarConfirmacionEliminar(event, form) {
     event.preventDefault();
     const dialog = document.getElementById("confirmarEliminar");
+    const overlay = document.getElementById("overlay");
+
     // Muestra el diálogo
     dialog.style.display = "block";
+    overlay.style.display = "block";
 
     // Agrega un event listener al botón "Aceptar" en el diálogo
     const btnAceptar = document.getElementById("btn-aceptar");
@@ -53,6 +56,7 @@ function mostrarConfirmacionEliminar(event, form) {
         
         // Oculta el diálogo
         dialog.style.display = "none";
+        overlay.style.display = "none";
         
     });
 
@@ -61,6 +65,7 @@ function mostrarConfirmacionEliminar(event, form) {
     btnCancelar.addEventListener("click", function () {
         // Oculta el diálogo sin enviar el formulario
         dialog.style.display = "none";
+        overlay.style.display = "none";
     });
 
     return false; // Evita que el formulario se envíe automáticamente

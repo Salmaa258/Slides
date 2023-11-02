@@ -244,3 +244,70 @@ a {
     color: #ffffff;
     background-color: #00a4bd;
 }
+
+/*Dialog*/
+dialog {
+    background-color: #858585;
+    border-radius: 10px;
+    position: fixed;
+    font-size: 20px;
+    bottom: 50%;
+    left: 0%;
+    width: 24%;
+    z-index: 9999;
+  }
+  
+  #confirmarGuardar {
+    background-color: #858585;
+    border-radius: 10px;
+    position: fixed;
+    font-size: 20px;
+    bottom: 50%;
+    left: 0%;
+    width: 16%;
+    z-index: 9999;
+  }
+  
+  #btn-aceptar,
+  #btn-cancelar {
+    background-color: #304a6e;
+    font-size: 17px;
+    padding: 10px 20px;
+    color: #eef0f4;
+    border: none;
+    margin-right: 20px;
+    float: right;
+  }
+  
+  #btn-aceptar:hover,
+  #btn-cancelar:hover {
+    background-color: #223650;
+    cursor: pointer;
+  }
+  
+  #btn-aceptar-exito {
+    background-color: #304a6e;
+    font-size: 17px;
+    padding: 10px 20px;
+    color: #eef0f4;
+    border: none;
+    margin-right: 20px;
+    float: right;
+  }
+  
+  #btn-aceptar-exito:hover {
+    background-color: #223650;
+    cursor: pointer;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Color de fondo oscuro con opacidad */
+    z-index: 9998; /* Asegura que la superposición esté por encima del contenido */
+    display: none; /* Inicialmente oculta la superposición */
+  }
+  

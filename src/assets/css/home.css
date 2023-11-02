@@ -230,3 +230,14 @@ dialog {
   background-color: #223650;
   cursor: pointer;
 }
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Color de fondo oscuro con opacidad */
+  z-index: 9998; /* Asegura que la superposición esté por encima del contenido */
+  display: none; /* Inicialmente oculta la superposición */
+}
