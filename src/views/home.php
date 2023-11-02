@@ -20,6 +20,9 @@
             <p id="añadir">AÑADIR</p>
         </div>
 
+        <!-- Capa de superposición -->
+        <div class="overlay" id="overlay"></div>
+
         <?php
         session_start();
 
@@ -89,9 +92,11 @@
         // Función para mostrar el diálogo de éxito al eliminar
         function mostrarExitoEliminar() {
             const exitoEliminarDialog = document.getElementById("exito_eliminar");
+            const overlay = document.getElementById("overlay");
             <?php
             if (isset($_SESSION['eliminacion_exitosa']) && $_SESSION['eliminacion_exitosa'] === true) {
                 echo 'exitoEliminarDialog.style.display = "block";';
+                echo 'overlay.style.display = "block";';
                 // Elimina la variable de sesión para evitar que se muestre nuevamente al recargar la página.
                 unset($_SESSION['eliminacion_exitosa']);
             }
@@ -102,6 +107,7 @@
             btnExitoAceptar.addEventListener("click", function () {
                 // Oculta el diálogo de éxito
                 exitoEliminarDialog.style.display = "none";
+                overlay.style.display = "none";
 
             });
         }
