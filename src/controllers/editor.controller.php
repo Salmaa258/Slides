@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // Punto de entrada principal
 define('VALID_ENTRY_POINT', true);
@@ -91,6 +92,9 @@ if (isset($_POST['presentacion_id'])) {
     $newPresentacion = new Presentacion(null, $titulo, $descripcion, $tema, $diapositivas);
     $newPresentacion->guardarNuevaPresentacion($conn);
     $id_presentacion = $newPresentacion->getId();
+
+     // Establece la variable de sesión para indicar que la eliminación fue exitosa
+     $_SESSION['guardado_exitoso'] = true;
 
 }
 

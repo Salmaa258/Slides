@@ -34,6 +34,7 @@ $conn = $db->getConnection();
 
 
 <?php
+session_start();
 
 $presentacion = null;
 $id_presentacion = null;
@@ -148,9 +149,33 @@ if (isset($_GET['presentacion_id'])) {
         </form>
     </dialog>
 
-
-
     <script src="../js/editor.js"></script>
+
+    <script>
+        mostrarExitoGuardar();
+        // Función para mostrar el diálogo de éxito al eliminar
+        function mostrarExitoGuardar() {
+            const exitoGuardarDialog = document.getElementById("exito_guardar");
+            const overlay = document.getElementById("overlay");
+            <?php
+            if (isset($_SESSION['guardado_exitoso']) && $_SESSION['guardado_exitoso'] === true) {
+                echo 'exitoGuardarDialog.style.display = "block";';
+                echo 'overlay.style.display = "block";';
+                // Elimina la variable de sesión para evitar que se muestre nuevamente al recargar la página.
+                unset($_SESSION['guardado_exitoso']);
+            }
+            ?>
+
+            // Agrega un event listener al botón "Aceptar" en el diálogo de éxito
+            const btnExitoAceptar = document.getElementById("btn-aceptar-exito");
+            btnExitoAceptar.addEventListener("click", function () {
+                // Oculta el diálogo de éxito
+                exitoGuardarDialog.style.display = "none";
+                overlay.style.display = "none";
+
+            });
+        }
+    </script>
 </body>
 
 </html>

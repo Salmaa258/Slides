@@ -41,7 +41,7 @@ const newTipoContenido = () => {
     numDiapositivas++;
 };
 
-
+//Funcion para mostrar la confirmación del feedback
 const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
     event.preventDefault();
     const dialog = document.getElementById("confirmarGuardar");
@@ -70,18 +70,7 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
   
       // Reseteamos el tipo de diapositiva
       tipoDiapositiva = "";
-  
-      // Mostramos el diálogo de éxito
-      const exitoDialog = document.getElementById("exito_guardar");
-      exitoDialog.style.display = "block";
-  
-      // Agrega un event listener al botón "Aceptar" en el diálogo de éxito
-      const btnAceptarExito = document.getElementById("btn-aceptar-exito");
-      btnAceptarExito.addEventListener("click", () => {
-        // Oculta el diálogo de éxito
-        const exitoDialog = document.getElementById("exito_guardar");
-        exitoDialog.style.display = "none";
-      });
+
     });
   
     // Agrega un event listener al botón "Cancelar" en el diálogo
@@ -107,6 +96,7 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
     return false; // Evita que el evento del enlace se propague
   };
   
+  //Botón guardar la presentación 
   const btnGuardar = document.getElementById("btn-guardar");
   btnGuardar.addEventListener("click", (event) => {
     event.preventDefault();
@@ -131,15 +121,16 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
     });
   });
   
+  //Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Titulo"
   const mostrarConfirmacionNuevaDiapositivaTitulo = (event) => {
     mostrarConfirmacionNuevaDiapositiva(event, "titulo");
   };
   
+  //Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Titulo + Texto"
   const mostrarConfirmacionNuevaDiapositivaTituloTexto = (event) => {
     mostrarConfirmacionNuevaDiapositiva(event, "tituloTexto");
   };
   
-//_______________________________________________________________________________
 
 // Evento para cerrar desplegables al hacer click fuera del mismo.
 document.addEventListener('click', (event) => {
