@@ -3,6 +3,7 @@ const diapositivaTitulo = document.getElementById('d_titulo_template');
 const diapositivaTituloTexto = document.getElementById(
     'd_titulo_texto_template'
 );
+let tipoDiapositiva = "";
 
 // Crea y añade una nueva diapositiva de tipo "título" al contenedor principal.
 const newTipoTitulo = () => {
@@ -39,6 +40,106 @@ const newTipoContenido = () => {
     diapositivasContainer.append(diapositivaContainer);
     numDiapositivas++;
 };
+
+
+const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
+    event.preventDefault();
+    const dialog = document.getElementById("confirmarGuardar");
+    const overlay = document.getElementById("overlay");
+  
+    // Recordamos el tipo de diapositiva que se va a agregar
+    tipoDiapositiva = tipo;
+  
+    // Muestra el diálogo
+    dialog.style.display = "block";
+    overlay.style.display = "block";
+  
+    // Agrega un event listener al botón "Aceptar" en el diálogo
+    const btnAceptar = document.getElementById("btn-aceptar");
+    btnAceptar.addEventListener("click", () => {
+      // Oculta el diálogo
+      dialog.style.display = "none";
+      overlay.style.display = "none";
+  
+      // Agregamos la Diapositiva seleccionada según el tipo recordado
+      if (tipoDiapositiva === "titulo") {
+        newTipoTitulo();
+      } else if (tipoDiapositiva === "tituloTexto") {
+        newTipoContenido();
+      }
+  
+      // Reseteamos el tipo de diapositiva
+      tipoDiapositiva = "";
+  
+      // Mostramos el diálogo de éxito
+      const exitoDialog = document.getElementById("exito_guardar");
+      exitoDialog.style.display = "block";
+  
+      // Agrega un event listener al botón "Aceptar" en el diálogo de éxito
+      const btnAceptarExito = document.getElementById("btn-aceptar-exito");
+      btnAceptarExito.addEventListener("click", () => {
+        // Oculta el diálogo de éxito
+        const exitoDialog = document.getElementById("exito_guardar");
+        exitoDialog.style.display = "none";
+      });
+    });
+  
+    // Agrega un event listener al botón "Cancelar" en el diálogo
+    const btnCancelar = document.getElementById("btn-cancelar");
+    btnCancelar.addEventListener("click", () => {
+      // Oculta el diálogo sin llamar a la función
+      dialog.style.display = "none";
+      overlay.style.display = "none";
+  
+      if (tipoDiapositiva) {
+        // Si hay un tipo de diapositiva recordado, inserta en la base de datos pero sin guardar los cambios
+        if (tipoDiapositiva === "titulo") {
+            newTipoTitulo();
+        } else if (tipoDiapositiva === "tituloTexto") {
+            newTipoContenido();
+        }
+      }
+  
+      // Reseteamos el tipo de diapositiva
+      tipoDiapositiva = "";
+    });
+  
+    return false; // Evita que el evento del enlace se propague
+  };
+  
+  const btnGuardar = document.getElementById("btn-guardar");
+  btnGuardar.addEventListener("click", (event) => {
+    event.preventDefault();
+    const dialog = document.getElementById("confirmarGuardar");
+    const overlay = document.getElementById("overlay");
+    const exitoDialog = document.getElementById("exito_guardar");
+  
+    // Oculta el diálogo de confirmación y la capa de superposición
+    dialog.style.display = "none";
+    overlay.style.display = "none";
+  
+    // Mostrar el diálogo de éxito
+    exitoDialog.style.display = "block";
+    overlay.style.display = "block";
+  
+    // Agrega un event listener al botón "Aceptar" en el diálogo de éxito
+    const btnAceptarExito = document.getElementById("btn-aceptar-exito");
+    btnAceptarExito.addEventListener("click", () => {
+      // Oculta el diálogo de éxito
+      exitoDialog.style.display = "none";
+      overlay.style.display = "none";
+    });
+  });
+  
+  const mostrarConfirmacionNuevaDiapositivaTitulo = (event) => {
+    mostrarConfirmacionNuevaDiapositiva(event, "titulo");
+  };
+  
+  const mostrarConfirmacionNuevaDiapositivaTituloTexto = (event) => {
+    mostrarConfirmacionNuevaDiapositiva(event, "tituloTexto");
+  };
+  
+//_______________________________________________________________________________
 
 // Evento para cerrar desplegables al hacer click fuera del mismo.
 document.addEventListener('click', (event) => {
