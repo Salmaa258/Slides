@@ -48,7 +48,7 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 
 === Semana 2
 ==== Alfred
-
+- Funcionalidad guardar y editar antes del Refactorizar.
 
 ==== Salma
 - Función de Eliminar Presentaciones desde home, **eliminar.php**.
@@ -62,7 +62,13 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 === Semana 3
 
 ==== Alfred
-
+- Diseño lista en Figma.
+- Creacion funcionalidades:
+    - Creacion de lista.
+    - Actualizar lista dinamicamente por diapositivas.
+    - Mostrar solo la diapositiva actual.
+    - Enlazar items de la lista con sus diapositivas.
+    - Eliminar diapositivas y mostrar la diapositiva anterior o posterior según su localicazión.
 
 ==== Salma
 - Añadir Feedback al eliminar la presentación en la pantalla **home.php**.
