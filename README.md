@@ -19,14 +19,17 @@
 
 - Desplegada en la máquina de Salma (192.168.50.159)
 
+#### Instalación:
+
 sudo apt install default-mysql-server
 
 
 sudo apt install git
 
 
-git clone https://git.copernic.cat/daw2/grup4-alfred_emilio_salma.git -b formacion
+git clone https://git.copernic.cat/daw2/grup4-alfred_emilio_salma.git -b develop
 
+#### Configuración ficheros:
 
 sudo nano /etc/php/8.2/apache2/php.ini
 
@@ -59,6 +62,7 @@ sudo nano /var/www/html/grup4_alfred_emilio_salma/php/config.php
 
 cambiar linia -> define('DB_HOST', '127.0.0.1:3306'); 
 
+#### Creación BBDD:
 
 sudo mysql
 > CREATE DATABASE db_Presentaciones;
@@ -72,6 +76,6 @@ sudo mysql
 
 mysql -u usuari -p
 
-> insert into Presentacions values(null,'aaa','aaa', null);
+> insert into presentacion values(null,'aaa','aaa');
 
         
