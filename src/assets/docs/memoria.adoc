@@ -53,16 +53,28 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 ==== Salma
 - Función de Eliminar Presentaciones desde home, **eliminar.php**.
 - Despliegue de la aplicación en un servidor (Isard).
-- Eliminar diapositivas exitentes desde la pantalla **crear_p**.
-- Reordenar diapositivas. 
 - Creación de la guía de estilos en Figma.
 
 
 ==== Emilio
 
 
-
 === Semana 3
+
+==== Alfred
+
+
+==== Salma
+- Añadir Feedback al eliminar la presentación en la pantalla **home.php**.
+- Pedir confirmación para guardar el progreso en la bbdd cuando se añade una nueva diapositiva.
+- Añadir Feedback cuando se guarda una presentación.
+- Diseño en Figma de la nueva diapositiva TipoImagen.
+- Creacion nueva tabla tipoImagen + añadir la nueva diapositiva.
+
+
+==== Emilio
+
+
 === Semana 4
 
 == DISEÑO
