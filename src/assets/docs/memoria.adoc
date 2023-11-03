@@ -73,6 +73,15 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 
 
 ==== Emilio
+- Refactorizar PHP, creando Modelos, Vistas y Controladores.
+- Aplicar MVC a las funcionalidades actuales.
+- Refactorizar directorio del proyecto, organizando MVC, assets, etc.
+- Funcionalidad cargar presentación de la BD en el editor para seguir editando después de guardar.
+- Refactorizar editor.css para visualizar temas con variables CSS.
+- Hacer los temas persistentes en la BD y que se muestren al cargar.
+- Diseño Figma de los Temas de presentación.
+- Diseño Figma pantalla Previsualización.
+- Funcionalidad Previsualización de las presentaciones.
 
 
 === Semana 4
