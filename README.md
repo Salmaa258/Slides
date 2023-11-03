@@ -58,7 +58,7 @@ iface enp3s0 inet static
 sudo mv grup4-alfred_emilio_salma/ /var/www/html/
 
 
-sudo nano /var/www/html/grup4_alfred_emilio_salma/php/config.php
+sudo nano /var/www/html/grup4_alfred_emilio_salma/config.php
 
 cambiar linia -> define('DB_HOST', '127.0.0.1:3306'); 
 
