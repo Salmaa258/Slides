@@ -32,12 +32,28 @@ body {
     height: 97vh;
 }
 
+a {
+    display: none;
+    position: absolute;
+    right: 6%;
+    top: 2%;
+    z-index: 1;
+}
+
+#diapositivaPosterior > img {
+    display: none;
+    position: absolute;
+    right: 25%;
+    top: 2%;
+    z-index: 1;
+}
+
 #diapositivaAnterior {
     position: absolute;
     left: 0;
     height: 100%;
     width: 15%;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: start;
     padding-left: 1.5%;
@@ -45,6 +61,8 @@ body {
 
 #diapositivaAnterior:hover button {
     display: flex;
+    padding: 10px 20px 10px 15px;
+    cursor: pointer;
 }
 
 #diapositivaPosterior {
@@ -58,15 +76,26 @@ body {
     padding-right: 1.5%;
 }
 
+#diapositivaPosterior:hover a {
+    display: block;
+}
+
+#diapositivaPosterior:hover img {
+    display: block;
+    cursor: pointer;
+}
+
 #diapositivaPosterior:hover button {
     display: flex;
+    padding: 10px 15px 10px 20px;
+    cursor: pointer;
 }
 
 button {
     border-radius: 100%;
     background: #304a6e;
     border: 0;
-    padding: 10px 18px;
+    padding: 10px 16px;
     display: none;
     justify-content: center;
     align-items: center;
@@ -93,7 +122,7 @@ button {
 
 h1 {
     display: flex;
-    width: 75%;
+    width: 85%;
     height: 7%;
     justify-content: center;
     align-items: start;
@@ -101,7 +130,8 @@ h1 {
 }
 
 p {
-    width: 75%;
+    width: 85%;
     height: 100%;
     font-size: 32px;
+    overflow: hidden;
 }

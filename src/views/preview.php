@@ -37,6 +37,8 @@ $tema = $presentacion->getTema();
         <button onclick="anterior()"><img src="../assets/icons/leftArrow.svg"></button>
     </div>
     <div id="diapositivaPosterior">
+        <img src="../assets/icons/fullscreen.svg" onclick="activarPantallaCompleta()">
+        <a href="home.php"><img src="../assets/icons/exit.svg"></a>
         <button onclick="siguiente()"><img src="../assets/icons/rightArrow.svg"></button>
     </div>
     <div id="diapositivas">
