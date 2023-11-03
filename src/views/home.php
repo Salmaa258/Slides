@@ -51,9 +51,9 @@
                 <form hidden id="previewForm_<?= $row['id'] ?>" action="preview.php" method="POST" hidden>
                 </form>
                 <div class="imagen-overlay" onclick="document.forms['previewForm_<?= $row['id'] ?>'].submit();">
-                    <form action="preview.php" method="get">
+                    <form action="preview.php" method="POST">
                         <input type="hidden" name="id_presentacion" value="<?= $row['id'] ?>">
-                        <img src="../assets/icons/ver.png" alt="">
+                        <img src="../assets/icons/ver.png" alt="" type="submit">
                     </form>
                 </div>
                 <button class="opciones-btn clickable">+</button>

@@ -66,4 +66,12 @@ class TipoTitulo extends Diapositiva
           name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
       </div>';
     }
+
+    public function getDiapositivaPreview(): string
+    {
+        return '
+        <div class="d-container" style="display: none;">
+            <h1 class="d_titulo_' . $this->getId() . '">' . $this->getTitulo() . '</h1>
+        </div>';
+    }
 }
