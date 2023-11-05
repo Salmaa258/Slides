@@ -102,7 +102,7 @@ if (isset($_GET['presentacion_id'])) {
                 <a href="home.php">
                     <button class="button">Cancelar</button>
                 </a>
-                <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
+                    <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
             </div>
         </div>
     </div>
@@ -145,18 +145,18 @@ if (isset($_GET['presentacion_id'])) {
     <dialog id="exito_guardar">
         <p>Se ha guardado la presentación correctamente</p>
         <form method="dialog">
-            <button id="btn-aceptar-exito" type="submit" form="data_p">Aceptar</button>
+            <button id="btn-aceptar-exito">Aceptar</button>
         </form>
     </dialog>
 
     <script src="../js/editor.js"></script>
 
     <script>
-        mostrarExitoGuardar();
-        // Función para mostrar el diálogo de éxito al eliminar
+        // Función para mostrar el diálogo de éxito al guardar
         function mostrarExitoGuardar() {
             const exitoGuardarDialog = document.getElementById("exito_guardar");
             const overlay = document.getElementById("overlay");
+
             <?php
             if (isset($_SESSION['guardado_exitoso']) && $_SESSION['guardado_exitoso'] === true) {
                 echo 'exitoGuardarDialog.style.display = "block";';
@@ -167,15 +167,18 @@ if (isset($_GET['presentacion_id'])) {
             ?>
 
             // Agrega un event listener al botón "Aceptar" en el diálogo de éxito
-            const btnExitoAceptar = document.getElementById("btn-aceptar-exito");
-            btnExitoAceptar.addEventListener("click", function () {
+            const btnAceptarExito = document.getElementById("btn-aceptar-exito");
+            btnAceptarExito.addEventListener("click", function () {
                 // Oculta el diálogo de éxito
                 exitoGuardarDialog.style.display = "none";
-                overlay.style.display = "none";
-
+                overlay.style.display = "none"; 
             });
         }
+        // Llama a la función mostrarExitoGuardar al cargar la página
+        mostrarExitoGuardar();
     </script>
+
+
 </body>
 
 </html>
