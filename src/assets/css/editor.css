@@ -247,7 +247,7 @@ a {
 
 /*Dialog*/
 dialog {
-    background-color: #858585;
+    background-color: #a7a7a7;
     border-radius: 10px;
     position: fixed;
     font-size: 20px;
@@ -258,7 +258,7 @@ dialog {
   }
   
   #confirmarGuardar {
-    background-color: #858585;
+    background-color: #a7a7a7;
     border-radius: 10px;
     position: fixed;
     font-size: 20px;
@@ -276,6 +276,7 @@ dialog {
     color: #eef0f4;
     border: none;
     margin-right: 20px;
+    border-radius: 8px;
     float: right;
   }
   
@@ -290,6 +291,7 @@ dialog {
     font-size: 17px;
     padding: 10px 20px;
     color: #eef0f4;
+    border-radius: 8px;
     border: none;
     margin-right: 20px;
     float: right;
