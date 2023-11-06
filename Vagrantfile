@@ -82,7 +82,7 @@ CREATE TABLE tipoContenido(
   diapositiva_id  INT,
   presentacion_id INT,
   titulo          VARCHAR(255),
-  contenido       TEXT,
+  contenido       VARCHAR(1280),
 
   PRIMARY KEY(diapositiva_id, presentacion_id),
   FOREIGN KEY (diapositiva_id) 
