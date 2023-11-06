@@ -1,3 +1,5 @@
+const cajaContainer = document.getElementById('global');
+
 //Función para mostrar opciones de editar, eliminar y clonar presentación
 function mostrarOpciones(cajaElement) {
     const opcionesButton = cajaElement.querySelector('.opciones-btn');
@@ -10,32 +12,6 @@ function mostrarOpciones(cajaElement) {
         opcionesButton.textContent = '+';
     }
 }
-
-const cajaContainer = document.getElementById('global');
-
-cajaContainer.addEventListener('click', (e) => {
-    if (e.target.className.includes('opciones-btn')) {
-        mostrarOpciones(e.target.parentNode);
-    }
-});
-
-document.addEventListener('click', (e) => {
-    let optionsDisplayTrue;
-    try {
-        optionsDisplayTrue = document.querySelector(
-            '.opciones[style*="display: block"]'
-        ).parentElement;
-    } catch (error) {
-        optionsDisplayTrue = null;
-    }
-
-    if (
-        !e.target.className.includes('clickable') &&
-        optionsDisplayTrue !== null
-    ) {
-        mostrarOpciones(optionsDisplayTrue);
-    }
-});
 
 // Función para mostrar el diálogo al hacer clic en el botón de eliminar
 function mostrarConfirmacionEliminar(event, form) {
@@ -70,3 +46,27 @@ function mostrarConfirmacionEliminar(event, form) {
 
     return false; // Evita que el formulario se envíe automáticamente
 }
+
+document.addEventListener('click', (e) => {
+    let optionsDisplayTrue;
+    try {
+        optionsDisplayTrue = document.querySelector(
+            '.opciones[style*="display: block"]'
+        ).parentElement;
+    } catch (error) {
+        optionsDisplayTrue = null;
+    }
+
+    if (
+        !e.target.className.includes('clickable') &&
+        optionsDisplayTrue !== null
+    ) {
+        mostrarOpciones(optionsDisplayTrue);
+    }
+});
+
+cajaContainer.addEventListener('click', (e) => {
+    if (e.target.className.includes('opciones-btn')) {
+        mostrarOpciones(e.target.parentNode);
+    }
+});
