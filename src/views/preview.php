@@ -20,6 +20,7 @@ $conn = $db->getConnection();
 
 $presentacion = Presentacion::getPresentacionBD($conn, $_POST['id_presentacion']);
 $tema = $presentacion->getTema();
+$firstDiapositiva = isset($_POST['diapositiva_id']) ? $_POST['diapositiva_id'] : null;
 ?>
 
 <!DOCTYPE html>
@@ -38,10 +39,10 @@ $tema = $presentacion->getTema();
     </div>
     <div id="diapositivaPosterior">
         <img src="../assets/icons/fullscreen.svg" onclick="activarPantallaCompleta()">
-        <a href="home.php"><img src="../assets/icons/exit.svg"></a>
+        <a href="javascript: history.go(-1)"><img src="../assets/icons/exit.svg"></a>
         <button onclick="siguiente()"><img src="../assets/icons/rightArrow.svg"></button>
     </div>
-    <div id="diapositivas">
+    <div id="diapositivas" firstDiapositiva="<?= $firstDiapositiva ?>">
         <?php
         $diapositivas = $presentacion->getDiapositivas();
         foreach ($diapositivas as $diapositiva) {

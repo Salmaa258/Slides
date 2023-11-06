@@ -11,13 +11,13 @@
 #diapositivas[tema='oscuro'] {
     --background: #1d1e18;
     --border: #eef0f4;
-    --focus: #26272D;
+    --focus: #26272d;
 }
 
 #diapositivas[tema='claro'] {
     --background: #eef0f4;
     --border: #1d1e18;
-    --focus: #D1D1D1;
+    --focus: #d1d1d1;
 }
 
 body {
@@ -36,7 +36,6 @@ body {
 }
 
 #inputTitulo {
-    font-family: Gabarito;
     background-color: transparent;
     color: #eef0f4;
     font-family: Gabarito;
@@ -55,7 +54,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
     gap: 7px;
-    width: 100%;
+    width: 90%;
     color: #eef0f4;
     min-width: min-content;
     transform: scale(1);
@@ -68,7 +67,7 @@ body {
     justify-content: center;
     width: 100%;
     height: min-content;
-    gap: 5px 6%;
+    gap: 5px 4%;
     border-radius: 8px;
     background: #304a6e;
     padding: 1%;
@@ -202,8 +201,6 @@ a {
     height: 15%;
 }
 
-
-
 .d-container textarea {
     height: 80%;
     width: 100%;
@@ -255,9 +252,9 @@ dialog {
     left: 0%;
     width: 24%;
     z-index: 9999;
-  }
-  
-  #confirmarGuardar {
+}
+
+#confirmarGuardar {
     background-color: #a7a7a7;
     border-radius: 10px;
     position: fixed;
@@ -266,10 +263,10 @@ dialog {
     left: 0%;
     width: 16%;
     z-index: 9999;
-  }
-  
-  #btn-aceptar,
-  #btn-cancelar {
+}
+
+#btn-aceptar,
+#btn-cancelar {
     background-color: #304a6e;
     font-size: 17px;
     padding: 10px 20px;
@@ -278,15 +275,15 @@ dialog {
     margin-right: 20px;
     border-radius: 8px;
     float: right;
-  }
-  
-  #btn-aceptar:hover,
-  #btn-cancelar:hover {
+}
+
+#btn-aceptar:hover,
+#btn-cancelar:hover {
     background-color: #223650;
     cursor: pointer;
-  }
-  
-  #btn-aceptar-exito {
+}
+
+#btn-aceptar-exito {
     background-color: #304a6e;
     font-size: 17px;
     padding: 10px 20px;
@@ -295,14 +292,14 @@ dialog {
     border: none;
     margin-right: 20px;
     float: right;
-  }
-  
-  #btn-aceptar-exito:hover {
+}
+
+#btn-aceptar-exito:hover {
     background-color: #223650;
     cursor: pointer;
-  }
-  
-  .overlay {
+}
+
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -311,5 +308,4 @@ dialog {
     background-color: rgba(0, 0, 0, 0.5); /* Color de fondo oscuro con opacidad */
     z-index: 9998; /* Asegura que la superposición esté por encima del contenido */
     display: none; /* Inicialmente oculta la superposición */
-  }
-  
+}
