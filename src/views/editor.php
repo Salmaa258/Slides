@@ -67,7 +67,9 @@ if (isset($_GET['presentacion_id'])) {
         <div class="headerButtons">
             <div class="descripcion-container">
                 <div id="icon-presentaciones">
-                    <img src="../assets/icons/presentacio.svg" alt="Icono Presentación" />
+                    <a href="home.php">
+                        <img src="../assets/icons/home.svg" alt="Icono Presentación" />
+                    </a>
                 </div>
                 <form method="POST" id="data_p" action="../controllers/editor.controller.php">
                     <input type="text" class="input focus" name="p_descripcion" value="<?= $descripcion ?>"
@@ -98,11 +100,15 @@ if (isset($_GET['presentacion_id'])) {
                 </div>
                 <span>Seleccionar Tema</span>
             </div>
+            <form id="preview_form" action="preview.php" method="POST">
+                <input hidden type="text" name="id_presentacion" value="<?= $id_presentacion ?>">
+                <input hidden type="text" name="diapositiva_id" value="">
+                <button class="button" type="submit">
+                    <img src="../assets/icons/presentation.svg" alt="Icono Presentación" />
+                </button>
+            </form>
             <div class="actionButtons">
-                <a href="home.php">
-                    <button class="button">Cancelar</button>
-                </a>
-                    <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
+                <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
             </div>
         </div>
     </div>
@@ -171,7 +177,7 @@ if (isset($_GET['presentacion_id'])) {
             btnAceptarExito.addEventListener("click", function () {
                 // Oculta el diálogo de éxito
                 exitoGuardarDialog.style.display = "none";
-                overlay.style.display = "none"; 
+                overlay.style.display = "none";
             });
         }
         // Llama a la función mostrarExitoGuardar al cargar la página
