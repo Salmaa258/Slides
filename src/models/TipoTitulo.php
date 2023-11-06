@@ -62,7 +62,7 @@ class TipoTitulo extends Diapositiva
     public function getDiapositivaHTML(): string
     {
         return '<div class="d-container">
-        <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
+        <input class="focus" type="text" form="data_p" maxlength="128" value="' . $this->getTitulo() . '" autocomplete="off"
           name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
       </div>';
     }
