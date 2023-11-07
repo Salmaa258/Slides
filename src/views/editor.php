@@ -62,7 +62,7 @@ if (isset($_GET['presentacion_id'])) {
     <div class="header">
         <input hidden <?= $disabled ?> type="text" form="data_p" name="presentacion_id" value="<?= $id_presentacion ?>">
         <input hidden type="text" form="data_p" name="tema" value="<?= $tema ?>">
-        <input id="inputTitulo" type="text" form="data_p" class="input" name="p_titulo" value="<?= $titulo ?>"
+        <input id="inputTitulo" type="text" form="data_p" class="input" maxlength="30" name="p_titulo" value="<?= $titulo ?>"
             placeholder="Añade un título..." required autocomplete="off" />
         <div class="headerButtons">
             <div class="descripcion-container">
@@ -72,7 +72,7 @@ if (isset($_GET['presentacion_id'])) {
                     </a>
                 </div>
                 <form method="POST" id="data_p" action="../controllers/editor.controller.php">
-                    <input type="text" class="input focus" name="p_descripcion" value="<?= $descripcion ?>"
+                    <input type="text" class="input focus" maxlength="150" name="p_descripcion" value="<?= $descripcion ?>"
                         placeholder="Escribe una descripción..." autocomplete="off" />
                 </form>
             </div>
@@ -116,15 +116,15 @@ if (isset($_GET['presentacion_id'])) {
     <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
         <template id="d_titulo_template">
             <div class="d-container">
-                <input class="focus" type="text" form="data_p" autocomplete="off"
+                <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                     placeholder="Haz click para añadir un título..." />
             </div>
         </template>
         <template id="d_titulo_texto_template">
             <div class="d-container">
-                <input class="focus" type="text" form="data_p" autocomplete="off"
+                <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                     placeholder="Haz click para añadir un título..." />
-                <textarea class="focus" form="data_p" autocomplete="off"
+                <textarea class="focus" form="data_p" maxlength="1280" autocomplete="off"
                     placeholder="Haz click para añadir un texto"></textarea>
             </div>
         </template>

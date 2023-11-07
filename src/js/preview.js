@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('fullscreenchange', (event) => {
     if (document.fullscreenElement) {
-        document.querySelector('#diapositivaPosterior img').src = '';
+        document.querySelector('#diapositivaPosterior img').style.display = 'none';
     } else {
-        document.querySelector('#diapositivaPosterior img').src = '../assets/icons/fullscreen.svg';
+        document.querySelector('#diapositivaPosterior img').style.display = '';
     }
 });
