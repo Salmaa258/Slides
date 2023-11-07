@@ -170,7 +170,9 @@ const previewForm = document.querySelector('#preview_form');
 previewForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const inputDiapositivaId = previewForm.querySelector('input[name="diapositiva_id"]');
-    const diapositivaActual = document.querySelector('.d-container[style*="display: flex"] input');
-    inputDiapositivaId.value = diapositivaActual.name[diapositivaActual.name.length - 1];
+    let diapositivaActual = document.querySelector('.d-container[style*="display: flex"] input');
+    diapositivaActual = diapositivaActual.name.split('_');
+    diapositivaActual = diapositivaActual[diapositivaActual.length - 1];
+    inputDiapositivaId.value = diapositivaActual;
     e.target.submit();
 });
