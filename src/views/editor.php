@@ -62,8 +62,8 @@ if (isset($_GET['presentacion_id'])) {
     <div class="header">
         <input hidden <?= $disabled ?> type="text" form="data_p" name="presentacion_id" value="<?= $id_presentacion ?>">
         <input hidden type="text" form="data_p" name="tema" value="<?= $tema ?>">
-        <input id="inputTitulo" type="text" form="data_p" class="input" maxlength="30" name="p_titulo" value="<?= $titulo ?>"
-            placeholder="Añade un título..." required autocomplete="off" />
+        <input id="inputTitulo" type="text" form="data_p" class="input" maxlength="30" name="p_titulo"
+            value="<?= $titulo ?>" placeholder="Añade un título..." required autocomplete="off" />
         <div class="headerButtons">
             <div class="descripcion-container">
                 <div id="icon-presentaciones">
@@ -72,8 +72,8 @@ if (isset($_GET['presentacion_id'])) {
                     </a>
                 </div>
                 <form method="POST" id="data_p" action="../controllers/editor.controller.php">
-                    <input type="text" class="input focus" maxlength="150" name="p_descripcion" value="<?= $descripcion ?>"
-                        placeholder="Escribe una descripción..." autocomplete="off" />
+                    <input type="text" class="input focus" maxlength="150" name="p_descripcion"
+                        value="<?= $descripcion ?>" placeholder="Escribe una descripción..." autocomplete="off" />
                 </form>
             </div>
             <div id="nova-diapositiva">
@@ -104,9 +104,15 @@ if (isset($_GET['presentacion_id'])) {
                 <input hidden type="text" name="id_presentacion" value="<?= $id_presentacion ?>">
                 <input hidden type="text" name="diapositiva_id" value="">
                 <button class="button" type="submit">
-                    <img src="../assets/icons/presentation.svg" alt="Icono Presentación" />
+                    <img src="../assets/icons/presentacion.svg" alt="Icono Presentación" />
                 </button>
             </form>
+            <div id="publicar_button">
+                <input hidden type="text" name="url" form="data_p" value="null">
+                <button class="button" type="submit">
+                    <img src="../assets/icons/noPublicada.svg" alt="Publicar Presentacion" />
+                </button>
+            </div>
             <div class="actionButtons">
                 <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
             </div>
