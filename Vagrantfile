@@ -52,8 +52,7 @@ CREATE TABLE presentacion(
 
   PRIMARY KEY(id),
   FOREIGN KEY (tema) 
-    REFERENCES tema(id),
-  CONSTRAINT uk_presentacion_url UNIQUE (url);
+    REFERENCES tema(id)
 );
 
 CREATE TABLE diapositiva(

@@ -6,10 +6,10 @@ class Presentacion
     private string $titulo;
     private string $descripcion;
     private string $tema;
-    private string|null $url;
+    private string $url;
     private array $diapositivas;
 
-    public function __construct(int|null $id, string $titulo, string $descripcion, string $tema, string|null $url, array $diapositivas)
+    public function __construct(int|null $id, string $titulo, string $descripcion, string $tema, string $url, array $diapositivas)
     {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -39,7 +39,8 @@ class Presentacion
         return $this->tema;
     }
 
-    public function getUrl(): string {
+    public function getUrl(): string
+    {
         return $this->url;
     }
 
@@ -66,6 +67,11 @@ class Presentacion
     public function setTema(string $tema): void
     {
         $this->tema = $tema;
+    }
+
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
     }
 
     public function setDiapositivas(array $diapositivas): void
@@ -115,7 +121,7 @@ class Presentacion
             $stmt->execute();
         }
 
-        if ($this->getUrl() === null) {
+        if ($this->getUrl() !== 'null') {
             $newUrl = null;
 
             $stmt = $conn->prepare("UPDATE presentacion SET url = ? WHERE id = ?");

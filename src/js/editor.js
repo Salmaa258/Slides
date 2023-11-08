@@ -90,30 +90,6 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
     return false; // Evita que el evento del enlace se propague
 };
 
-// //Botón guardar la presentación
-// const btnGuardar = document.getElementById("btn-guardar");
-// btnGuardar.addEventListener("click", (event) => {
-//   event.preventDefault();
-//   const overlay = document.getElementById("overlay");
-//   const exitoDialog = document.getElementById("exito_guardar");
-
-//   // Mostrar el diálogo de éxito
-//   exitoDialog.style.display = "block";
-//   overlay.style.display = "block";
-
-//   // Agrega un event listener al botón "Aceptar" en el diálogo de éxito
-//   const btnAceptarExito = document.getElementById("btn-aceptar-exito");
-//   btnAceptarExito.addEventListener("click", (form) => {
-
-//     // Cuando el usuario hace clic en "Aceptar", envía el formulario
-//     form.submit();
-
-//     // Oculta el diálogo de éxito
-//     exitoDialog.style.display = "none";
-//     overlay.style.display = "none";
-//   });
-// });
-
 //Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Titulo"
 const mostrarConfirmacionNuevaDiapositivaTitulo = (event) => {
     mostrarConfirmacionNuevaDiapositiva(event, 'titulo');
@@ -166,6 +142,10 @@ const setOscuro = () => {
     inputTema.value = 'oscuro';
 };
 
+const generaUrl = () => {
+    return Math.floor(1000000000 + Math.random() * 9999999999);
+};
+
 const previewForm = document.querySelector('#preview_form');
 previewForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -175,4 +155,14 @@ previewForm.addEventListener('submit', (e) => {
     diapositivaActual = diapositivaActual[diapositivaActual.length - 1];
     inputDiapositivaId.value = diapositivaActual;
     e.target.submit();
+});
+
+const generalForm = document.querySelector('#data_p');
+const publicarButton = document.querySelector('#publicar_button');
+publicarButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const inputUrl = publicarButton.querySelector('input');
+    const url = generaUrl();
+    inputUrl.value = url;
+    generalForm.submit();
 });

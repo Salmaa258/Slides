@@ -42,6 +42,7 @@ $disabled = 'disabled';
 $titulo = null;
 $descripcion = null;
 $tema = 'oscuro';
+$url = 'null';
 $lastDiapositivaId = 0;
 $diapositivas = null;
 
@@ -52,6 +53,7 @@ if (isset($_GET['presentacion_id'])) {
     $descripcion = $presentacion->getDescripcion();
     $lastDiapositivaId = $presentacion->getLastDiapositivaId($conn);
     $tema = $presentacion->getTema();
+    $url = $presentacion->getUrl();
     $diapositivas = $presentacion->getDiapositivas();
     $disabled = '';
 }
@@ -108,8 +110,8 @@ if (isset($_GET['presentacion_id'])) {
                 </button>
             </form>
             <div id="publicar_button">
-                <input hidden type="text" name="url" form="data_p" value="null">
-                <button class="button" type="submit">
+                <input hidden type="text" name="url" form="data_p" value="<?= $url ?>">
+                <button class="button" type="submit" form="data_p">
                     <img src="../assets/icons/noPublicada.svg" alt="Publicar Presentacion" />
                 </button>
             </div>
