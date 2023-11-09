@@ -21,7 +21,7 @@ if (isset($_POST['presentacion_id'])) {
     $presentacionBD = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
     $id_presentacion = $presentacionBD->getId();
 
-    // Actualiza el título, descripción y tema de la presentación
+    // Actualiza el título, descripción, tema y url de la presentación
     $presentacionBD->setTitulo($_POST['p_titulo']);
     $presentacionBD->setDescripcion($_POST['p_descripcion']);
     $presentacionBD->setTema($_POST['tema']);

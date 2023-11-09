@@ -121,8 +121,8 @@ class Presentacion
             $stmt->execute();
         }
 
-        if ($this->getUrl() !== 'null') {
-            $newUrl = null;
+        if ($this->getUrl() != $row['url']) {
+            $newUrl = $this->getUrl();
 
             $stmt = $conn->prepare("UPDATE presentacion SET url = ? WHERE id = ?");
             $stmt->bindParam(1, $newUrl);
@@ -216,7 +216,7 @@ class Presentacion
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], $row['tema'], $row['tema'], []);
+        $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], $row['tema'], $row['url'], []);
 
         $diapositivas = Presentacion::getDiapositivasBD($conn, $id_presentacion);
         $presentacion->setDiapositivas($diapositivas);
