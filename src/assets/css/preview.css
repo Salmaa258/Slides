@@ -38,6 +38,9 @@ a {
     right: 6%;
     top: 2%;
     z-index: 1;
+    background: #304a6e;
+    padding: 3px;
+    border-radius: 8px;
 }
 
 #diapositivaPosterior > img {
@@ -46,6 +49,9 @@ a {
     right: 25%;
     top: 2%;
     z-index: 1;
+    background: #304a6e;
+    padding: 5px;
+    border-radius: 8px;
 }
 
 #diapositivaAnterior {

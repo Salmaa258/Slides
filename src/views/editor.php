@@ -63,12 +63,14 @@ if (isset($_GET['presentacion_id'])) {
     <div class="header">
         <input hidden <?= $disabled ?> type="text" form="data_p" name="presentacion_id" value="<?= $id_presentacion ?>">
         <input hidden type="text" form="data_p" name="tema" value="<?= $tema ?>">
-        <input id="inputTitulo" type="text" form="data_p" class="input" name="p_titulo" value="<?= $titulo ?>"
+        <input id="inputTitulo" type="text" form="data_p" class="input" maxlength="30" name="p_titulo" value="<?= $titulo ?>"
             placeholder="Añade un título..." required autocomplete="off" />
         <div class="headerButtons">
             <div class="descripcion-container">
                 <div id="icon-presentaciones">
-                    <img src="../assets/icons/presentacio.svg" alt="Icono Presentación" />
+                    <a href="home.php">
+                        <img src="../assets/icons/home.svg" alt="Icono Presentación" />
+                    </a>
                 </div>
                 <form method="POST" id="data_p" enctype="multipart/form-data" action="../controllers/editor.controller.php">
                     <input type="text" class="input focus" maxlength="150" name="p_descripcion" value="<?= $descripcion ?>"
@@ -102,11 +104,15 @@ if (isset($_GET['presentacion_id'])) {
                 </div>
                 <span>Seleccionar Tema</span>
             </div>
+            <form id="preview_form" action="preview.php" method="POST">
+                <input hidden type="text" name="id_presentacion" value="<?= $id_presentacion ?>">
+                <input hidden type="text" name="diapositiva_id" value="">
+                <button class="button" type="submit">
+                    <img src="../assets/icons/presentation.svg" alt="Icono Presentación" />
+                </button>
+            </form>
             <div class="actionButtons">
-                <a href="home.php">
-                    <button class="button">Cancelar</button>
-                </a>
-                    <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
+                <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
             </div>
         </div>
     </div>
@@ -114,15 +120,15 @@ if (isset($_GET['presentacion_id'])) {
     <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
         <template id="d_titulo_template">
             <div class="d-container">
-                <input class="focus" type="text" form="data_p" autocomplete="off"
+                <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                     placeholder="Haz click para añadir un título..." />
             </div>
         </template>
         <template id="d_titulo_texto_template">
             <div class="d-container">
-                <input class="focus" type="text" form="data_p" autocomplete="off"
+                <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                     placeholder="Haz click para añadir un título..." />
-                <textarea class="focus" form="data_p" autocomplete="off"
+                <textarea class="focus" form="data_p" maxlength="1280" autocomplete="off"
                     placeholder="Haz click para añadir un texto"></textarea>
             </div>
         </template>
@@ -188,7 +194,7 @@ if (isset($_GET['presentacion_id'])) {
             btnAceptarExito.addEventListener("click", function () {
                 // Oculta el diálogo de éxito
                 exitoGuardarDialog.style.display = "none";
-                overlay.style.display = "none"; 
+                overlay.style.display = "none";
             });
         }
         // Llama a la función mostrarExitoGuardar al cargar la página
