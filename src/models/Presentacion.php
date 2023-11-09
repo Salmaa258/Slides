@@ -157,12 +157,16 @@ class Presentacion
     private static function getDiapositivasBD(PDO $conn, int $id_presentacion): array
     {
         $stmt = $conn->prepare(
-            "SELECT dt.id as diapositiva_id, COALESCE(tt.titulo, tc.titulo) AS titulo, tc.contenido
-            FROM presentacion p 
-                LEFT JOIN diapositiva dt ON p.id = dt.presentacion_id
-                LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
-                LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
-            WHERE p.id = ?;"
+            "SELECT dt.id as diapositiva_id, 
+            COALESCE(tt.titulo, tc.titulo, ti.titulo) AS titulo, 
+            COALESCE(tc.contenido, ti.contenido) AS contenido,
+            ti.nombre_imagen
+        FROM presentacion p 
+            LEFT JOIN diapositiva dt ON p.id = dt.presentacion_id
+            LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
+            LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
+            LEFT JOIN tipoImagen ti ON dt.id = ti.diapositiva_id AND dt.presentacion_id = ti.presentacion_id
+        WHERE p.id = ?;"
         );
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
@@ -170,12 +174,18 @@ class Presentacion
         $diapositivas = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if ($row['contenido'] === null) {
-                array_push($diapositivas, new TipoTitulo($row['diapositiva_id'], $row['titulo']));
+            if ($row['nombre_imagen'] === null) {
+
+                if ($row['contenido'] === null) {
+                    array_push($diapositivas, new TipoTitulo($row['diapositiva_id'], $row['titulo']));
+                } else {
+                    array_push($diapositivas, new TipoContenido($row['diapositiva_id'], $row['titulo'], $row['contenido']));
+                }
             } else {
-                array_push($diapositivas, new TipoContenido($row['diapositiva_id'], $row['titulo'], $row['contenido']));
+                array_push($diapositivas, new TipoImagen($row['diapositiva_id'], $row['titulo'], $row['contenido'], $row['nombre_imagen']));
             }
         }
+
 
         return $diapositivas;
     }
