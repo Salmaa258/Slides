@@ -74,6 +74,11 @@ body {
     min-width: 490px;
 }
 
+#publicar_button {
+    display: flex;
+    gap: 15px;
+}
+
 .descripcion-container {
     display: flex;
     align-items: center;

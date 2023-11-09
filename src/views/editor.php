@@ -43,6 +43,8 @@ $titulo = null;
 $descripcion = null;
 $tema = 'oscuro';
 $url = 'null';
+$icon = 'publicada';
+$copy = 'flex';
 $lastDiapositivaId = 0;
 $diapositivas = null;
 
@@ -58,6 +60,10 @@ if (isset($_GET['presentacion_id'])) {
     $disabled = '';
 }
 
+if ($url === 'null') {
+    $icon = 'noPublicada';
+    $copy = 'none';
+}
 ?>
 
 <body>
@@ -100,7 +106,7 @@ if (isset($_GET['presentacion_id'])) {
                         <span onclick="setOscuro()"><img id="icono-tema" src="../assets/icons/black.svg" />Oscuro</span>
                     </div>
                 </div>
-                <span>Seleccionar Tema</span>
+                <span>Tema</span>
             </div>
             <form id="preview_form" action="preview.php" method="POST">
                 <input hidden type="text" name="id_presentacion" value="<?= $id_presentacion ?>">
@@ -112,7 +118,10 @@ if (isset($_GET['presentacion_id'])) {
             <div id="publicar_button">
                 <input hidden type="text" name="url" form="data_p" value="<?= $url ?>">
                 <button class="button" type="submit" form="data_p">
-                    <img src="../assets/icons/noPublicada.svg" alt="Publicar Presentacion" />
+                    <img src="../assets/icons/<?= $icon ?>.svg" alt="Publicar Presentacion" />
+                </button>
+                <button id="copyUrlButton" class="button" style="display:<?= $copy ?>;">
+                    <img src="../assets/icons/copy.svg" alt="Copiar URL" />
                 </button>
             </div>
             <div class="actionButtons">

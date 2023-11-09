@@ -158,10 +158,10 @@ previewForm.addEventListener('submit', (e) => {
 });
 
 const generalForm = document.querySelector('#data_p');
-const publicarButton = document.querySelector('#publicar_button');
+const publicarButton = document.querySelector('#publicar_button button[form="data_p"]');
 publicarButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const inputUrl = publicarButton.querySelector('input');
+    const inputUrl = publicarButton.parentElement.querySelector('input');
     if (inputUrl.value === 'null') {
         const url = generaUrl();
         inputUrl.value = url;
@@ -169,4 +169,16 @@ publicarButton.addEventListener('click', (e) => {
         inputUrl.value = 'null';
     }
     generalForm.submit();
+});
+
+const copyButton = document.querySelector('#copyUrlButton');
+
+copyButton.addEventListener('click', (e) => {
+    let url = document.querySelector('input[name="url"]').value;
+    url = 'http://localhost:4200/src/views/preview.php?url=' + url;
+    navigator.clipboard.writeText(url);
+    e.target.src = '../assets/icons/checkCopy.svg';
+    setTimeout(() => {
+        e.target.src = '../assets/icons/copy.svg';
+    }, 2000);
 });
