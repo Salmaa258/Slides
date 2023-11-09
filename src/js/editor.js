@@ -180,5 +180,5 @@ copyButton.addEventListener('click', (e) => {
     e.target.src = '../assets/icons/checkCopy.svg';
     setTimeout(() => {
         e.target.src = '../assets/icons/copy.svg';
-    }, 2000);
+    }, 1000);
 });
