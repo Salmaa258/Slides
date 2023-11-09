@@ -163,7 +163,7 @@ publicarButton.addEventListener('click', (e) => {
     e.preventDefault();
     const inputUrl = publicarButton.querySelector('input');
     if (inputUrl.value === 'null') {
-        const url = `${generaUrl()}`;
+        const url = generaUrl();
         inputUrl.value = url;
     } else {
         inputUrl.value = 'null';
