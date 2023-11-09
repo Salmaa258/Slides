@@ -1,9 +1,9 @@
 const diapositivasContainer = document.getElementById('diapositivas');
 const diapositivaTitulo = document.getElementById('d_titulo_template');
-const diapositivaTituloTexto = document.getElementById(
-  'd_titulo_texto_template'
-);
+const diapositivaTituloTexto = document.getElementById('d_titulo_texto_template');
+const diapositivaTituloTextoImagen = document.getElementById('d_titulo_texto_imagen_template');
 let tipoDiapositiva = "";
+
 
 // Crea y añade una nueva diapositiva de tipo "título" al contenedor principal.
 const newTipoTitulo = () => {
@@ -41,6 +41,23 @@ const newTipoContenido = () => {
   numDiapositivas++;
 };
 
+// Crea y añade una nueva diapositiva que tiene un título, un área de texto y una imagen.
+const newTipoImagen = () => {
+  const diapositiva = diapositivaTituloTextoImagen.content.cloneNode(true);
+  const diapositivaContainer = diapositiva.querySelector('.d-containerImagen');
+
+  diapositivaContainer.querySelector('input[type="text"]').name =
+    'd_titulo_' + numDiapositivas;
+  diapositivaContainer.querySelector('textarea').name =
+    'd_contenido_' + numDiapositivas;
+  diapositivaContainer.querySelector('input[type="file"]').name =
+    'd_imagen_' + numDiapositivas;
+
+  diapositivasContainer.append(diapositivaContainer);
+  numDiapositivas++;
+};
+
+
 //Funcion para mostrar la confirmación del feedback
 const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
   event.preventDefault();
@@ -66,6 +83,8 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
       newTipoTitulo();
     } else if (tipoDiapositiva === "tituloTexto") {
       newTipoContenido();
+    } else if (tipoDiapositiva === "tituloTextoImagen") {
+      newTipoImagen();
     }
 
     // Reseteamos el tipo de diapositiva
@@ -86,8 +105,11 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
         newTipoTitulo();
       } else if (tipoDiapositiva === "tituloTexto") {
         newTipoContenido();
+      } else if (tipoDiapositiva === "tituloTextoImagen") {
+        newTipoImagen();
       }
     }
+
 
     // Reseteamos el tipo de diapositiva
     tipoDiapositiva = "";
@@ -95,30 +117,6 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
 
   return false; // Evita que el evento del enlace se propague
 };
-
-// //Botón guardar la presentación 
-// const btnGuardar = document.getElementById("btn-guardar");
-// btnGuardar.addEventListener("click", (event) => {
-//   event.preventDefault();
-//   const overlay = document.getElementById("overlay");
-//   const exitoDialog = document.getElementById("exito_guardar");
-
-//   // Mostrar el diálogo de éxito
-//   exitoDialog.style.display = "block";
-//   overlay.style.display = "block";
-
-//   // Agrega un event listener al botón "Aceptar" en el diálogo de éxito
-//   const btnAceptarExito = document.getElementById("btn-aceptar-exito");
-//   btnAceptarExito.addEventListener("click", (form) => {
-
-//     // Cuando el usuario hace clic en "Aceptar", envía el formulario
-//     form.submit();
-
-//     // Oculta el diálogo de éxito
-//     exitoDialog.style.display = "none";
-//     overlay.style.display = "none";
-//   });
-// });
 
 //Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Titulo"
 const mostrarConfirmacionNuevaDiapositivaTitulo = (event) => {
@@ -128,6 +126,11 @@ const mostrarConfirmacionNuevaDiapositivaTitulo = (event) => {
 //Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Titulo + Texto"
 const mostrarConfirmacionNuevaDiapositivaTituloTexto = (event) => {
   mostrarConfirmacionNuevaDiapositiva(event, "tituloTexto");
+};
+
+//Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Titulo + Texto + Imagen"
+const mostrarConfirmacionNuevaDiapositivaTituloTextoImagen = (event) => {
+  mostrarConfirmacionNuevaDiapositiva(event, "tituloTextoImagen");
 };
 
 

@@ -11,6 +11,7 @@ require_once '../models/Presentacion.php';
 require_once '../models/Diapositiva.php';
 require_once '../models/TipoTitulo.php';
 require_once '../models/TipoContenido.php';
+require_once '../models/TipoImagen.php';
 
 // Obtener la única instancia de la base de datos
 $db = Database::getInstance();
@@ -69,10 +70,11 @@ if (isset($_GET['presentacion_id'])) {
                 <div id="icon-presentaciones">
                     <img src="../assets/icons/presentacio.svg" alt="Icono Presentación" />
                 </div>
-                <form method="POST" id="data_p" action="../controllers/editor.controller.php">
-                    <input type="text" class="input focus" name="p_descripcion" value="<?= $descripcion ?>"
+                <form method="POST" id="data_p" enctype="multipart/form-data" action="../controllers/editor.controller.php">
+                    <input type="text" class="input focus" maxlength="150" name="p_descripcion" value="<?= $descripcion ?>"
                         placeholder="Escribe una descripción..." autocomplete="off" />
                 </form>
+
             </div>
             <div id="nova-diapositiva">
                 <div class="dropdown">
@@ -82,6 +84,8 @@ if (isset($_GET['presentacion_id'])) {
                     <div class="dropdown-content">
                         <span onclick="mostrarConfirmacionNuevaDiapositivaTitulo(event)">Título</span>
                         <span onclick="mostrarConfirmacionNuevaDiapositivaTituloTexto(event)">Título + Texto</span>
+                        <span onclick="mostrarConfirmacionNuevaDiapositivaTituloTextoImagen(event)">Título + Texto + Imagen</span>
+
                     </div>
                 </div>
                 <span>Añadir diapositiva</span>
@@ -122,6 +126,19 @@ if (isset($_GET['presentacion_id'])) {
                     placeholder="Haz click para añadir un texto"></textarea>
             </div>
         </template>
+        <template id="d_titulo_texto_imagen_template">
+                <div class="d-containerImagen">
+                    <input class="focus" type="text" form="data_p" autocomplete="off"
+                        placeholder="Haz click para añadir un título..." />
+                    <div class="d-containerImgText">
+                        <textarea class="focus" form="data_p" autocomplete="off"
+                            placeholder="Haz click para añadir un texto"></textarea>
+                        <input class="imagen" type="file" form="data_p" name="d_imagen_"
+                            accept="image/jpeg, image/png, image/jpg" />
+                    </div>
+                </div>
+        </template>
+
 
         <?php
         if ($lastDiapositivaId !== 0) {
