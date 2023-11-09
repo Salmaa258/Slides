@@ -92,6 +92,23 @@ CREATE TABLE tipoContenido(
     REFERENCES presentacion(id)
     ON DELETE CASCADE
 );
+
+CREATE TABLE tipoImagen(
+  diapositiva_id  INT,
+  presentacion_id INT,
+  titulo          VARCHAR(255),
+  contenido       VARCHAR(255),
+  nombre_imagen   VARCHAR(255),
+
+  PRIMARY KEY(diapositiva_id, presentacion_id),
+  FOREIGN KEY (diapositiva_id) 
+    REFERENCES diapositiva(id)
+    ON DELETE CASCADE,
+  FOREIGN KEY (presentacion_id) 
+    REFERENCES presentacion(id)
+    ON DELETE CASCADE
+);
+
 EOF
 SCRIPT
 

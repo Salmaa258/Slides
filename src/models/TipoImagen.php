@@ -132,9 +132,22 @@ class TipoImagen extends Diapositiva
                 <textarea class="focus" form="data_p" autocomplete="off"
                 name="d_contenido_' . $this->getId() . '" placeholder="Haz click para añadir un texto">' . $this->getContenido() . '</textarea>
                 <div class="imagenDiv">
-                    
                     ' . $imagenHtml . '
                 </div>
+            </div>
+        </div>';
+    }
+
+    public function getDiapositivaPreview(): string
+    {
+        $nombreImagen = '../imagenes/' . $this->getNombre_imagen();
+
+        return '
+        <div class="d-container" style="display: none;">
+            <h1 class="d_titulo_' . $this->getId() . '">' . $this->getTitulo() . '</h1>
+            <p class="d_contenido_' . $this->getId() . '">' . $this->getContenido() . '</p>
+            <div class="d-containerImagen">
+            <img class="d_imagen_' . $this->getId() . '" src="' . $nombreImagen . '" alt="Imagen de la diapositiva">
             </div>
         </div>';
     }
