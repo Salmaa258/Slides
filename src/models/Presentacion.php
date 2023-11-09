@@ -224,6 +224,28 @@ class Presentacion
     }
 
     /**
+     * Funcion que retorna una presentacion instanciada de la BD en base a la URL publica.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @param int $id_presentacion ID de la presentacion que queremos instanciar.
+     * @return Presentacion
+     */
+    public static function getPresentacionByURL(PDO $conn, int $url): Presentacion|null
+    {
+        $stmt = $conn->prepare("SELECT id FROM presentacion WHERE url = ?");
+        $stmt->bindParam(1, $url);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (isset($row["id"])) {
+            return self::getPresentacionBD($conn, $row["id"]);
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
      * Funcion que elimina una presentacion de la BD.
      * @param PDO $conn Objeto PDO de la conexion a la base de datos.
      * @param int $id_presentacion ID de la presentacion a eliminar.

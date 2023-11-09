@@ -32,22 +32,26 @@ body {
     height: 97vh;
 }
 
+.actionButtons {
+    display: flex;
+    justify-content: end;
+    align-items: start;
+    position: absolute;
+    top: 2%;
+    right: 6%;
+    gap: 10px;
+}
+
 a {
     display: none;
-    position: absolute;
-    right: 6%;
-    top: 2%;
     z-index: 1;
     background: #304a6e;
     padding: 3px;
     border-radius: 8px;
 }
 
-#diapositivaPosterior > img {
+#diapositivaPosterior > .actionButtons > img {
     display: none;
-    position: absolute;
-    right: 25%;
-    top: 2%;
     z-index: 1;
     background: #304a6e;
     padding: 5px;

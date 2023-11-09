@@ -17,8 +17,16 @@ $db = Database::getInstance();
 
 // Obtener la conexión a la base de datos
 $conn = $db->getConnection();
+$presentacion;
+$exitButton = '';
 
-$presentacion = Presentacion::getPresentacionBD($conn, $_POST['id_presentacion']);
+if (isset($_GET['url'])) {
+    $presentacion = Presentacion::getPresentacionByURL($conn, $_GET['url']);
+} else {
+    $presentacion = Presentacion::getPresentacionBD($conn, $_POST['id_presentacion']);
+    $exitButton = '<a href="javascript: history.go(-1)"><img src="../assets/icons/exit.svg"></a>';
+}
+
 $tema = $presentacion->getTema();
 $firstDiapositiva = isset($_POST['diapositiva_id']) ? $_POST['diapositiva_id'] : null;
 ?>
@@ -38,8 +46,10 @@ $firstDiapositiva = isset($_POST['diapositiva_id']) ? $_POST['diapositiva_id'] :
         <button onclick="anterior()"><img src="../assets/icons/leftArrow.svg"></button>
     </div>
     <div id="diapositivaPosterior">
-        <img src="../assets/icons/fullscreen.svg" onclick="activarPantallaCompleta()">
-        <a href="javascript: history.go(-1)"><img src="../assets/icons/exit.svg"></a>
+        <div class="actionButtons">
+            <img src="../assets/icons/fullscreen.svg" onclick="activarPantallaCompleta()">
+            <?= $exitButton ?>
+        </div>
         <button onclick="siguiente()"><img src="../assets/icons/rightArrow.svg"></button>
     </div>
     <div id="diapositivas" firstDiapositiva="<?= $firstDiapositiva ?>">
