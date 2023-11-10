@@ -43,6 +43,9 @@ $disabled = 'disabled';
 $titulo = null;
 $descripcion = null;
 $tema = 'oscuro';
+$url = 'null';
+$icon = 'publicada';
+$copy = 'flex';
 $lastDiapositivaId = 0;
 $diapositivas = null;
 
@@ -53,18 +56,23 @@ if (isset($_GET['presentacion_id'])) {
     $descripcion = $presentacion->getDescripcion();
     $lastDiapositivaId = $presentacion->getLastDiapositivaId($conn);
     $tema = $presentacion->getTema();
+    $url = $presentacion->getUrl();
     $diapositivas = $presentacion->getDiapositivas();
     $disabled = '';
 }
 
+if ($url === 'null') {
+    $icon = 'noPublicada';
+    $copy = 'none';
+}
 ?>
 
 <body>
     <div class="header">
         <input hidden <?= $disabled ?> type="text" form="data_p" name="presentacion_id" value="<?= $id_presentacion ?>">
         <input hidden type="text" form="data_p" name="tema" value="<?= $tema ?>">
-        <input id="inputTitulo" type="text" form="data_p" class="input" maxlength="30" name="p_titulo" value="<?= $titulo ?>"
-            placeholder="Añade un título..." required autocomplete="off" />
+        <input id="inputTitulo" type="text" form="data_p" class="input" maxlength="30" name="p_titulo"
+            value="<?= $titulo ?>" placeholder="Añade un título..." required autocomplete="off" />
         <div class="headerButtons">
             <div class="descripcion-container">
                 <div id="icon-presentaciones">
@@ -102,15 +110,24 @@ if (isset($_GET['presentacion_id'])) {
                         <span onclick="setOscuro()"><img id="icono-tema" src="../assets/icons/black.svg" />Oscuro</span>
                     </div>
                 </div>
-                <span>Seleccionar Tema</span>
+                <span>Tema</span>
             </div>
             <form id="preview_form" action="preview.php" method="POST">
                 <input hidden type="text" name="id_presentacion" value="<?= $id_presentacion ?>">
                 <input hidden type="text" name="diapositiva_id" value="">
                 <button class="button" type="submit">
-                    <img src="../assets/icons/presentation.svg" alt="Icono Presentación" />
+                    <img src="../assets/icons/presentacion.svg" alt="Icono Presentación" />
                 </button>
             </form>
+            <div id="publicar_button">
+                <input hidden type="text" name="url" form="data_p" value="<?= $url ?>">
+                <button class="button" type="submit" form="data_p">
+                    <img src="../assets/icons/<?= $icon ?>.svg" alt="Publicar Presentacion" />
+                </button>
+                <button id="copyUrlButton" class="button" style="display:<?= $copy ?>;">
+                    <img src="../assets/icons/copy.svg" alt="Copiar URL" />
+                </button>
+            </div>
             <div class="actionButtons">
                 <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
             </div>

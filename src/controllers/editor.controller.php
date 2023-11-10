@@ -30,10 +30,11 @@ if (isset($_POST['presentacion_id'])) {
     $presentacionBD = Presentacion::getPresentacionBD($conn, $_POST['presentacion_id']);
     $id_presentacion = $presentacionBD->getId();
 
-    // Actualiza el título, descripción y tema de la presentación
+    // Actualiza el título, descripción, tema y url de la presentación
     $presentacionBD->setTitulo($_POST['p_titulo']);
     $presentacionBD->setDescripcion($_POST['p_descripcion']);
     $presentacionBD->setTema($_POST['tema']);
+    $presentacionBD->setUrl($_POST['url']);
     $presentacionBD->actualizarInfo($conn);
 
     $lastDiapositivaId = $presentacionBD->getLastDiapositivaId($conn) + 1;
@@ -118,6 +119,7 @@ if (isset($_POST['presentacion_id'])) {
     $titulo = isset($_POST['p_titulo']) ? trim($_POST['p_titulo']) : '';
     $descripcion = isset($_POST['p_descripcion']) ? trim($_POST['p_descripcion']) : '';
     $tema = $_POST['tema'];
+    $url = $_POST['url'];
 
     $diapositivas = [];
 
@@ -194,13 +196,13 @@ if (isset($_POST['presentacion_id'])) {
     }
 
     // Crea una nueva presentación y la guarda en la base de datos
-    $newPresentacion = new Presentacion(null, $titulo, $descripcion, $tema, $diapositivas);
+    $newPresentacion = new Presentacion(null, $titulo, $descripcion, $tema, $url, $diapositivas);
     $newPresentacion->guardarNuevaPresentacion($conn);
     $id_presentacion = $newPresentacion->getId();
 
     // Establece la variable de sesión para indicar que la creación fue exitosa
     $_SESSION['guardado_exitoso'] = true;
-    
+
 }
 
 // Redirigir al usuario de vuelta a la página de creación de presentaciones

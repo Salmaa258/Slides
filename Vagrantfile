@@ -48,6 +48,7 @@ CREATE TABLE presentacion(
   titulo          VARCHAR(255),
   descripcion     VARCHAR(255),
   tema            VARCHAR(10),
+  url             CHAR(10),
 
   PRIMARY KEY(id),
   FOREIGN KEY (tema) 

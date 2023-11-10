@@ -181,6 +181,10 @@ const setOscuro = () => {
     inputTema.value = 'oscuro';
 };
 
+const generaUrl = () => {
+    return Math.floor(1000000000 + Math.random() * 9999999999);
+};
+
 const previewForm = document.querySelector('#preview_form');
 previewForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -190,4 +194,30 @@ previewForm.addEventListener('submit', (e) => {
     diapositivaActual = diapositivaActual[diapositivaActual.length - 1];
     inputDiapositivaId.value = diapositivaActual;
     e.target.submit();
+});
+
+const generalForm = document.querySelector('#data_p');
+const publicarButton = document.querySelector('#publicar_button button[form="data_p"]');
+publicarButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const inputUrl = publicarButton.parentElement.querySelector('input');
+    if (inputUrl.value === 'null') {
+        const url = generaUrl();
+        inputUrl.value = url;
+    } else {
+        inputUrl.value = 'null';
+    }
+    generalForm.submit();
+});
+
+const copyButton = document.querySelector('#copyUrlButton');
+
+copyButton.addEventListener('click', (e) => {
+    let url = document.querySelector('input[name="url"]').value;
+    url = 'http://localhost:4200/src/views/preview.php?url=' + url;
+    navigator.clipboard.writeText(url);
+    e.target.src = '../assets/icons/checkCopy.svg';
+    setTimeout(() => {
+        e.target.src = '../assets/icons/copy.svg';
+    }, 1000);
 });

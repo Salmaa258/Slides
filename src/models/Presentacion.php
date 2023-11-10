@@ -6,14 +6,16 @@ class Presentacion
     private string $titulo;
     private string $descripcion;
     private string $tema;
+    private string $url;
     private array $diapositivas;
 
-    public function __construct(int|null $id, string $titulo, string $descripcion, string $tema, array $diapositivas)
+    public function __construct(int|null $id, string $titulo, string $descripcion, string $tema, string $url, array $diapositivas)
     {
         $this->id = $id;
         $this->titulo = $titulo;
         $this->descripcion = $descripcion;
         $this->tema = $tema;
+        $this->url = $url;
         $this->diapositivas = $diapositivas;
     }
 
@@ -35,6 +37,11 @@ class Presentacion
     public function getTema(): string
     {
         return $this->tema;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 
     public function getDiapositivas(): array
@@ -62,6 +69,11 @@ class Presentacion
         $this->tema = $tema;
     }
 
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
+    }
+
     public function setDiapositivas(array $diapositivas): void
     {
         $this->diapositivas = $diapositivas;
@@ -76,7 +88,7 @@ class Presentacion
     {
         $id_presentacion = $this->getId();
 
-        $stmt = $conn->prepare("SELECT titulo, descripcion, tema FROM presentacion WHERE id = ?");
+        $stmt = $conn->prepare("SELECT titulo, descripcion, tema, url FROM presentacion WHERE id = ?");
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
@@ -108,6 +120,15 @@ class Presentacion
             $stmt->bindParam(2, $id_presentacion);
             $stmt->execute();
         }
+
+        if ($this->getUrl() != $row['url']) {
+            $newUrl = $this->getUrl();
+
+            $stmt = $conn->prepare("UPDATE presentacion SET url = ? WHERE id = ?");
+            $stmt->bindParam(1, $newUrl);
+            $stmt->bindParam(2, $id_presentacion);
+            $stmt->execute();
+        }
     }
 
     /**
@@ -135,10 +156,11 @@ class Presentacion
      */
     public function guardarNuevaPresentacion(PDO $conn): void
     {
-        $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion, tema) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion, tema, url) VALUES (?, ?, ?, ?)");
         $stmt->bindParam(1, $this->titulo);
         $stmt->bindParam(2, $this->descripcion);
         $stmt->bindParam(3, $this->tema);
+        $stmt->bindParam(4, $this->url);
         $stmt->execute();
 
         $this->id = $conn->lastInsertId();
@@ -198,17 +220,39 @@ class Presentacion
      */
     public static function getPresentacionBD(PDO $conn, int $id_presentacion): Presentacion
     {
-        $stmt = $conn->prepare("SELECT id, titulo, descripcion, tema FROM presentacion WHERE id = ?");
+        $stmt = $conn->prepare("SELECT id, titulo, descripcion, tema, url FROM presentacion WHERE id = ?");
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], $row['tema'], []);
+        $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], $row['tema'], $row['url'], []);
 
         $diapositivas = Presentacion::getDiapositivasBD($conn, $id_presentacion);
         $presentacion->setDiapositivas($diapositivas);
         return $presentacion;
+    }
+
+    /**
+     * Funcion que retorna una presentacion instanciada de la BD en base a la URL publica.
+     * @param PDO $conn Objeto PDO de la conexion a la base de datos.
+     * @param int $id_presentacion ID de la presentacion que queremos instanciar.
+     * @return Presentacion
+     */
+    public static function getPresentacionByURL(PDO $conn, int $url): Presentacion|null
+    {
+        $stmt = $conn->prepare("SELECT id FROM presentacion WHERE url = ?");
+        $stmt->bindParam(1, $url);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (isset($row["id"])) {
+            return self::getPresentacionBD($conn, $row["id"]);
+        } else {
+            return null;
+        }
+
     }
 
     /**

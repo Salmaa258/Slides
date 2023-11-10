@@ -18,9 +18,9 @@ $db = Database::getInstance();
 $conn = $db->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $presentation_id = $_POST['id_presentacion'];
+    $presentacion_id = $_POST['id_presentacion'];
 
-    Presentacion::eliminarPresentacionBD($conn, $presentation_id);
+    Presentacion::eliminarPresentacionBD($conn, $presentacion_id);
 
     // Establece la variable de sesión para indicar que la eliminación fue exitosa
     $_SESSION['eliminacion_exitosa'] = true;
