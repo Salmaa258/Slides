@@ -133,7 +133,12 @@ if ($url === 'null') {
             </div>
         </div>
     </div>
-
+    <div class="white-list">
+        <div class="white-list-header">Diapositivas</div>
+        <ul class="white-list-items">
+        <li>Titulo 1</li>
+        </ul>
+    </div>
     <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
         <template id="d_titulo_template">
             <div class="d-container">
@@ -189,7 +194,18 @@ if ($url === 'null') {
         </form>
     </dialog>
 
-    <script src="../js/editor.js"></script>
+    <?php
+    // Verificar si la presentación ha sido cargada de la BD
+    if ($id_presentacion !== null) {
+        echo '<script src="../js/presentaciones_bd/eliminar_d_bd.js"></script>';
+        echo '<script src="../js/presentaciones_bd/lista_bd.js"></script>';
+        echo '<script src="../js/presentaciones_bd/editor_bd.js"></script>';
+    } else {
+        echo '<script src="../js/presentaciones/eliminar_d.js"></script>';
+        echo '<script src="../js/presentaciones/lista.js"></script>';
+        echo '<script src="../js/presentaciones/editor.js"></script>';
+    }
+    ?>
 
     <script>
         // Función para mostrar el diálogo de éxito al guardar
