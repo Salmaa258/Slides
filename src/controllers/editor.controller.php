@@ -11,10 +11,19 @@ require_once '../models/Presentacion.php';
 require_once '../models/Diapositiva.php';
 require_once '../models/TipoTitulo.php';
 require_once '../models/TipoContenido.php';
+require_once '../models/TipoImagen.php';
 
 $db = Database::getInstance();
 $conn = $db->getConnection();
 $id_presentacion;
+
+// Función para verificar y crear la carpeta de imágenes
+function createImagesFolder()
+{
+    if (!file_exists('../imagenes')) {
+        mkdir('../imagenes', 0777, true);
+    }
+}
 
 if (isset($_POST['presentacion_id'])) {
     // Edición de una presentación existente
@@ -32,6 +41,10 @@ if (isset($_POST['presentacion_id'])) {
 
     foreach ($presentacionBD->getDiapositivas() as $diapositiva) {
         // Actualiza el contenido de diapositivas existentes si se proporciona
+        if (isset($_POST['d_imagen_' . $diapositiva->getId() . ''])) {
+            $diapositiva->setNombre_imagen($_POST['d_imagen_' . $diapositiva->getId() . '']);
+        }
+
         if (isset($_POST['d_contenido_' . $diapositiva->getId() . ''])) {
             $diapositiva->setContenido($_POST['d_contenido_' . $diapositiva->getId() . '']);
         }
@@ -47,16 +60,56 @@ if (isset($_POST['presentacion_id'])) {
 
     // Agrega nuevas diapositivas si se proporciona un título para ellas en el formulario
     while (isset($_POST['d_titulo_' . $lastDiapositivaId])) {
-        if (isset($_POST['d_contenido_' . $lastDiapositivaId . ''])) {
-            $contenido = $_POST['d_contenido_' . $lastDiapositivaId];
-            $newDiapositiva = new TipoContenido(null, '', $contenido);
+        $titulo = $_POST['d_titulo_' . $lastDiapositivaId];
+        $contenido = $_POST['d_contenido_' . $lastDiapositivaId];
+
+        // Verifica si se ha subido una imagen
+        if (isset($_FILES['d_imagen_' . $lastDiapositivaId])) {
+            $imagen = $_FILES['d_imagen_' . $lastDiapositivaId];
+            $nombre_imagen = $imagen['name'];
+
+            // Verifica que la imagen sea de tipo PNG o JPG
+            $ext = pathinfo($nombre_imagen, PATHINFO_EXTENSION);
+            if (in_array($ext, ['png', 'jpg', 'jpeg'])) {
+
+                // Genera un nombre de archivo único para la imagen
+                $unique_id = uniqid();
+                $unique_id = substr($unique_id, -3);
+                $nombre_imagen = $lastDiapositivaId . "a" . $unique_id . '.' . $ext;
+                $ruta_imagen = '../imagenes/' . $nombre_imagen;
+                $url_temp = $_FILES['d_imagen_' . $lastDiapositivaId];
+
+                createImagesFolder();
+
+                // Mueve la imagen al directorio de imágenes
+                move_uploaded_file($url_temp['tmp_name'], $ruta_imagen);
+
+
+                // $imagen_anterior = $diapositiva->getNombre_imagen();
+                // if (!empty($imagen_anterior)) {
+                //     // Elimina la imagen anterior del sistema de archivos
+                //     $ruta_imagen_anterior = '../imagenes/' . $imagen_anterior;
+                //     if (file_exists($ruta_imagen_anterior)) {
+                //         unlink($ruta_imagen_anterior);
+                //     }
+                // }
+
+                // Crea una nueva diapositiva con el nombre de la imagen
+                $newDiapositiva = new TipoImagen(null, $titulo, $contenido, $nombre_imagen);
+            }
+
+            $newDiapositiva = new TipoImagen(null, $titulo, $contenido, $nombre_imagen);
+
+
+        } else if (isset($_POST['d_contenido_' . $lastDiapositivaId])) {
+            // Si no se proporcionó una imagen, crea una diapositiva sin imagen
+            $newDiapositiva = new TipoContenido(null, $titulo, $contenido);
+
         } else {
-            $newDiapositiva = new TipoTitulo(null, '');
+            $newDiapositiva = new TipoTitulo(null, $titulo);
         }
 
-        $titulo = $_POST['d_titulo_' . $lastDiapositivaId];
-        $newDiapositiva->setTitulo($titulo);
-
+        // Guarda la nueva diapositiva en la base de datos
         $newDiapositiva->nuevaDiapositiva($conn, $id_presentacion);
 
         $lastDiapositivaId++;
@@ -74,7 +127,52 @@ if (isset($_POST['presentacion_id'])) {
 
     // Crea diapositivas basadas en los valores proporcionados en el formulario
     while (isset($_POST['d_titulo_' . $count_diapositiva])) {
-        if (isset($_POST['d_contenido_' . $count_diapositiva])) {
+
+        if (isset($_FILES['d_imagen_' . $count_diapositiva])) {
+    
+            $imagen = $_FILES['d_imagen_' . $count_diapositiva];
+            $nombre_imagen = $imagen['name'];
+    
+            // Verifica que la imagen sea de tipo PNG o JPG
+            $ext = pathinfo($nombre_imagen, PATHINFO_EXTENSION);
+            if (in_array($ext, ['png', 'jpg', 'jpeg'])) {
+                // Genera un nombre de archivo único para la imagen
+                $unique_id = uniqid();
+                $unique_id = substr($unique_id, -3);
+                $nombre_imagen = $count_diapositiva . "a" . $unique_id . '.' . $ext;
+                $ruta_imagen = '../imagenes/' . $nombre_imagen;
+                $url_temp = $_FILES['d_imagen_' . $count_diapositiva];
+    
+                createImagesFolder();
+    
+                // Mueve la imagen al directorio de imágenes
+                move_uploaded_file($url_temp['tmp_name'], $ruta_imagen);
+    
+                // Añade la diapositiva con imagen solo si hay imagen
+                array_push(
+                    $diapositivas,
+                    new TipoImagen(
+                        $count_diapositiva,
+                        $_POST['d_titulo_' . $count_diapositiva],
+                        $_POST['d_contenido_' . $count_diapositiva],
+                        $nombre_imagen
+                    )
+                );
+            }
+            
+            array_push(
+                $diapositivas,
+                new TipoImagen(
+                    $count_diapositiva,
+                    $_POST['d_titulo_' . $count_diapositiva],
+                    $_POST['d_contenido_' . $count_diapositiva],
+                    isset($nombre_imagen) ? $nombre_imagen : null
+                )
+            );
+            
+    
+        } else if (isset($_POST['d_contenido_' . $count_diapositiva])) {
+            // Añade la diapositiva con contenido solo si hay contenido
             array_push(
                 $diapositivas,
                 new TipoContenido(
@@ -84,6 +182,7 @@ if (isset($_POST['presentacion_id'])) {
                 )
             );
         } else {
+            // Añade la diapositiva con título solo si no hay ni imagen ni contenido
             array_push(
                 $diapositivas,
                 new TipoTitulo(
@@ -92,6 +191,7 @@ if (isset($_POST['presentacion_id'])) {
                 )
             );
         }
+    
         $count_diapositiva++;
     }
 
@@ -108,3 +208,4 @@ if (isset($_POST['presentacion_id'])) {
 // Redirigir al usuario de vuelta a la página de creación de presentaciones
 header("Location: ../views/editor.php?presentacion_id=" . $id_presentacion);
 exit;
+
