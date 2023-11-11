@@ -178,6 +178,7 @@ a {
 }
 
 .d-container {
+    position: static;
     display: flex;
     aspect-ratio: 16/9;
     flex-direction: column;
@@ -247,6 +248,47 @@ a {
 .dropdown-content span:hover {
     color: #ffffff;
     background-color: #00a4bd;
+}
+
+/* Estilos para la lista con fondo blanco */
+.white-list {
+    background-color: var(--list-background);
+    border: 1px solid #e0e0e0;
+    max-width: 400px;
+    max-height: 532px;
+}
+
+.white-list-header {
+    background-color: #304a6e;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    border-bottom: 1px solid white;
+}
+
+.white-list-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    color: white;
+}
+
+.white-list-items li {
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    color: var(--list-item-color);
+}
+
+.white-list-items li:last-child {
+    border-bottom: none;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
 }
 
 /*Dialog*/

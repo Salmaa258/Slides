@@ -2,19 +2,31 @@ const diapositivasContainer = document.getElementById('diapositivas');
 const diapositivaTitulo = document.getElementById('d_titulo_template');
 const diapositivaTituloTexto = document.getElementById('d_titulo_texto_template');
 const diapositivaTituloTextoImagen = document.getElementById('d_titulo_texto_imagen_template');
-let tipoDiapositiva = "";
 
+// Este contador incrementará con cada nueva diapositiva
+let newDiapositivaId = 1; 
+
+// Función para generar un ID único para nuevas diapositivas
+const generateNewDiapositivaId = () => `new-${newDiapositivaId++}`;
 
 // Crea y añade una nueva diapositiva de tipo "título" al contenedor principal.
 const newTipoTitulo = () => {
     const diapositiva = diapositivaTitulo.content.cloneNode(true);
     const diapositivaContainer = diapositiva.querySelector('.d-container');
-
-    diapositivaContainer.querySelector('input[type="text"]').name = 'd_titulo_' + numDiapositivas;
+    const tempId = generateNewDiapositivaId();
+    diapositivaContainer.setAttribute('data-id', tempId);
+    diapositivaContainer.querySelector('input[type="text"]').name = 'd_titulo_' + tempId;
 
     diapositivasContainer.append(diapositivaContainer);
-    numDiapositivas++;
+
+    ocultarTodasLasDiapositivas();
+    mostrarDiapositiva(tempId);
+    ordenLista.push(tempId);
+    actualizarListaDiapositivas();
+    
+    mostrarDiapositiva(numDiapositivas - 1);
 };
+
 
 let numDiapositivas = document.getElementById('diapositivas');
 numDiapositivas = numDiapositivas.getAttribute('lastDiapositivaId');
@@ -23,37 +35,48 @@ if (numDiapositivas === '0') {
     newTipoTitulo();
     numDiapositivas = 1;
 } else {
-    numDiapositivas = parseInt(numDiapositivas) + 1;
+    numDiapositivas = parseInt(numDiapositivas) - 1;
 }
 
 // Crea y añade una nueva diapositiva que tiene un título y un área de texto.
 const newTipoContenido = () => {
     const diapositiva = diapositivaTituloTexto.content.cloneNode(true);
     const diapositivaContainer = diapositiva.querySelector('.d-container');
-
-    diapositivaContainer.querySelector('input[type="text"]').name = 'd_titulo_' + numDiapositivas;
-    diapositivaContainer.querySelector('textarea').name = 'd_contenido_' + numDiapositivas;
+    const tempId = generateNewDiapositivaId();
+    diapositivaContainer.setAttribute('data-id', tempId);
+    diapositivaContainer.querySelector('input[type="text"]').name = 'd_titulo_' + tempId;
+    diapositivaContainer.querySelector('textarea').name = 'd_contenido_' + tempId;
 
     diapositivasContainer.append(diapositivaContainer);
-    numDiapositivas++;
+
+    ocultarTodasLasDiapositivas();
+    mostrarDiapositiva(tempId);
+    ordenLista.push(tempId);
+    actualizarListaDiapositivas();
+
+    mostrarDiapositiva(numDiapositivas - 1);
 };
 
 // Crea y añade una nueva diapositiva que tiene un título, un área de texto y una imagen.
 const newTipoImagen = () => {
-  const diapositiva = diapositivaTituloTextoImagen.content.cloneNode(true);
-  const diapositivaContainer = diapositiva.querySelector('.d-containerImagen');
+    const diapositiva = diapositivaTituloTextoImagen.content.cloneNode(true);
+    const diapositivaContainer = diapositiva.querySelector('.d-containerImagen');
+    const tempId = generateNewDiapositivaId(); // Asume que existe una función para generar IDs únicos
+    diapositivaContainer.setAttribute('data-id', tempId);
 
-  diapositivaContainer.querySelector('input[type="text"]').name =
-    'd_titulo_' + numDiapositivas;
-  diapositivaContainer.querySelector('textarea').name =
-    'd_contenido_' + numDiapositivas;
-  diapositivaContainer.querySelector('input[type="file"]').name =
-    'd_imagen_' + numDiapositivas;
+    diapositivaContainer.querySelector('input[type="text"]').name = 'd_titulo_' + tempId;
+    diapositivaContainer.querySelector('textarea').name = 'd_contenido_' + tempId;
+    diapositivaContainer.querySelector('input[type="file"]').name = 'd_imagen_' + tempId;
 
-  diapositivasContainer.append(diapositivaContainer);
-  numDiapositivas++;
+    diapositivasContainer.append(diapositivaContainer);
+
+    ocultarTodasLasDiapositivas(); 
+    mostrarDiapositiva(tempId); 
+    ordenLista.push(tempId); 
+    actualizarListaDiapositivas(); 
+
+    mostrarDiapositiva(numDiapositivas - 1);
 };
-
 
 //Funcion para mostrar la confirmación del feedback
 const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
@@ -173,12 +196,32 @@ inputTema = document.querySelector('input[name="tema"]');
 const setClaro = () => {
     diapositivasContainer.setAttribute('tema', 'claro');
     inputTema.value = 'claro';
+
+    const whiteListItems = document.querySelector('.white-list-items');
+    if (whiteListItems) {
+      whiteListItems.style.backgroundColor = 'white';
+      whiteListItems.style.color = 'black';
+      const listItems = whiteListItems.querySelectorAll('li');
+      listItems.forEach(item => {
+        item.style.color = 'black';
+      });
+    }
 };
 
 // Funcion que aplica el tema oscuro.
 const setOscuro = () => {
     diapositivasContainer.setAttribute('tema', 'oscuro');
     inputTema.value = 'oscuro';
+
+    const whiteListItems = document.querySelector('.white-list-items');
+    if (whiteListItems) {
+      whiteListItems.style.backgroundColor = '';
+      whiteListItems.style.color = '';
+      const listItems = whiteListItems.querySelectorAll('li');
+      listItems.forEach(item => {
+        item.style.color = '';
+      });
+    }
 };
 
 const generaUrl = () => {

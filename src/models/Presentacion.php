@@ -188,7 +188,8 @@ class Presentacion
             LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
             LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
             LEFT JOIN tipoImagen ti ON dt.id = ti.diapositiva_id AND dt.presentacion_id = ti.presentacion_id
-        WHERE p.id = ?;"
+        WHERE p.id = ?
+        ORDER BY dt.orden ASC;"
         );
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();

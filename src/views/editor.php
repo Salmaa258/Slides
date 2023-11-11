@@ -83,6 +83,7 @@ if ($url === 'null') {
                 <form method="POST" id="data_p" enctype="multipart/form-data" action="../controllers/editor.controller.php">
                     <input type="text" class="input focus" maxlength="150" name="p_descripcion" value="<?= $descripcion ?>"
                         placeholder="Escribe una descripción..." autocomplete="off" />
+                    <input type="hidden" name="ordenDiapositivas" id="ordenDiapositivas" value="">
                 </form>
 
             </div>
@@ -133,48 +134,50 @@ if ($url === 'null') {
             </div>
         </div>
     </div>
-    <div class="white-list">
-        <div class="white-list-header">Diapositivas</div>
-        <ul class="white-list-items">
-        <li>Titulo 1</li>
-        </ul>
-    </div>
-    <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
-        <template id="d_titulo_template">
-            <div class="d-container">
-                <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
-                    placeholder="Haz click para añadir un título..." />
-            </div>
-        </template>
-        <template id="d_titulo_texto_template">
-            <div class="d-container">
-                <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
-                    placeholder="Haz click para añadir un título..." />
-                <textarea class="focus" form="data_p" maxlength="1280" autocomplete="off"
-                    placeholder="Haz click para añadir un texto"></textarea>
-            </div>
-        </template>
-        <template id="d_titulo_texto_imagen_template">
-                <div class="d-containerImagen">
-                    <input class="focus" type="text" form="data_p" autocomplete="off"
+    <div class="content-wrapper">
+        <div class="white-list">
+            <div class="white-list-header">Diapositivas</div>
+            <ul class="white-list-items">
+            <li>Titulo 1</li>
+            </ul>
+        </div>
+        <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
+            <template id="d_titulo_template">
+                <div class="d-container">
+                    <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
-                    <div class="d-containerImgText">
-                        <textarea class="focus" form="data_p" autocomplete="off"
-                            placeholder="Haz click para añadir un texto"></textarea>
-                        <input class="imagen" type="file" form="data_p" name="d_imagen_"
-                            accept="image/jpeg, image/png, image/jpg" />
-                    </div>
                 </div>
-        </template>
+            </template>
+            <template id="d_titulo_texto_template">
+                <div class="d-container">
+                    <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
+                        placeholder="Haz click para añadir un título..." />
+                    <textarea class="focus" form="data_p" maxlength="1280" autocomplete="off"
+                        placeholder="Haz click para añadir un texto"></textarea>
+                </div>
+            </template>
+            <template id="d_titulo_texto_imagen_template">
+                    <div class="d-containerImagen">
+                        <input class="focus" type="text" form="data_p" autocomplete="off"
+                            placeholder="Haz click para añadir un título..." />
+                        <div class="d-containerImgText">
+                            <textarea class="focus" form="data_p" autocomplete="off"
+                                placeholder="Haz click para añadir un texto"></textarea>
+                            <input class="imagen" type="file" form="data_p" name="d_imagen_"
+                                accept="image/jpeg, image/png, image/jpg" />
+                        </div>
+                    </div>
+            </template>
 
 
-        <?php
-        if ($lastDiapositivaId !== 0) {
-            foreach ($diapositivas as $diapositiva) {
-                echo $diapositiva->getDiapositivaHTML();
+            <?php
+            if ($lastDiapositivaId !== 0) {
+                foreach ($diapositivas as $diapositiva) {
+                    echo $diapositiva->getDiapositivaHTML();
+                }
             }
-        }
-        ?>
+            ?>
+        </div>
     </div>
 
 

@@ -58,6 +58,7 @@ CREATE TABLE presentacion(
 CREATE TABLE diapositiva(
   id                INT AUTO_INCREMENT,
   presentacion_id   INT,
+  orden             INT,
 
   PRIMARY KEY(id, presentacion_id),
   FOREIGN KEY (presentacion_id) 

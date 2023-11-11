@@ -22,8 +22,9 @@ class TipoTitulo extends Diapositiva
 
     public function nuevaDiapositiva(PDO $conn, int $id_presentacion): void
     {
-        $stmt = $conn->prepare("INSERT INTO diapositiva(presentacion_id) VALUES (?)");
+        $stmt = $conn->prepare("INSERT INTO diapositiva(presentacion_id, orden) VALUES (?, ?)");
         $stmt->bindParam(1, $id_presentacion);
+        $stmt->bindParam(2, $this->orden);
         $stmt->execute();
 
         $id_diapositiva = $conn->lastInsertId();
@@ -36,7 +37,7 @@ class TipoTitulo extends Diapositiva
         $stmt->execute();
     }
 
-    public function actualizaDiapositiva(PDO $conn, int $id_presentacion): void
+    public function actualizarDiapositiva(PDO $conn, int $id_presentacion): void
     {
         $id_diapositiva = $this->getId();
 
@@ -61,8 +62,8 @@ class TipoTitulo extends Diapositiva
 
     public function getDiapositivaHTML(): string
     {
-        return '<div class="d-container">
-        <input class="focus" type="text" form="data_p" maxlength="128" value="' . $this->getTitulo() . '" autocomplete="off"
+        return '<div class="d-container" data-id="' . $this->getId() . '">
+        <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
           name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
       </div>';
     }
@@ -70,7 +71,7 @@ class TipoTitulo extends Diapositiva
     public function getDiapositivaPreview(): string
     {
         return '
-        <div class="d-container" style="display: none;">
+        <div class="d-container" style="display: none">
             <h1 class="d_titulo_' . $this->getId() . '">' . $this->getTitulo() . '</h1>
         </div>';
     }

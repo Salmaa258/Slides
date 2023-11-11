@@ -18,6 +18,16 @@ abstract class Diapositiva extends Presentacion
     {
         $this->id = $id;
     }
+    
+    protected ?int $orden = null;
+
+    public function getOrden(): ?int {
+        return $this->orden;
+    }
+
+    public function setOrden(?int $orden): void {
+        $this->orden = $orden;
+    }
 
     /**
      * Funcion que añade a la BD la diapositiva instanciada.
@@ -33,7 +43,7 @@ abstract class Diapositiva extends Presentacion
      * @param int $id_presentacion Id de la presentacion a la que pertenece la diapositiva.
      * @return void
      */
-    abstract public function actualizaDiapositiva(PDO $conn, int $id_presentacion): void;
+    abstract public function actualizarDiapositiva(PDO $conn, int $id_presentacion): void;
 
     /**
      * Funcion que genera la vista HTML de la diapositiva instanciada.
@@ -67,4 +77,65 @@ abstract class Diapositiva extends Presentacion
             return 'Error al eliminar la diapositiva.';
         }
     }
+
+    public static function actualizarOrdenDiapositiva(PDO $conn, $idDiapositiva, $nuevoOrden) {
+        $stmt = $conn->prepare("UPDATE diapositiva SET orden = ? WHERE id = ?");
+        $stmt->bindParam(1, $nuevoOrden);
+        $stmt->bindParam(2, $idDiapositiva);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public static function getDiapositivaPorId(PDO $conn, int $idDiapositiva): ?Diapositiva {
+        // Intentar obtener detalles de TipoContenido primero
+        $stmt = $conn->prepare("
+            SELECT d.id, d.orden, tc.titulo, tc.contenido
+            FROM diapositiva d
+            LEFT JOIN tipoContenido tc ON d.id = tc.diapositiva_id
+            WHERE d.id = ?
+        ");
+        $stmt->bindParam(1, $idDiapositiva);
+        $stmt->execute();
+    
+        $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($datos && $datos['contenido'] !== null) {
+            // Es una instancia de TipoContenido
+            return new TipoContenido($datos['id'], $datos['titulo'], $datos['contenido']);
+        } else {
+            // Si no es TipoContenido, intentar obtener TipoTitulo
+            $stmt = $conn->prepare("
+                SELECT d.id, d.orden, tt.titulo
+                FROM diapositiva d
+                LEFT JOIN tipoTitulo tt ON d.id = tt.diapositiva_id
+                WHERE d.id = ?
+            ");
+            $stmt->bindParam(1, $idDiapositiva);
+            $stmt->execute();
+    
+            $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($datos && $datos['titulo'] !== null) {
+                // Es una instancia de TipoTitulo
+                return new TipoTitulo($datos['id'], $datos['titulo']);
+            } else {
+                // Si no es TipoTitulo, intentar obtener TipoImagen
+                $stmt = $conn->prepare("
+                    SELECT d.id, d.orden, ti.titulo, ti.contenido, ti.nombre_imagen
+                    FROM diapositiva d
+                    LEFT JOIN tipoImagen ti ON d.id = ti.diapositiva_id
+                    WHERE d.id = ?
+                ");
+                $stmt->bindParam(1, $idDiapositiva);
+                $stmt->execute();
+    
+                $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($datos && $datos['nombre_imagen'] !== null) {
+                    // Es una instancia de TipoImagen
+                    return new TipoImagen($datos['id'], $datos['titulo'], $datos['contenido'], $datos['nombre_imagen']);
+                }
+            }
+        }
+        
+        return null; // No se encontró la diapositiva o no tiene tipo definido
+    }
+    
 }
