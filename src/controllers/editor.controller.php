@@ -16,7 +16,8 @@ $conn = $db->getConnection();
 $id_presentacion;
 
 // Función para verificar y crear la carpeta de imágenes
-function createImagesFolder() {
+function createImagesFolder()
+{
     $imagesDirectory = '../imagenes';
     if (!file_exists($imagesDirectory)) {
         mkdir($imagesDirectory, 0777, true);
@@ -24,7 +25,8 @@ function createImagesFolder() {
     return $imagesDirectory;
 }
 
-function handleImageUpload($imagen) {
+function handleImageUpload($imagen)
+{
     $ruta_imagen = createImagesFolder() . '/' . $imagen['name'];
     // Lógica para validar la imagen, cambiar el nombre, etc.
     move_uploaded_file($imagen['tmp_name'], $ruta_imagen);
@@ -44,31 +46,31 @@ if (isset($_POST['presentacion_id'])) {
 
     $ordenDiapositivas = isset($_POST['ordenDiapositivas']) ? explode(',', $_POST['ordenDiapositivas']) : [];
 
-foreach ($ordenDiapositivas as $orden => $idDiapositiva) {
-    ++$orden; // Incrementa antes de usar
-    if (strpos($idDiapositiva, 'new-') === false) {
-        $editDiapositiva = Diapositiva::getDiapositivaPorId($conn, $idDiapositiva);
-        if ($editDiapositiva) {
-            $titulo = $_POST['d_titulo_' . $idDiapositiva] ?? '';
-            $contenido = $_POST['d_contenido_' . $idDiapositiva] ?? '';
-            $editDiapositiva->setTitulo($titulo);
+    foreach ($ordenDiapositivas as $orden => $idDiapositiva) {
+        ++$orden; // Incrementa antes de usar
+        if (strpos($idDiapositiva, 'new-') === false) {
+            $editDiapositiva = Diapositiva::getDiapositivaPorId($conn, $idDiapositiva);
+            if ($editDiapositiva) {
+                $titulo = $_POST['d_titulo_' . $idDiapositiva] ?? '';
+                $contenido = $_POST['d_contenido_' . $idDiapositiva] ?? '';
+                $editDiapositiva->setTitulo($titulo);
 
-            if ($editDiapositiva instanceof TipoContenido) {
-                $editDiapositiva->setContenido($contenido);
-            } elseif ($editDiapositiva instanceof TipoImagen) {
-                if (isset($_FILES['d_imagen_' . $idDiapositiva])) {
-                    $imagen = $_FILES['d_imagen_' . $idDiapositiva];
-                    // Asumiendo que tienes una función para manejar la carga de la imagen
-                    $nombre_imagen = handleImageUpload($imagen);
-                    $editDiapositiva->setNombre_imagen($nombre_imagen);
+                if ($editDiapositiva instanceof TipoContenido) {
+                    $editDiapositiva->setContenido($contenido);
+                } elseif ($editDiapositiva instanceof TipoImagen) {
+                    if (isset($_FILES['d_imagen_' . $idDiapositiva])) {
+                        $imagen = $_FILES['d_imagen_' . $idDiapositiva];
+                        // Asumiendo que tienes una función para manejar la carga de la imagen
+                        $nombre_imagen = handleImageUpload($imagen);
+                        $editDiapositiva->setNombre_imagen($nombre_imagen);
+                    }
+                    $editDiapositiva->setContenido($contenido); // Si la imagen tiene contenido asociado
                 }
-                $editDiapositiva->setContenido($contenido); // Si la imagen tiene contenido asociado
+                $editDiapositiva->setOrden($orden);
+                $editDiapositiva->actualizarDiapositiva($conn, $id_presentacion);
+                Diapositiva::actualizarOrdenDiapositiva($conn, $editDiapositiva->getId(), $orden);
             }
-            $editDiapositiva->setOrden($orden);
-            $editDiapositiva->actualizarDiapositiva($conn, $id_presentacion);
-            Diapositiva::actualizarOrdenDiapositiva($conn, $editDiapositiva->getId(), $orden);
-        }
-    } else {
+        } else {
             // Es una nueva diapositiva
             $tempId = str_replace('new-', '', $idDiapositiva);
             $titulo = $_POST['d_titulo_new-' . $tempId] ?? '';

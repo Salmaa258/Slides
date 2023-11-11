@@ -124,24 +124,14 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
                 newTipoTitulo();
             } else if (tipoDiapositiva === 'tituloTexto') {
                 newTipoContenido();
+            } else if (tipoDiapositiva === 'tituloTextoImagen') {
+                newTipoImagen();
             }
         }
 
-    if (tipoDiapositiva) {
-      // Si hay un tipo de diapositiva recordado, inserta en la base de datos pero sin guardar los cambios
-      if (tipoDiapositiva === "titulo") {
-        newTipoTitulo();
-      } else if (tipoDiapositiva === "tituloTexto") {
-        newTipoContenido();
-      } else if (tipoDiapositiva === "tituloTextoImagen") {
-        newTipoImagen();
-      }
-    }
-
-
-    // Reseteamos el tipo de diapositiva
-    tipoDiapositiva = "";
-  });
+        // Reseteamos el tipo de diapositiva
+        tipoDiapositiva = '';
+    });
 
   return false; // Evita que el evento del enlace se propague
 };
