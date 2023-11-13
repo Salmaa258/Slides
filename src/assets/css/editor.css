@@ -328,9 +328,7 @@ dialog {
 }
 
 #btn-aceptar,
-#btn-cancelar,
-#btn-aceptar-eliminar,
-#btn-cancelar-eliminar {
+#btn-cancelar {
     background-color: #304a6e;
     font-size: 17px;
     padding: 10px 20px;
@@ -344,12 +342,15 @@ dialog {
 #btn-aceptar:hover,
 #btn-cancelar:hover, 
 #btn-aceptar-eliminar:hover,
-#btn-cancelar-eliminar:hover {
+#btn-cancelar-eliminar:hover,
+#btn_aceptar_error:hover {
     background-color: #223650;
     cursor: pointer;
 }
 
-#btn-aceptar-exito, #btn-aceptar-exito-eliminar {
+#btn-aceptar-exito, 
+#btn-aceptar-exito-eliminar,
+#btn-aceptar-error {
     background-color: #304a6e;
     font-size: 17px;
     padding: 10px 20px;

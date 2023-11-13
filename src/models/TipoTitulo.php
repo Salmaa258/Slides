@@ -63,6 +63,9 @@ class TipoTitulo extends Diapositiva
     public function getDiapositivaHTML(): string
     {
         return '<div class="d-container" data-id="' . $this->getId() . '">
+        <div class="delete-slide-icon">
+            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" onclick="confirmDelete(event, this.closest(\'.d-container\'))">
+        </div>
         <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
           name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
       </div>';
