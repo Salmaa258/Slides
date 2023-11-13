@@ -144,12 +144,18 @@ if ($url === 'null') {
         <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
             <template id="d_titulo_template">
                 <div class="d-container">
+                    <div class="delete-slide-icon">
+                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" onclick="confirmDelete(event, this.closest('.d-container'))">
+                    </div>
                     <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
                 </div>
             </template>
             <template id="d_titulo_texto_template">
                 <div class="d-container">
+                    <div class="delete-slide-icon">
+                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" onclick="confirmDelete(event, this.closest('.d-container'))">
+                    </div>
                     <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
                     <textarea class="focus" form="data_p" maxlength="1280" autocomplete="off"
@@ -158,6 +164,9 @@ if ($url === 'null') {
             </template>
             <template id="d_titulo_texto_imagen_template">
                     <div class="d-containerImagen">
+                        <div class="delete-slide-icon">
+                            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" onclick="confirmDelete(event, this.closest('.d-containerImagen'))">
+                        </div>
                         <input class="focus" type="text" form="data_p" autocomplete="off"
                             placeholder="Haz click para añadir un título..." />
                         <div class="d-containerImgText">
@@ -197,15 +206,38 @@ if ($url === 'null') {
         </form>
     </dialog>
 
+    <dialog id="confirmarEliminar">
+        <p>¿Quieres eliminar la diapositiva?</p>
+        <form method="dialog">
+            <button id="btn-aceptar" onclick="eliminarDiapositiva()">Aceptar</button>
+            <button id="btn-cancelar" onclick="cerrarConfirmacion()">Cancelar</button>
+        </form>
+    </dialog>
+
+    <dialog id="exito_eliminar">
+        <p>Se ha eliminado la diapositiva correctamente</p>
+        <form method="dialog">
+            <button id="btn-aceptar-exito" onclick="cerrarExito()">Aceptar</button>
+        </form>
+    </dialog>
+
+    <dialog id="error_eliminar">
+        <p>No se puede eliminar la diapositiva, no puede existir una peresentacion sin diapositivas.</p>
+        <form method="dialog">
+            <button id="btn-aceptar-error" onclick="cerrarError()">Aceptar</button>
+        </form>
+    </dialog>
+
+
     <?php
     // Verificar si la presentación ha sido cargada de la BD
     if ($id_presentacion !== null) {
-        echo '<script src="../js/presentaciones_bd/eliminar_d_bd.js"></script>';
         echo '<script src="../js/presentaciones_bd/lista_bd.js"></script>';
+        echo '<script src="../js/presentaciones_bd/eliminar_d_bd.js"></script>';
         echo '<script src="../js/presentaciones_bd/editor_bd.js"></script>';
     } else {
-        echo '<script src="../js/presentaciones/eliminar_d.js"></script>';
         echo '<script src="../js/presentaciones/lista.js"></script>';
+        echo '<script src="../js/presentaciones/eliminar_d.js"></script>';
         echo '<script src="../js/presentaciones/editor.js"></script>';
     }
     ?>
