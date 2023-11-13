@@ -137,5 +137,21 @@ abstract class Diapositiva extends Presentacion
         
         return null; // No se encontró la diapositiva o no tiene tipo definido
     }
-    
+
+    public static function obtenerIdsDiapositivasPorPresentacion(PDO $conn, int $id_presentacion): array
+    {
+        $ids = [];
+        
+        $query = "SELECT id FROM diapositiva WHERE presentacion_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $id_presentacion);
+        $stmt->execute();
+        
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $ids[] = $row['id'];
+        }
+        
+        return $ids;
+    }
+
 }

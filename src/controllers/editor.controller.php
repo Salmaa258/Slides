@@ -46,6 +46,21 @@ if (isset($_POST['presentacion_id'])) {
 
     $ordenDiapositivas = isset($_POST['ordenDiapositivas']) ? explode(',', $_POST['ordenDiapositivas']) : [];
 
+    // Obtén la lista de IDs de las diapositivas existentes en la base de datos para esta presentación
+    $diapositivasExistentes = Diapositiva::obtenerIdsDiapositivasPorPresentacion($conn, $id_presentacion);
+
+    // Compara y elimina las diapositivas que ya no existen
+    foreach ($diapositivasExistentes as $idDiapositivaExistente) {
+        if (!in_array($idDiapositivaExistente, $ordenDiapositivas)) {
+            $diapositivaAEliminar = Diapositiva::getDiapositivaPorId($conn, $idDiapositivaExistente);
+            if ($diapositivaAEliminar) {
+                // Elimina la diapositiva y realiza cualquier otro proceso de eliminación necesario
+                $mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
+                // Puedes manejar la respuesta, como mostrar un mensaje de éxito o error
+            }
+        }
+    }
+
     foreach ($ordenDiapositivas as $orden => $idDiapositiva) {
         ++$orden; // Incrementa antes de usar
         if (strpos($idDiapositiva, 'new-') === false) {

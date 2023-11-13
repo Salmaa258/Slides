@@ -1,20 +1,20 @@
+let diapositivaAEliminar = null; // Variable global para rastrear la diapositiva que se eliminará
+
 function confirmDelete(event, container) {
     event.preventDefault();
     if (container) {
         const diapositivaId = container.getAttribute('data-id');
         if (diapositivaId) {
-            sessionStorage.setItem('diapositivaAEliminar', diapositivaId);
+            diapositivaAEliminar = diapositivaId;
             document.getElementById('confirmarEliminar').showModal();
         }
     }
 }
 
-
 // Esta función se llama cuando se confirma la eliminación de una diapositiva
 function eliminarDiapositiva() {
-    const diapositivaId = sessionStorage.getItem('diapositivaAEliminar');
-    if (diapositivaId) {
-        const container = document.querySelector(`.d-container[data-id="${diapositivaId}"], .d-containerImagen[data-id="${diapositivaId}"]`);
+    if (diapositivaAEliminar) {
+        const container = document.querySelector(`.d-container[data-id="${diapositivaAEliminar}"], .d-containerImagen[data-id="${diapositivaAEliminar}"]`);
         if (container) {
             // Verificar que haya al menos una diapositiva antes de intentar eliminarla
             if (ordenLista.length > 1) {
@@ -22,7 +22,7 @@ function eliminarDiapositiva() {
                 container.remove();
 
                 // Obtener el índice de la diapositiva en el orden actual
-                const index = ordenLista.indexOf(diapositivaId);
+                const index = ordenLista.indexOf(diapositivaAEliminar);
 
                 // Actualizar el orden de la lista de diapositivas después de eliminar
                 ordenLista.splice(index, 1); // Eliminar el ID de la diapositiva de la lista de orden
@@ -44,13 +44,12 @@ function eliminarDiapositiva() {
                 mostrarError(); // Mostrar la modal de error cuando se intenta eliminar la última diapositiva
             }
         }
+        diapositivaAEliminar = null; // Restablece la variable global después de la eliminación
     }
 }
 
-
 function cerrarConfirmacion() {
     document.getElementById('confirmarEliminar').close();
-    sessionStorage.removeItem('diapositivaAEliminar');
 }
 
 function cerrarExito() {
@@ -70,4 +69,3 @@ function cerrarError() {
         errorModal.close();
     }
 }
-

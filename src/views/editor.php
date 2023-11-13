@@ -232,8 +232,8 @@ if ($url === 'null') {
     <?php
     // Verificar si la presentación ha sido cargada de la BD
     if ($id_presentacion !== null) {
-        echo '<script src="../js/presentaciones_bd/eliminar_d_bd.js"></script>';
         echo '<script src="../js/presentaciones_bd/lista_bd.js"></script>';
+        echo '<script src="../js/presentaciones_bd/eliminar_d_bd.js"></script>';
         echo '<script src="../js/presentaciones_bd/editor_bd.js"></script>';
     } else {
         echo '<script src="../js/presentaciones/lista.js"></script>';
