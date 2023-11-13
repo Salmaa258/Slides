@@ -291,6 +291,19 @@ a {
     width: 100%;
 }
 
+.delete-slide-icon {
+    position: absolute;
+    top: 10px;  /* Ajusta según sea necesario para posicionar el ícono correctamente */
+    right: 5px;
+    cursor: pointer;
+    opacity: 0.7;  /* Lo hacemos un poco transparente para que no sea demasiado llamativo */
+    transition: opacity 0.3s;  /* Una transición suave para el hover */
+}
+
+.delete-slide-icon:hover {
+    opacity: 1;  /* Al pasar el ratón por encima, el ícono se vuelve totalmente opaco */
+}
+
 /*Dialog*/
 dialog {
     background-color: #a7a7a7;
@@ -303,7 +316,7 @@ dialog {
     z-index: 9999;
 }
 
-#confirmarGuardar {
+#confirmarGuardar, #confirmarEliminar {
     background-color: #a7a7a7;
     border-radius: 10px;
     position: fixed;
@@ -315,7 +328,9 @@ dialog {
 }
 
 #btn-aceptar,
-#btn-cancelar {
+#btn-cancelar,
+#btn-aceptar-eliminar,
+#btn-cancelar-eliminar {
     background-color: #304a6e;
     font-size: 17px;
     padding: 10px 20px;
@@ -327,12 +342,14 @@ dialog {
 }
 
 #btn-aceptar:hover,
-#btn-cancelar:hover {
+#btn-cancelar:hover, 
+#btn-aceptar-eliminar:hover,
+#btn-cancelar-eliminar:hover {
     background-color: #223650;
     cursor: pointer;
 }
 
-#btn-aceptar-exito {
+#btn-aceptar-exito, #btn-aceptar-exito-eliminar {
     background-color: #304a6e;
     font-size: 17px;
     padding: 10px 20px;
@@ -343,7 +360,7 @@ dialog {
     float: right;
 }
 
-#btn-aceptar-exito:hover {
+#btn-aceptar-exito:hover, #btn-aceptar-exito-eliminar:hover {
     background-color: #223650;
     cursor: pointer;
 }
