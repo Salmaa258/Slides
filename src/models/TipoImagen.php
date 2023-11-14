@@ -61,6 +61,7 @@ class TipoImagen extends Diapositiva
         $stmt->bindParam(4, $this->contenido);
         $stmt->bindParam(5, $this->nombre_imagen);
         $stmt->execute();
+
     }
 
     public function actualizarDiapositiva(PDO $conn, int $id_presentacion): void
@@ -115,7 +116,7 @@ class TipoImagen extends Diapositiva
         $imagenHtml = ''; // Inicializamos la variable que contendrá el código HTML de la imagen
 
         // Verificamos si el nombre de la imagen es nulo o vacío
-        if ($this->getNombre_imagen() !== null && $this->getNombre_imagen() !== '') {
+        if ($this->getNombre_imagen() !== 'null' && $this->getNombre_imagen() !== '') {
             // Si la imagen no es nula, mostramos la imagen
             $imagenHtml = '
             <div class="imagenDiv">
@@ -127,8 +128,8 @@ class TipoImagen extends Diapositiva
 
         return '
         <div class="d-containerImagen" data-id="' . $this->getId() . '">
-        <div class="delete-slide-icon">
-            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" onclick="confirmDelete(event, this.closest(\'.d-containerImagen\'))">
+        <div class="delete-slide-icon-content">
+            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest(\'.d-containerImagen\'))">
         </div>
         <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
             name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />

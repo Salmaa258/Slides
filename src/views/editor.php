@@ -145,7 +145,7 @@ if ($url === 'null') {
             <template id="d_titulo_template">
                 <div class="d-container">
                     <div class="delete-slide-icon">
-                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" onclick="confirmDelete(event, this.closest('.d-container'))">
+                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest('.d-container'))">
                     </div>
                     <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
@@ -153,8 +153,8 @@ if ($url === 'null') {
             </template>
             <template id="d_titulo_texto_template">
                 <div class="d-container">
-                    <div class="delete-slide-icon">
-                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" onclick="confirmDelete(event, this.closest('.d-container'))">
+                    <div class="delete-slide-icon-content">
+                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest('.d-container'))">
                     </div>
                     <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
@@ -164,8 +164,8 @@ if ($url === 'null') {
             </template>
             <template id="d_titulo_texto_imagen_template">
                     <div class="d-containerImagen">
-                        <div class="delete-slide-icon">
-                            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" onclick="confirmDelete(event, this.closest('.d-containerImagen'))">
+                        <div class="delete-slide-icon-content">
+                            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest('.d-containerImagen'))">
                         </div>
                         <input class="focus" type="text" form="data_p" autocomplete="off"
                             placeholder="Haz click para añadir un título..." />
