@@ -134,19 +134,36 @@ if (isset($_POST['presentacion_id'])) {
     $newPresentacion->guardarNuevaPresentacion($conn);
     $id_presentacion = $newPresentacion->getId();
 
+    $tiposDiapositivas = [];
+
     // Crear diapositivas para la nueva presentación
     $ordenDiapositivas = isset($_POST['ordenDiapositivas']) ? explode(',', $_POST['ordenDiapositivas']) : [];
     foreach ($ordenDiapositivas as $orden => $tempId) {
         $orden++; // Asegúrate de que el orden comience en 1
         $tempId = str_replace('new-', '', $tempId);
         $titulo = $_POST['d_titulo_new-' . $tempId] ?? '';
+        $titulo = is_string($titulo) ? $titulo : ''; // Asignar una cadena vacía si $titulo no es una cadena válida 
         $contenido = $_POST['d_contenido_new-' . $tempId] ?? '';
+    
+        // Crear una nueva diapositiva vacía del tipo correspondiente
+        $tipoDiapositiva = explode('-', $tempId)[1]; // Extrae el tipo de la ID temporal
+    
+        // Almacena el tipo de diapositiva en el array
+        $tiposDiapositivas[] = $tipoDiapositiva;
+        
+        // Antes de crear una nueva instancia de TipoImagen, asegúrate de que $nombre_imagen esté definida
+        if ($tipoDiapositiva === 'imagen') {
+            // Verifica si se ha subido una imagen para la nueva diapositiva
+            if (isset($_FILES['d_imagen_new-' . $tempId]) && $_FILES['d_imagen_new-' . $tempId]['error'] == UPLOAD_ERR_OK) {
+                $imagen = $_FILES['d_imagen_new-' . $tempId];
+                $nombre_imagen = $imagen['name'];
+                $ext = pathinfo($nombre_imagen, PATHINFO_EXTENSION);
 
-        // Verifica si se ha subido una imagen para la nueva diapositiva
-        if (isset($_FILES['d_imagen_new-' . $tempId]) && $_FILES['d_imagen_new-' . $tempId]['error'] == UPLOAD_ERR_OK) {
-            $imagen = $_FILES['d_imagen_new-' . $tempId];
-            $nombre_imagen = $imagen['name'];
-            $ext = pathinfo($nombre_imagen, PATHINFO_EXTENSION);
+                if (in_array($ext, ['png', 'jpg', 'jpeg', 'webp'])) {
+                    // Genera un nombre de archivo único para la imagen
+                    $unique_id = uniqid('', true);
+                    $nombre_imagen = "imagen_$tempId" . "_" . $unique_id . '.' . $ext;
+                    $ruta_imagen = createImagesFolder() . '/' . $nombre_imagen;
 
             if (in_array($ext, ['png', 'jpg', 'jpeg', 'webp'])) {
                 // Genera un nombre de archivo único para la imagen
@@ -162,12 +179,18 @@ if (isset($_POST['presentacion_id'])) {
             } else {
                 $nuevaDiapositiva = new TipoImagen(null, $titulo, $contenido, 'null');
             }
-        } elseif (!empty($contenido)) {
+        }
+
+        // Ahora crea la diapositiva independientemente del tipo
+        if ($tipoDiapositiva === 'imagen') {
+            // Crea una nueva diapositiva de tipo imagen y la añade a la presentación
+            $nuevaDiapositiva = new TipoImagen(null, $titulo, $contenido, $nombre_imagen);
+        } elseif ($tipoDiapositiva === 'contenido') {
             $nuevaDiapositiva = new TipoContenido(null, $titulo, $contenido);
         } else {
             $nuevaDiapositiva = new TipoTitulo(null, $titulo);
         }
-
+    
         if (isset($nuevaDiapositiva)) {
             $nuevaDiapositiva->setOrden($orden);
             $nuevaDiapositiva->nuevaDiapositiva($conn, $id_presentacion);
@@ -178,6 +201,6 @@ if (isset($_POST['presentacion_id'])) {
 
 }
 
-// Redirigir al usuario de vuelta a la página de creación de presentaciones
-header("Location: ../views/editor.php?presentacion_id=" . $id_presentacion);
-exit;
+    // Redirigir al usuario de vuelta a la página de creación de presentaciones
+    header("Location: ../views/editor.php?presentacion_id=" . $id_presentacion);
+    exit;
