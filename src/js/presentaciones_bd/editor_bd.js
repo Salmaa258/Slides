@@ -10,28 +10,29 @@ let newDiapositivaId = 1;
 const generateNewDiapositivaId = () => `new-${newDiapositivaId++}`;
 
 // Crea y añade una nueva diapositiva de tipo "título" al contenedor principal.
-const newTipoTitulo = () => {
+const newTipoTitulo = (tipo) => {
     const diapositiva = diapositivaTitulo.content.cloneNode(true);
     const diapositivaContainer = diapositiva.querySelector('.d-container');
     const tempId = generateNewDiapositivaId();
-    diapositivaContainer.setAttribute('data-id', tempId);
-    diapositivaContainer.querySelector('input[type="text"]').name = 'd_titulo_' + tempId;
+    const idTemporalConTipo = `${tempId}-${tipo}`; // Añade el tipo después del ID temporal
+    diapositivaContainer.setAttribute('data-id', idTemporalConTipo);
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_titulo_${idTemporalConTipo}`;
 
     diapositivasContainer.append(diapositivaContainer);
 
     ocultarTodasLasDiapositivas();
-    mostrarDiapositiva(tempId);
-    ordenLista.push(tempId);
+    mostrarDiapositiva(idTemporalConTipo);
+    ordenLista.push(idTemporalConTipo);
     actualizarListaDiapositivas();
     
-    mostrarDiapositiva(tempId);
+    mostrarDiapositiva(idTemporalConTipo);
 };
 
 let numDiapositivas = document.getElementById('diapositivas');
 numDiapositivas = numDiapositivas.getAttribute('lastDiapositivaId');
 // Comprobamos si estamos creando una diapositiva nueva o editando una existente.
 if (numDiapositivas === '0') {
-    newTipoTitulo();
+    newTipoTitulo('titulo');
     numDiapositivas = 1;
 } else {
     numDiapositivas = parseInt(numDiapositivas) - 1;
@@ -39,43 +40,45 @@ if (numDiapositivas === '0') {
 
 
 // Crea y añade una nueva diapositiva que tiene un título y un área de texto.
-const newTipoContenido = () => {
+const newTipoContenido = (tipo) => {
     const diapositiva = diapositivaTituloTexto.content.cloneNode(true);
     const diapositivaContainer = diapositiva.querySelector('.d-container');
     const tempId = generateNewDiapositivaId();
-    diapositivaContainer.setAttribute('data-id', tempId);
-    diapositivaContainer.querySelector('input[type="text"]').name = 'd_titulo_' + tempId;
-    diapositivaContainer.querySelector('textarea').name = 'd_contenido_' + tempId;
+    const idTemporalConTipo = `${tempId}-${tipo}`; // Añade el tipo después del ID temporal
+    diapositivaContainer.setAttribute('data-id', idTemporalConTipo);
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_titulo_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('textarea').name = `d_contenido_${idTemporalConTipo}`;
 
     diapositivasContainer.append(diapositivaContainer);
 
     ocultarTodasLasDiapositivas();
-    mostrarDiapositiva(tempId);
-    ordenLista.push(tempId);
+    mostrarDiapositiva(idTemporalConTipo);
+    ordenLista.push(idTemporalConTipo);
     actualizarListaDiapositivas();
 
-    mostrarDiapositiva(tempId);
+    mostrarDiapositiva(numDiapositivas - 1);
 };
 
 // Crea y añade una nueva diapositiva que tiene un título, un área de texto y una imagen.
-const newTipoImagen = () => {
+const newTipoImagen = (tipo) => {
     const diapositiva = diapositivaTituloTextoImagen.content.cloneNode(true);
     const diapositivaContainer = diapositiva.querySelector('.d-containerImagen');
-    const tempId = generateNewDiapositivaId(); // Asume que existe una función para generar IDs únicos
-    diapositivaContainer.setAttribute('data-id', tempId);
+    const tempId = generateNewDiapositivaId();
+    const idTemporalConTipo = `${tempId}-${tipo}`; // Añade el tipo después del ID temporal
+    diapositivaContainer.setAttribute('data-id', idTemporalConTipo);
 
-    diapositivaContainer.querySelector('input[type="text"]').name = 'd_titulo_' + tempId;
-    diapositivaContainer.querySelector('textarea').name = 'd_contenido_' + tempId;
-    diapositivaContainer.querySelector('input[type="file"]').name = 'd_imagen_' + tempId;
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_titulo_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('textarea').name = `d_contenido_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[type="file"]').name = `d_imagen_${idTemporalConTipo}`;
 
     diapositivasContainer.append(diapositivaContainer);
 
     ocultarTodasLasDiapositivas(); 
-    mostrarDiapositiva(tempId); 
-    ordenLista.push(tempId); 
+    mostrarDiapositiva(idTemporalConTipo); 
+    ordenLista.push(idTemporalConTipo); 
     actualizarListaDiapositivas(); 
 
-    mostrarDiapositiva(tempId);
+    mostrarDiapositiva(numDiapositivas - 1);
 };
 
 //Funcion para mostrar la confirmación del feedback
@@ -100,11 +103,11 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
 
     // Agregamos la Diapositiva seleccionada según el tipo recordado
     if (tipoDiapositiva === "titulo") {
-      newTipoTitulo();
+      newTipoTitulo('titulo');
     } else if (tipoDiapositiva === "tituloTexto") {
-      newTipoContenido();
+      newTipoContenido('contenido');
     } else if (tipoDiapositiva === "tituloTextoImagen") {
-      newTipoImagen();
+      newTipoImagen('imagen');
     }
 
         // Reseteamos el tipo de diapositiva
@@ -121,11 +124,11 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
         if (tipoDiapositiva) {
             // Si hay un tipo de diapositiva recordado, inserta en la base de datos pero sin guardar los cambios
             if (tipoDiapositiva === 'titulo') {
-                newTipoTitulo();
+                newTipoTitulo('titulo');
             } else if (tipoDiapositiva === 'tituloTexto') {
-                newTipoContenido();
+                newTipoContenido('contenido');
             } else if (tipoDiapositiva === 'tituloTextoImagen') {
-                newTipoImagen();
+                newTipoImagen('contenido');
             }
         }
 

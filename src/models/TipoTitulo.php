@@ -2,9 +2,9 @@
 
 class TipoTitulo extends Diapositiva
 {
-    private string $titulo;
+    private ?string $titulo;
 
-    public function __construct(int | null $id_diapositiva, string $titulo)
+    public function __construct(int | null $id_diapositiva, ?string $titulo)
     {
         parent::__construct($id_diapositiva);
         $this->titulo = $titulo;
@@ -15,7 +15,7 @@ class TipoTitulo extends Diapositiva
         return $this->titulo;
     }
 
-    public function setTitulo(string $titulo): void
+    public function setTitulo(?string $titulo): void
     {
         $this->titulo = $titulo;
     }
