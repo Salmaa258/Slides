@@ -103,14 +103,7 @@ if (isset($_POST['presentacion_id'])) {
                     $unique_id = substr($unique_id, -3);
                     $nombre_imagen = "imagen_$tempId" . "_" . $unique_id . '.' . $ext;
                     $ruta_imagen = '../imagenes/' . $nombre_imagen;
-                    //$url_temp = $_FILES['d_imagen_' . $tempId];
                     $url_temp = $_FILES['d_imagen_new-' . $tempId];
-
-                    // $unique_id = uniqid();
-                    // $unique_id = substr($unique_id, -3);
-                    // $nombre_imagen = $tempId . "a" . $unique_id . '.' . $ext;
-                    // $ruta_imagen = '../imagenes/' . $nombre_imagen;
-                    // $url_temp = $_FILES['d_imagen_' . $tempId];
 
                     move_uploaded_file($url_temp['tmp_name'], $ruta_imagen);
                     
@@ -124,7 +117,7 @@ if (isset($_POST['presentacion_id'])) {
             } else {
                 $nuevaDiapositiva = new TipoTitulo(null, $titulo);
             }
-            //var_dump($nuevaDiapositiva);
+            
             $nuevaDiapositiva->setOrden($orden);
             $nuevaDiapositiva->nuevaDiapositiva($conn, $id_presentacion);
         }
@@ -161,7 +154,6 @@ if (isset($_POST['presentacion_id'])) {
                 $nombre_imagen = "imagen_$tempId" . "_" . $unique_id . '.' . $ext;
                 $ruta_imagen = createImagesFolder() . '/' . $nombre_imagen;
                 
-
                 // Mueve la imagen al directorio de imágenes
                 move_uploaded_file($imagen['tmp_name'], $ruta_imagen);
 
