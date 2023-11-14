@@ -76,8 +76,8 @@ if (isset($_POST['presentacion_id'])) {
                     if (isset($_FILES['d_imagen_' . $idDiapositiva])) {
                         $imagen = $_FILES['d_imagen_' . $idDiapositiva];
                         // Asumiendo que tienes una función para manejar la carga de la imagen
-                        $nombre_imagen = handleImageUpload($imagen);
-                        $editDiapositiva->setNombre_imagen($nombre_imagen);
+                        //$nombre_imagen = handleImageUpload($imagen);
+                        $editDiapositiva->setNombre_imagen($imagen['name']);
                     }
                     $editDiapositiva->setContenido($contenido); // Si la imagen tiene contenido asociado
                 }
@@ -90,25 +90,41 @@ if (isset($_POST['presentacion_id'])) {
             $tempId = str_replace('new-', '', $idDiapositiva);
             $titulo = $_POST['d_titulo_new-' . $tempId] ?? '';
             $contenido = $_POST['d_contenido_new-' . $tempId] ?? '';
-
+            
             // Verifica si se ha subido una imagen
             if (isset($_FILES['d_imagen_new-' . $tempId])) {
                 $imagen = $_FILES['d_imagen_new-' . $tempId];
                 $nombre_imagen = $imagen['name'];
+                
                 $ext = pathinfo($nombre_imagen, PATHINFO_EXTENSION);
                 if (in_array($ext, ['png', 'jpg', 'jpeg', 'webp'])) {
-                    $unique_id = uniqid('', true); // Genera un ID único
-                    $nombre_imagen = $tempId . "_" . $unique_id . '.' . $ext;
-                    $ruta_imagen = createImagesFolder() . '/' . $nombre_imagen;
-                    move_uploaded_file($imagen['tmp_name'], $ruta_imagen);
+
+                    $unique_id = uniqid();
+                    $unique_id = substr($unique_id, -3);
+                    $nombre_imagen = "imagen_$tempId" . "_" . $unique_id . '.' . $ext;
+                    $ruta_imagen = '../imagenes/' . $nombre_imagen;
+                    //$url_temp = $_FILES['d_imagen_' . $tempId];
+                    $url_temp = $_FILES['d_imagen_new-' . $tempId];
+
+                    // $unique_id = uniqid();
+                    // $unique_id = substr($unique_id, -3);
+                    // $nombre_imagen = $tempId . "a" . $unique_id . '.' . $ext;
+                    // $ruta_imagen = '../imagenes/' . $nombre_imagen;
+                    // $url_temp = $_FILES['d_imagen_' . $tempId];
+
+                    move_uploaded_file($url_temp['tmp_name'], $ruta_imagen);
+                    
                     $nuevaDiapositiva = new TipoImagen(null, $titulo, $contenido, $nombre_imagen);
+                } else {
+                    $nuevaDiapositiva = new TipoImagen(null, $titulo, $contenido, 'null');
                 }
+                
             } elseif (!empty($contenido)) {
                 $nuevaDiapositiva = new TipoContenido(null, $titulo, $contenido);
             } else {
                 $nuevaDiapositiva = new TipoTitulo(null, $titulo);
             }
-
+            //var_dump($nuevaDiapositiva);
             $nuevaDiapositiva->setOrden($orden);
             $nuevaDiapositiva->nuevaDiapositiva($conn, $id_presentacion);
         }
@@ -144,6 +160,7 @@ if (isset($_POST['presentacion_id'])) {
                 $unique_id = uniqid('', true);
                 $nombre_imagen = "imagen_$tempId" . "_" . $unique_id . '.' . $ext;
                 $ruta_imagen = createImagesFolder() . '/' . $nombre_imagen;
+                
 
                 // Mueve la imagen al directorio de imágenes
                 move_uploaded_file($imagen['tmp_name'], $ruta_imagen);
@@ -151,8 +168,7 @@ if (isset($_POST['presentacion_id'])) {
                 // Crea una nueva diapositiva de tipo imagen y la añade a la presentación
                 $nuevaDiapositiva = new TipoImagen(null, $titulo, $contenido, $nombre_imagen);
             } else {
-                // Manejar el caso de que el archivo no tenga una extensión permitida
-                // Puedes decidir cómo manejarlo, por ejemplo, estableciendo un mensaje de error
+                $nuevaDiapositiva = new TipoImagen(null, $titulo, $contenido, 'null');
             }
         } elseif (!empty($contenido)) {
             $nuevaDiapositiva = new TipoContenido(null, $titulo, $contenido);
@@ -165,6 +181,9 @@ if (isset($_POST['presentacion_id'])) {
             $nuevaDiapositiva->nuevaDiapositiva($conn, $id_presentacion);
         }
     }
+    // Establece la variable de sesión para indicar que la creación fue exitosa
+    $_SESSION['guardado_exitoso'] = true;
+
 }
 
 // Redirigir al usuario de vuelta a la página de creación de presentaciones
