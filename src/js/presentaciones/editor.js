@@ -254,6 +254,10 @@ const setOscuro = () => {
     }
 };
 
+const updateList = () => {
+    document.querySelector('#ordenDiapositivas').value = ordenLista; 
+}
+
 const previewForm = document.querySelector('#preview_form');
 previewForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -271,6 +275,7 @@ publicarButton.addEventListener('click', (e) => {
     e.preventDefault();
     const inputUrl = publicarButton.parentElement.querySelector('input');
     inputUrl.value = 'true';
+    updateList();
     generalForm.submit();
 });
 
@@ -292,6 +297,7 @@ pin_button.addEventListener('click', (e) => {
     e.preventDefault();
     const modifyPin = pin_button.querySelector('input');
     modifyPin.value = 'true';
+    updateList();
     generalForm.submit();
 });
 

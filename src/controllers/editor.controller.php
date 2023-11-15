@@ -104,7 +104,7 @@ if (isset($_POST['add_pin'])) {
                 // Puedes manejar la respuesta, como mostrar un mensaje de éxito o error
             }
                 // Elimina la diapositiva y realiza cualquier otro proceso de eliminación necesario
-                //$mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
+                $mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
 
                 // Elimina la imagen anterior si existe
                 if (!empty($nombreImagenAnterior)) {

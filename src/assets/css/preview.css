@@ -185,6 +185,8 @@ p {
     position: absolute;
     bottom: 4%;
     gap: 0 2%;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 #miniaturas:hover .d-miniatura {
