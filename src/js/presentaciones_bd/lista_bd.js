@@ -16,7 +16,7 @@ const mostrarDiapositiva = (id) => {
   // Selecciona ambas clases con una coma separando los selectores
   const diapositivaParaMostrar = document.querySelector(`.d-container[data-id="${id}"], .d-containerImagen[data-id="${id}"]`);
   if (diapositivaParaMostrar) {
-    diapositivaParaMostrar.style.display = 'flex'; // Asegúrate de que esta sea tu clase para mostrar elementos
+    diapositivaParaMostrar.style.display = 'block'; // Asegúrate de que esta sea tu clase para mostrar elementos
     console.log('Diapositiva mostrada.');
   } else {
     console.log('No se encontró la diapositiva con el ID proporcionado.');
@@ -45,6 +45,13 @@ const hacerElementosArrastrables = () => {
       }
       ordenLista = [...listaDiapositivas.children].map(li => li.getAttribute('data-id'));
       console.log('Elementos reordenados:', ordenLista);
+
+      // Después de agregar todos los elementos li a la lista, verifica si hay más de 11 elementos
+      if (ordenLista.length > 11) {
+        const listaContainer = document.querySelector('.white-list-items-container');
+        listaContainer.style.maxHeight = '400px';
+        listaContainer.style.overflowY = 'auto';
+      }
     }
   });
 
