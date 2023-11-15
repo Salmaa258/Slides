@@ -57,6 +57,10 @@ $diapositivas = null;
 
 if (isset($_GET['presentacion_id'])) {
     $presentacion = Presentacion::getPresentacionBD($conn, $_GET['presentacion_id']);
+    if ($presentacion === null) {
+        header("Location: ../views/home.php");
+        exit;
+    }
     $id_presentacion = $presentacion->getId();
     $titulo = $presentacion->getTitulo();
     $descripcion = $presentacion->getDescripcion();

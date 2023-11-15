@@ -24,6 +24,10 @@ $exitButton = '';
 
 if (isset($_GET['url'])) {
     $presentacion = Presentacion::getPresentacionByURL($conn, $_GET['url']);
+    if ($presentacion === null) {
+        header("Location: ../views/home.php");
+        exit;
+    }
     $id_presentacion = $presentacion->getId();
     $pin = $presentacion->getPin();
     if ($pin !== 'null') {

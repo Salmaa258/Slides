@@ -240,8 +240,8 @@ class Presentacion
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             if ($row['nombre_imagen'] === null) {
 
-                if ($row['pregunta'] !== null){ 
-                    array_push($diapositivas, new TipoPregunta($row['diapositiva_id'], $row['titulo'], $row['pregunta'], $row['respuesta_a'], $row['respuesta_b'], $row['respuesta_c'], $row['respuesta_d'], $row['respuesta_correcta']));    
+                if ($row['pregunta'] !== null) {
+                    array_push($diapositivas, new TipoPregunta($row['diapositiva_id'], $row['titulo'], $row['pregunta'], $row['respuesta_a'], $row['respuesta_b'], $row['respuesta_c'], $row['respuesta_d'], $row['respuesta_correcta']));
                 } else if ($row['contenido'] === null) {
                     array_push($diapositivas, new TipoTitulo($row['diapositiva_id'], $row['titulo']));
                 } else {
@@ -262,7 +262,7 @@ class Presentacion
      * @param int $id_presentacion ID de la presentacion que queremos instanciar.
      * @return Presentacion
      */
-    public static function getPresentacionBD(PDO $conn, int $id_presentacion): Presentacion
+    public static function getPresentacionBD(PDO $conn, int $id_presentacion): Presentacion|null
     {
         $stmt = $conn->prepare("SELECT id, titulo, descripcion, tema, url, pin FROM presentacion WHERE id = ?");
         $stmt->bindParam(1, $id_presentacion);
@@ -270,11 +270,15 @@ class Presentacion
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], $row['tema'], $row['url'], $row['pin'], []);
+        if (isset($row['id'])) {
+            $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], $row['tema'], $row['url'], $row['pin'], []);
 
-        $diapositivas = Presentacion::getDiapositivasBD($conn, $id_presentacion);
-        $presentacion->setDiapositivas($diapositivas);
-        return $presentacion;
+            $diapositivas = Presentacion::getDiapositivasBD($conn, $id_presentacion);
+            $presentacion->setDiapositivas($diapositivas);
+            return $presentacion;
+        } else {
+            return null;
+        }
     }
 
     /**
