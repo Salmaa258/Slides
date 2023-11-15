@@ -74,3 +74,14 @@ miniaturasContainer.addEventListener('click', (e) => {
     diapositivaActual = document.querySelector(`.d-container:has(h1.d_titulo_${diapositivaToShow})`);
     diapositivaActual.style.display = 'flex';
 })
+
+const checkAnswer = (event) => { 
+    const answers = event.target.parentElement;
+    const correctAnswer = answers.querySelector('h2').getAttribute('rp');
+    const answer = answers.querySelector('input:checked');
+    if (answer.value === correctAnswer.toLowerCase()) {
+        answer.parentElement.backgroundColor = 'green';
+    } else {
+        answer.parentElement.backgroundColor = 'red';
+    }
+}

@@ -142,6 +142,16 @@ h1 {
     margin-top: 7%;
 }
 
+.d-container > h2 {
+    display: flex;
+    width: 90%;
+    height: 7%;
+    justify-content: center;
+    align-items: start;
+    font-size: 52px;
+    margin-top: -14%;
+}
+
 p {
     display: flex;
     width: 100%;
@@ -175,6 +185,12 @@ p {
     height: 100%;
 }
 
+.d-container button {
+    display: block;
+    color: var(--border);
+    border-radius: 8px;
+}
+
 #miniaturas {
     display: flex;
     flex-direction: row;
@@ -186,7 +202,12 @@ p {
     bottom: 4%;
     gap: 0 2%;
     overflow-x: scroll;
-    overflow-y: hidden;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+}
+
+#miniaturas::-webkit-scrollbar {
+    display: none;
 }
 
 #miniaturas:hover .d-miniatura {
@@ -224,3 +245,5 @@ p {
     font-size: 8px;
     text-align: justify;
 }
+
+

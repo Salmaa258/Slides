@@ -101,7 +101,7 @@ CREATE TABLE tipoImagen(
   presentacion_id INT,
   titulo          VARCHAR(255),
   contenido       VARCHAR(1280),
-  nombre_imagen   VARCHAR(15),
+  nombre_imagen   VARCHAR(255),
 
   PRIMARY KEY(diapositiva_id, presentacion_id),
   FOREIGN KEY (diapositiva_id) 
