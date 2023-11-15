@@ -80,8 +80,9 @@ const checkAnswer = (event) => {
     const correctAnswer = answers.querySelector('h2').getAttribute('rp');
     const answer = answers.querySelector('input:checked');
     if (answer.value === correctAnswer.toLowerCase()) {
-        answer.parentElement.backgroundColor = 'green';
+        answer.parentElement.style.backgroundColor = 'green';
     } else {
-        answer.parentElement.backgroundColor = 'red';
+        answer.parentElement.style.backgroundColor = 'red';
     }
 }
+
