@@ -219,14 +219,14 @@ class TipoPregunta extends Diapositiva
         <textarea id="textareaPregunta" class="focus" form="data_p" rows="4" maxlength="128" name="d_pregunta_' . $this->getId() . '" placeholder="Introduce tu pregunta:">' . $this->getPregunta() . '</textarea>
         <div class="respuestas">
             <div class="respuesta">
-                <input type="text" form="data_p" name="d_respuesta_a_' . $this->getId() . '" placeholder="Respuesta A..." />
-                <input type="text" form="data_p" name="d_respuesta_b_' . $this->getId() . '" placeholder="Respuesta B..." />
-                <input type="text" form="data_p" name="d_respuesta_c_' . $this->getId() . '" placeholder="Respuesta C..." />
-                <input type="text" form="data_p" name="d_respuesta_d_' . $this->getId() . '" placeholder="Respuesta D..." />
+                <input type="text" form="data_p" name="d_respuesta_a_' . $this->getRespuestaA() . '" placeholder="Respuesta A..." />
+                <input type="text" form="data_p" name="d_respuesta_b_' . $this->getRespuestaB() . '" placeholder="Respuesta B..." />
+                <input type="text" form="data_p" name="d_respuesta_c_' . $this->getRespuestaC() . '" placeholder="Respuesta C..." />
+                <input type="text" form="data_p" name="d_respuesta_d_' . $this->getRespuestaD() . '" placeholder="Respuesta D..." />
             </div>
             <div class="respuestaCorrecta">
                 <p>Respuesta correcta:</p>
-                <select form="data_p" name="d_respuesta_correcta_' . $this->getId() . '">
+                <select form="data_p" name="d_respuesta_correcta_' . $this->getRespuestaCorrecta() . '">
                     <option value="A">A</option>
                     <option value="B">B</option>
                     <option value="C">C</option>
