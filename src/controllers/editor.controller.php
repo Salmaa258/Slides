@@ -61,7 +61,7 @@ if (isset($_POST['presentacion_id'])) {
                 // Puedes manejar la respuesta, como mostrar un mensaje de éxito o error
             }
                 // Elimina la diapositiva y realiza cualquier otro proceso de eliminación necesario
-                $mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
+                //$mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
 
                 // Elimina la imagen anterior si existe
                 if (!empty($nombreImagenAnterior)) {
@@ -151,12 +151,14 @@ if (isset($_POST['presentacion_id'])) {
             $titulo = is_string($titulo) ? $titulo : ''; // Asignar una cadena vacía si $titulo no es una cadena válida 
             $contenido = $_POST['d_contenido_' . $idDiapositiva] ?? '';
 
-            $pregunta = $_POST['d_pregunta_' . $idDiapositiva] ?? '';
-            $respuestaA = $_POST['d_respuesta_a_' . $idDiapositiva] ?? '';
-            $respuestaB = $_POST['d_respuesta_b_' . $idDiapositiva] ?? '';
-            $respuestaC = $_POST['d_respuesta_c_' . $idDiapositiva] ?? '';
-            $respuestaD = $_POST['d_respuesta_d_' . $idDiapositiva] ?? '';
-            $respuestaCorrecta = $_POST['d_respuesta_correcta_' . $idDiapositiva] ?? '';
+            $pregunta = $_POST['d_pregunta_new-' . $idDiapositiva] ?? '';
+            $respuestaA = $_POST['d_respuesta_A_new-' . $idDiapositiva] ?? '';
+            $respuestaB = $_POST['d_respuesta_B_new-' . $idDiapositiva] ?? '';
+            $respuestaC = $_POST['d_respuesta_C_new-' . $idDiapositiva] ?? '';
+            $respuestaD = $_POST['d_respuesta_D_new-' . $idDiapositiva] ?? '';
+            $respuestaCorrecta = $_POST['d_respuesta_correcta_new-' . $idDiapositiva] ?? '';
+
+                
 
             // Crear una nueva diapositiva vacía del tipo correspondiente
             $tipoDiapositiva = explode('-', $idDiapositiva)[1]; // Extrae el tipo de la ID temporal
@@ -232,12 +234,13 @@ if (isset($_POST['presentacion_id'])) {
         $titulo = is_string($titulo) ? $titulo : ''; // Asignar una cadena vacía si $titulo no es una cadena válida 
         $contenido = $_POST['d_contenido_new-' . $tempId] ?? '';
 
-        $pregunta = $_POST['pregunta_new-' . $tempId] ?? '';
-        $respuestaA = $_POST['respuestaA_new-' . $tempId] ?? '';
-        $respuestaB = $_POST['respuestaB_new-' . $tempId] ?? '';
-        $respuestaC = $_POST['respuestaC_new-' . $tempId] ?? '';
-        $respuestaD = $_POST['respuestaD_new-' . $tempId] ?? '';
-        $respuestaCorrecta = $_POST['respuestaCorrecta_new-' . $tempId] ?? '';
+        $pregunta = $_POST['d_pregunta_new-' . $tempId] ?? '';
+        $respuestaA = $_POST['d_respuesta_A_new-' . $tempId] ?? '';
+        $respuestaB = $_POST['d_respuesta_B_new-' . $tempId] ?? '';
+        $respuestaC = $_POST['d_respuesta_C_new-' . $tempId] ?? '';
+        $respuestaD = $_POST['d_respuesta_D_new-' . $tempId] ?? '';
+        $respuestaCorrecta = $_POST['d_respuesta_correcta_new-' . $tempId] ?? '';
+
 
         // Crear una nueva diapositiva vacía del tipo correspondiente
         $tipoDiapositiva = explode('-', $tempId)[1]; // Extrae el tipo de la ID temporal
