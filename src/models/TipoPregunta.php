@@ -208,8 +208,8 @@ class TipoPregunta extends Diapositiva
     }
 
     public function getDiapositivaHTML(): string
-    {
-        return '
+{
+    return '
     <div class="d-container" data-id="' . $this->getId() . '">
         <div class="delete-slide-icon-content">
             <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest(\'.d-container\'))">
@@ -219,23 +219,24 @@ class TipoPregunta extends Diapositiva
         <textarea id="textareaPregunta" class="focus" form="data_p" rows="4" maxlength="128" name="d_pregunta_' . $this->getId() . '" placeholder="Introduce tu pregunta:">' . $this->getPregunta() . '</textarea>
         <div class="respuestas">
             <div class="respuesta">
-                <input type="text" form="data_p" name="d_respuesta_a_' . $this->getRespuestaA() . '" placeholder="Respuesta A..." />
-                <input type="text" form="data_p" name="d_respuesta_b_' . $this->getRespuestaB() . '" placeholder="Respuesta B..." />
-                <input type="text" form="data_p" name="d_respuesta_c_' . $this->getRespuestaC() . '" placeholder="Respuesta C..." />
-                <input type="text" form="data_p" name="d_respuesta_d_' . $this->getRespuestaD() . '" placeholder="Respuesta D..." />
+                <input type="text" form="data_p" name="d_respuesta_a_' . $this->getId() . '" placeholder="Respuesta A..." value="' . $this->getRespuestaA() . '" />
+                <input type="text" form="data_p" name="d_respuesta_b_' . $this->getId() . '" placeholder="Respuesta B..." value="' . $this->getRespuestaB() . '" />
+                <input type="text" form="data_p" name="d_respuesta_c_' . $this->getId() . '" placeholder="Respuesta C..." value="' . $this->getRespuestaC() . '" />
+                <input type="text" form="data_p" name="d_respuesta_d_' . $this->getId() . '" placeholder="Respuesta D..." value="' . $this->getRespuestaD() . '" />
             </div>
             <div class="respuestaCorrecta">
                 <p>Respuesta correcta:</p>
-                <select form="data_p" name="d_respuesta_correcta_' . $this->getRespuestaCorrecta() . '">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
+                <select form="data_p" name="d_respuesta_correcta_' . $this->getId() . '">
+                    <option value="A" ' . ($this->getRespuestaCorrecta() === 'A' ? 'selected' : '') . '>A</option>
+                    <option value="B" ' . ($this->getRespuestaCorrecta() === 'B' ? 'selected' : '') . '>B</option>
+                    <option value="C" ' . ($this->getRespuestaCorrecta() === 'C' ? 'selected' : '') . '>C</option>
+                    <option value="D" ' . ($this->getRespuestaCorrecta() === 'D' ? 'selected' : '') . '>D</option>
                 </select>
             </div>
         </div>
     </div>';
-    }
+}
+
 
     public function getDiapositivaPreview(): string
     {
