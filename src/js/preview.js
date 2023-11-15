@@ -62,3 +62,15 @@ document.addEventListener('fullscreenchange', (event) => {
         document.querySelector('#diapositivaPosterior img').style.display = '';
     }
 });
+
+const miniaturasContainer = document.querySelector('#miniaturas');
+miniaturasContainer.addEventListener('click', (e) => {
+    let diapositivaToShow = e.target;
+    while (!diapositivaToShow.className.includes('d-miniatura')) {
+        diapositivaToShow = diapositivaToShow.parentElement;
+    }
+    diapositivaToShow = diapositivaToShow.getAttribute('id_diapositiva');
+    diapositivaActual.style.display = 'none';
+    diapositivaActual = document.querySelector(`.d-container:has(h1.d_titulo_${diapositivaToShow})`);
+    diapositivaActual.style.display = 'flex';
+})

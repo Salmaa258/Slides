@@ -86,7 +86,7 @@ abstract class Diapositiva extends Presentacion
         return $stmt;
     }
 
-    public static function getDiapositivaPorId(PDO $conn, int $idDiapositiva): ?Diapositiva {
+    public static function getDiapositivaPorId(PDO $conn, $idDiapositiva): ?Diapositiva {
         // Intentar obtener detalles de TipoContenido primero
         $stmt = $conn->prepare("
             SELECT d.id, d.orden, tc.titulo, tc.contenido

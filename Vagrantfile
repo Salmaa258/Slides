@@ -49,6 +49,7 @@ CREATE TABLE presentacion(
   descripcion     VARCHAR(255),
   tema            VARCHAR(10),
   url             CHAR(10),
+  pin             VARCHAR(8) DEFAULT 'null',
 
   PRIMARY KEY(id),
   FOREIGN KEY (tema) 
@@ -99,8 +100,8 @@ CREATE TABLE tipoImagen(
   diapositiva_id  INT,
   presentacion_id INT,
   titulo          VARCHAR(255),
-  contenido       VARCHAR(255),
-  nombre_imagen   VARCHAR(255),
+  contenido       VARCHAR(1280),
+  nombre_imagen   VARCHAR(15),
 
   PRIMARY KEY(diapositiva_id, presentacion_id),
   FOREIGN KEY (diapositiva_id) 

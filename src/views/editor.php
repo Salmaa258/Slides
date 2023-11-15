@@ -45,8 +45,13 @@ $titulo = null;
 $descripcion = null;
 $tema = 'oscuro';
 $url = 'null';
-$icon = 'publicada';
+$iconPublicar = 'publicada';
 $copy = 'flex';
+$pin = 'null';
+$hasPin = 'false';
+$newPin = 'none';
+$dropPin = 'none';
+$iconPin = 'unblock';
 $lastDiapositivaId = 0;
 $diapositivas = null;
 
@@ -58,13 +63,28 @@ if (isset($_GET['presentacion_id'])) {
     $lastDiapositivaId = $presentacion->getLastDiapositivaId($conn);
     $tema = $presentacion->getTema();
     $url = $presentacion->getUrl();
+    $pin = $presentacion->getPin();
     $diapositivas = $presentacion->getDiapositivas();
     $disabled = '';
 }
 
 if ($url === 'null') {
-    $icon = 'noPublicada';
+    $iconPublicar = 'noPublicada';
     $copy = 'none';
+}
+
+if ($pin !== 'null') {
+    $iconPin = 'block';
+    $hasPin = 'true';
+}
+
+if (isset($_GET['p'])) {
+    if ($_GET['p'] === 'new') {
+        $newPin = 'flex';
+    } else if ($_GET['p'] === 'drop') {
+        $dropPin = 'flex';
+    }
+    ;
 }
 ?>
 
@@ -87,7 +107,6 @@ if ($url === 'null') {
                         value="<?= $descripcion ?>" placeholder="Escribe una descripción..." autocomplete="off" />
                     <input type="hidden" name="ordenDiapositivas" id="ordenDiapositivas" value="">
                 </form>
-
             </div>
             <div id="nova-diapositiva">
                 <div class="dropdown">
@@ -126,12 +145,17 @@ if ($url === 'null') {
             <div id="publicar_button">
                 <input hidden type="text" name="url" form="data_p" value="<?= $url ?>">
                 <button class="button" type="submit" form="data_p">
-                    <img src="../assets/icons/<?= $icon ?>.svg" alt="Publicar Presentacion" />
+                    <img src="../assets/icons/<?= $iconPublicar ?>.svg" alt="Publicar Presentacion" />
                 </button>
                 <button id="copyUrlButton" class="button" style="display:<?= $copy ?>;">
                     <img src="../assets/icons/copy.svg" alt="Copiar URL" />
                 </button>
             </div>
+            <button id="pin_button" class="button" hasPin="<?= $hasPin ?>">
+                <input hidden type="text" name="modifyPin" form="data_p" type="submit" value="false" minlength="4"
+                    maxlength="8">
+                <img src="../assets/icons/<?= $iconPin ?>.svg" alt="Publicar Presentacion" />
+            </button>
             <div class="actionButtons">
                 <button id="btn-guardar" class="button" type="submit" form="data_p">Guardar</button>
             </div>
@@ -149,20 +173,16 @@ if ($url === 'null') {
         <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
             <template id="d_titulo_template">
                 <div class="d-container">
-                    <div class="delete-slide-icon">
-                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
+                    <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
                             onclick="confirmDelete(event, this.closest('.d-container'))">
-                    </div>
                     <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
                 </div>
             </template>
             <template id="d_titulo_texto_template">
                 <div class="d-container">
-                    <div class="delete-slide-icon-content">
-                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
+                    <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
                             onclick="confirmDelete(event, this.closest('.d-container'))">
-                    </div>
                     <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
                     <textarea class="focus" form="data_p" maxlength="1280" autocomplete="off"
@@ -171,14 +191,12 @@ if ($url === 'null') {
             </template>
             <template id="d_titulo_texto_imagen_template">
                 <div class="d-containerImagen">
-                    <div class="delete-slide-icon-content">
-                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
+                    <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
                             onclick="confirmDelete(event, this.closest('.d-containerImagen'))">
-                    </div>
-                    <input class="focus" type="text" form="data_p" autocomplete="off"
+                    <input class="focus" type="text" maxlength="128" form="data_p" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
                     <div class="d-containerImgText">
-                        <textarea class="focus" form="data_p" autocomplete="off"
+                        <textarea class="focus" form="data_p" autocomplete="off" maxlength="1280"
                             placeholder="Haz click para añadir un texto"></textarea>
                         <input class="imagen" type="file" form="data_p" name="d_imagen_"
                             accept="image/jpeg, image/png, image/jpg" />
@@ -187,10 +205,8 @@ if ($url === 'null') {
             </template>
             <template id="d_pregunta_template">
                 <div class="d-container">
-                    <div class="delete-slide-icon-content">
-                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
+                    <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
                             onclick="confirmDelete(event, this.closest('.d-container'))">
-                    </div>
                     <input class="focus" type="text" form="data_p" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
                     <textarea id="textareaPregunta" form="data_p" rows="4" maxlength="128" placeholder="Introduce tu pregunta:"></textarea>
@@ -239,6 +255,31 @@ if ($url === 'null') {
         <p>Se ha guardado la presentación correctamente</p>
         <form method="dialog">
             <button id="btn-aceptar-exito">Aceptar</button>
+        </form>
+    </dialog>
+
+    <dialog id="new_pin" style="display: <?= $newPin ?>;" class="dialogPin">
+        <button class="button" onclick="closePinDialog(event)">X</button>
+        <p>Introduce un pin</p>
+        <form method="POST" action="../controllers/editor.controller.php">
+            <input hidden type="text" name="id_presentacion" value="<?= $id_presentacion ?>">
+            <div><span>PIN</span>
+                <input type="password" name="add_pin" minlength="4" maxlength="8">
+            </div>
+            <button class="button" type="submit">Aceptar</button>
+        </form>
+    </dialog>
+
+    <dialog id="drop_pin" style="display: <?= $dropPin ?>;" class="dialogPin">
+        <button class="button" onclick="closePinDialog(event)">X</button>
+        <p>Eliminar PIN</p>
+        <form method="POST" action="../controllers/editor.controller.php">
+            <input hidden type="text" name="id_presentacion" value="<?= $id_presentacion ?>">
+            <div>
+                <span>PIN actual</span>
+                <input type="password" name="drop_pin" minlength="4" maxlength="8">
+            </div>
+            <button class="button" type="submit">Aceptar</button>
         </form>
     </dialog>
 

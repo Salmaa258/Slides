@@ -7,15 +7,17 @@ class Presentacion
     private string $descripcion;
     private string $tema;
     private string $url;
+    private string $pin;
     private array $diapositivas;
 
-    public function __construct(int|null $id, string $titulo, string $descripcion, string $tema, string $url, array $diapositivas)
+    public function __construct(int|null $id, string $titulo, string $descripcion, string $tema, string $url, string $pin, array $diapositivas)
     {
         $this->id = $id;
         $this->titulo = $titulo;
         $this->descripcion = $descripcion;
         $this->tema = $tema;
         $this->url = $url;
+        $this->pin = $pin;
         $this->diapositivas = $diapositivas;
     }
 
@@ -42,6 +44,11 @@ class Presentacion
     public function getUrl(): string
     {
         return $this->url;
+    }
+
+    public function getPin(): string
+    {
+        return $this->pin;
     }
 
     public function getDiapositivas(): array
@@ -72,6 +79,25 @@ class Presentacion
     public function setUrl(string $url): void
     {
         $this->url = $url;
+    }
+
+    public static function setPin(PDO $conn, int $id_presentacion, string $pin): void
+    {
+        $stmt = $conn->prepare("UPDATE presentacion SET pin = ? WHERE id = ?");
+        $stmt->bindParam(1, $pin);
+        $stmt->bindParam(2, $id_presentacion);
+        $stmt->execute();
+    }
+
+    public static function checkPin(PDO $conn, int $id_presentacion, string $pin): bool
+    {
+        $stmt = $conn->prepare("SELECT pin FROM presentacion WHERE id = ?");
+        $stmt->bindParam(1, $id_presentacion);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return ($row['pin'] === $pin);
     }
 
     public function setDiapositivas(array $diapositivas): void
@@ -121,13 +147,25 @@ class Presentacion
             $stmt->execute();
         }
 
-        if ($this->getUrl() != $row['url']) {
+        if ($this->getUrl() !== $row['url']) {
             $newUrl = $this->getUrl();
 
             $stmt = $conn->prepare("UPDATE presentacion SET url = ? WHERE id = ?");
             $stmt->bindParam(1, $newUrl);
             $stmt->bindParam(2, $id_presentacion);
             $stmt->execute();
+        }
+    }
+
+    /**
+     * Función que publica u oculta la presentación.
+     */
+    public function publica()
+    {
+        if ($this->url === 'null') {
+            $this->url = strval(random_int(1000000000, 9999999999));
+        } else {
+            $this->url = 'null';
         }
     }
 
@@ -156,11 +194,12 @@ class Presentacion
      */
     public function guardarNuevaPresentacion(PDO $conn): void
     {
-        $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion, tema, url) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO presentacion(titulo, descripcion, tema, url, pin) VALUES (?, ?, ?, ?, ?)");
         $stmt->bindParam(1, $this->titulo);
         $stmt->bindParam(2, $this->descripcion);
         $stmt->bindParam(3, $this->tema);
         $stmt->bindParam(4, $this->url);
+        $stmt->bindParam(5, $this->pin);
         $stmt->execute();
 
         $this->id = $conn->lastInsertId();
@@ -225,13 +264,13 @@ class Presentacion
      */
     public static function getPresentacionBD(PDO $conn, int $id_presentacion): Presentacion
     {
-        $stmt = $conn->prepare("SELECT id, titulo, descripcion, tema, url FROM presentacion WHERE id = ?");
+        $stmt = $conn->prepare("SELECT id, titulo, descripcion, tema, url, pin FROM presentacion WHERE id = ?");
         $stmt->bindParam(1, $id_presentacion);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], $row['tema'], $row['url'], []);
+        $presentacion = new Presentacion($row['id'], $row['titulo'], $row['descripcion'], $row['tema'], $row['url'], $row['pin'], []);
 
         $diapositivas = Presentacion::getDiapositivasBD($conn, $id_presentacion);
         $presentacion->setDiapositivas($diapositivas);

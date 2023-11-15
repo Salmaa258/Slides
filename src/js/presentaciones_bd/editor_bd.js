@@ -27,8 +27,6 @@ const newTipoTitulo = (tipo) => {
     actualizarListaDiapositivas();
     
     mostrarDiapositiva(idTemporalConTipo);
-
-    console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
 let numDiapositivas = document.getElementById('diapositivas');
@@ -60,8 +58,6 @@ const newTipoContenido = (tipo) => {
     actualizarListaDiapositivas();
 
     mostrarDiapositiva(idTemporalConTipo);
-
-    console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
 // Crea y añade una nueva diapositiva que tiene un título, un área de texto y una imagen.
@@ -84,8 +80,6 @@ const newTipoImagen = (tipo) => {
     actualizarListaDiapositivas(); 
 
     mostrarDiapositiva(idTemporalConTipo);
-
-    console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
 // Crea y añade una nueva diapositiva de tipoPregunta.
@@ -283,13 +277,8 @@ const generalForm = document.querySelector('#data_p');
 const publicarButton = document.querySelector('#publicar_button button[form="data_p"]');
 publicarButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const inputUrl = publicarButton.parentElement.querySelector('input');
-    if (inputUrl.value === 'null') {
-        const url = generaUrl();
-        inputUrl.value = url;
-    } else {
-        inputUrl.value = 'null';
-    }
+        const inputUrl = publicarButton.parentElement.querySelector('input');
+    inputUrl.value = 'true';
     generalForm.submit();
 });
 
@@ -304,3 +293,18 @@ copyButton.addEventListener('click', (e) => {
         e.target.src = '../assets/icons/copy.svg';
     }, 1000);
 });
+
+// Evento que establece true el input modifyPin, para indicar que se quiere modificar el PIN.
+const pin_button = document.querySelector('#pin_button');
+pin_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    const modifyPin = pin_button.querySelector('input');
+    modifyPin.value = 'true';
+    generalForm.submit();
+});
+
+// Función para cerrar los dialog de PIN.
+const closePinDialog = (e) => {
+    const dialog = e.target.parentElement;
+    dialog.style.display = 'none';
+}

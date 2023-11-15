@@ -63,19 +63,25 @@ class TipoTitulo extends Diapositiva
     public function getDiapositivaHTML(): string
     {
         return '<div class="d-container" data-id="' . $this->getId() . '">
-        <div class="delete-slide-icon">
-            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest(\'.d-container\'))">
-        </div>
-            <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
-            name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
+        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest(\'.d-container\'))">
+        <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
+        name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
       </div>';
     }
 
     public function getDiapositivaPreview(): string
     {
         return '
-        <div class="d-container" style="display: none">
+        <div class="d-container" style="display: none;">
             <h1 class="d_titulo_' . $this->getId() . '">' . $this->getTitulo() . '</h1>
+        </div>';
+    }
+
+    public function getMiniatura(): string
+    {
+        return '
+        <div class="d-miniatura" id_diapositiva="'. $this->getId() .'">
+            <h1>' . $this->getTitulo() . '</h1>
         </div>';
     }
 }

@@ -70,3 +70,23 @@ cajaContainer.addEventListener('click', (e) => {
         mostrarOpciones(e.target.parentNode);
     }
 });
+
+const publicarForm = document.querySelector('#publicar_form');
+publicarForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const inputUrl = publicarForm.querySelector('input[name="home_url"]');
+    inputUrl.value = 'true';
+    publicarForm.submit();
+});
+
+const copyButton = document.querySelector('#copyUrlButton');
+const iconCopy = copyButton.querySelector('img');
+copyButton.addEventListener('click', (e) => {
+    let url = document.querySelector('input[name="home_url"]').value;
+    url = 'http://localhost:4200/src/views/preview.php?url=' + url;
+    navigator.clipboard.writeText(url);
+    iconCopy.src = '../assets/icons/checkCopyHome.svg';
+    setTimeout(() => {
+        iconCopy.src = '../assets/icons/copyHome.svg';
+    }, 1000);
+});

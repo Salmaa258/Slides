@@ -128,9 +128,7 @@ class TipoImagen extends Diapositiva
 
         return '
         <div class="d-containerImagen" data-id="' . $this->getId() . '">
-        <div class="delete-slide-icon-content">
-            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest(\'.d-containerImagen\'))">
-        </div>
+        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest(\'.d-containerImagen\'))">
         <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
             name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
             <div class="d-containerImgText">
@@ -152,9 +150,27 @@ class TipoImagen extends Diapositiva
         return '
         <div class="d-container" style="display: none;">
             <h1 class="d_titulo_' . $this->getId() . '">' . $this->getTitulo() . '</h1>
-            <p class="d_contenido_' . $this->getId() . '">' . $this->getContenido() . '</p>
-            <div class="d-containerImagen">
-            <img class="d_imagen_' . $this->getId() . '" src="' . $nombreImagen . '" alt="Imagen de la diapositiva">
+            <div class="d-containerContenidoImagen">
+                <p class="d_contenido_' . $this->getId() . '">' . $this->getContenido() . '</p>
+                <div class="imagen">
+                    <img class="d_imagen_' . $this->getId() . '" src="' . $nombreImagen . '" alt="Imagen de la diapositiva" id="imagenPreview">
+                </div>
+            </div>
+        </div>';
+    }
+
+    public function getMiniatura(): string
+    {
+        $nombreImagen = '../imagenes/' . $this->getNombre_imagen();
+
+        return '
+        <div class="d-miniatura" id_diapositiva="'. $this->getId() .'">
+            <h1>' . $this->getTitulo() . '</h1>
+            <div class="d-containerContenidoImagen">
+                <p>' . $this->getContenido() . '</p>
+                <div class="imagen">
+                    <img id="imagenPreview" src="' . $nombreImagen . '" alt="Imagen de la diapositiva">
+                </div>
             </div>
         </div>';
     }

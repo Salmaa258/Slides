@@ -128,29 +128,97 @@ button {
     min-width: 615px;
     color: var(--border);
     gap: 5%;
+    box-sizing: border-box;
+    padding-bottom: 4%;
 }
 
 h1 {
     display: flex;
-    width: 85%;
+    width: 90%;
     height: 7%;
     justify-content: center;
     align-items: start;
     font-size: 52px;
+    margin-top: 7%;
 }
 
 p {
     display: flex;
-    width: 85%;
+    width: 100%;
     height: 100%;
     font-size: 32px;
+    margin: 0;
     overflow: hidden;
-    justify-content: center;
 }
 
 /* Estilos para la imagen */
-.d_imagen_ {
-    width: 100%; 
-    height: 100%; 
-    margin-bottom: 10px; 
+.d-containerContenidoImagen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    gap: 2%;
+}
+
+#imagenPreview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.imagen {
+    display: flex;
+    width: 80%;
+    height: 100%;
+}
+
+#miniaturas {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: end;
+    width: 95%;
+    height: 35%;
+    position: absolute;
+    bottom: 4%;
+    gap: 0 2%;
+}
+
+#miniaturas:hover .d-miniatura {
+    display: flex;
+}
+
+.d-miniatura {
+    aspect-ratio: 16 / 9;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 170px;
+    box-sizing: border-box;
+    padding: 1.3%;
+    background: black;
+    color: var(--border);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.d-miniatura:hover {
+    transform: scale(1.05);
+}
+
+.d-miniatura h1 {
+    font-size: 12px;
+    margin: 1% 0 6% 0;
+}
+
+.d-miniatura p {
+    font-size: 8px;
+    text-align: justify;
 }

@@ -254,10 +254,6 @@ const setOscuro = () => {
     }
 };
 
-const generaUrl = () => {
-    return Math.floor(1000000000 + Math.random() * 9999999999);
-};
-
 const previewForm = document.querySelector('#preview_form');
 previewForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -274,12 +270,7 @@ const publicarButton = document.querySelector('#publicar_button button[form="dat
 publicarButton.addEventListener('click', (e) => {
     e.preventDefault();
     const inputUrl = publicarButton.parentElement.querySelector('input');
-    if (inputUrl.value === 'null') {
-        const url = generaUrl();
-        inputUrl.value = url;
-    } else {
-        inputUrl.value = 'null';
-    }
+    inputUrl.value = 'true';
     generalForm.submit();
 });
 
@@ -294,3 +285,18 @@ copyButton.addEventListener('click', (e) => {
         e.target.src = '../assets/icons/copy.svg';
     }, 1000);
 });
+
+// Evento que establece true el input modifyPin, para indicar que se quiere modificar el PIN.
+const pin_button = document.querySelector('#pin_button');
+pin_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    const modifyPin = pin_button.querySelector('input');
+    modifyPin.value = 'true';
+    generalForm.submit();
+});
+
+// Función para cerrar los dialog de PIN.
+const closePinDialog = (e) => {
+    const dialog = e.target.parentElement;
+    dialog.style.display = 'none';
+}

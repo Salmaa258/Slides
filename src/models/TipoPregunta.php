@@ -211,9 +211,8 @@ class TipoPregunta extends Diapositiva
     {
         return '
     <div class="d-container" data-id="' . $this->getId() . '">
-        <div class="delete-slide-icon-content">
-            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest(\'.d-container\'))">
-        </div>
+            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
+                onclick="confirmDelete(event, this.closest(\'.d-container\'))">
         <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
         name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
         <textarea id="textareaPregunta" class="focus" form="data_p" rows="4" maxlength="128" name="d_pregunta_' . $this->getId() . '" placeholder="Introduce tu pregunta:">' . $this->getPregunta() . '</textarea>
