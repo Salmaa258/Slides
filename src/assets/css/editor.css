@@ -254,8 +254,8 @@ a {
 .white-list {
     background-color: var(--list-background);
     border: 1px solid #e0e0e0;
-    max-width: 400px;
-    max-height: 532px;
+    max-width: 200px;
+    max-height: auto;
 }
 
 .white-list-header {
@@ -289,6 +289,34 @@ a {
     align-items: flex-start;
     gap: 20px;
     width: 100%;
+}
+
+/* Estilos del scroll para .white-list-items-container */
+.white-list-items-container {
+    max-height: 339px;
+    overflow-y: auto;
+    border-radius: 6px;
+}
+
+/* Personalización del scroll */
+.white-list-items-container::-webkit-scrollbar {
+    width: 12px; /* Ancho del scroll */
+    height: 10px;
+    border: 6px;
+}
+
+.white-list-items-container::-webkit-scrollbar-track {
+    background-color: rgba(217, 217, 217, 0.4); /* Color de la pista (fondo) del scroll con opacidad */
+}
+
+.white-list-items-container::-webkit-scrollbar-thumb {
+    background-color: rgba(217, 217, 217, 1); /* Color del pulgón (parte deslizable) del scroll */
+    border-radius: 6px; /* Borde redondeado del pulgón */
+    height: 60px;
+}
+
+.white-list-items-container::-webkit-scrollbar-button {
+    display: none; /* Oculta los botones de flecha (si están presentes) */
 }
 
 .delete-slide-icon {

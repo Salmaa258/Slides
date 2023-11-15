@@ -45,6 +45,13 @@ const hacerElementosArrastrables = () => {
       }
       ordenLista = [...listaDiapositivas.children].map(li => li.getAttribute('data-id'));
       console.log('Elementos reordenados:', ordenLista);
+
+      // Después de agregar todos los elementos li a la lista, verifica si hay más de 11 elementos
+      if (ordenLista.length > 11) {
+        const listaContainer = document.querySelector('.white-list-items-container');
+        listaContainer.style.maxHeight = '400px';
+        listaContainer.style.overflowY = 'auto';
+      }
     }
   });
 
