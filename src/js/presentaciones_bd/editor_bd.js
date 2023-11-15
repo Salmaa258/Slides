@@ -26,6 +26,8 @@ const newTipoTitulo = (tipo) => {
     actualizarListaDiapositivas();
     
     mostrarDiapositiva(idTemporalConTipo);
+
+    console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
 let numDiapositivas = document.getElementById('diapositivas');
@@ -57,6 +59,8 @@ const newTipoContenido = (tipo) => {
     actualizarListaDiapositivas();
 
     mostrarDiapositiva(numDiapositivas - 1);
+
+    console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
 // Crea y añade una nueva diapositiva que tiene un título, un área de texto y una imagen.
@@ -79,6 +83,8 @@ const newTipoImagen = (tipo) => {
     actualizarListaDiapositivas(); 
 
     mostrarDiapositiva(numDiapositivas - 1);
+
+    console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
 //Funcion para mostrar la confirmación del feedback
