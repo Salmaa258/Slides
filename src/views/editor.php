@@ -196,14 +196,14 @@ if ($url === 'null') {
                     <textarea id="textareaPregunta" form="data_p" rows="4" maxlength="128" placeholder="Introduce tu pregunta:"></textarea>
                     <div class="respuestas">
                         <div class="respuesta">
-                            <input type="text" form="data_p" placeholder="Respuesta A..." />
-                            <input type="text" form="data_p" placeholder="Respuesta B..." />
-                            <input type="text" form="data_p" placeholder="Respuesta C..." />
-                            <input type="text" form="data_p" placeholder="Respuesta D..." />
+                            <input type="text" form="data_p" name="d_respuesta_a_" placeholder="Respuesta A..." />
+                            <input type="text" form="data_p" name="d_respuesta_b_" placeholder="Respuesta B..." />
+                            <input type="text" form="data_p" name="d_respuesta_c_" placeholder="Respuesta C..." />
+                            <input type="text" form="data_p" name="d_respuesta_d_" placeholder="Respuesta D..." />
                         </div>
                         <div class="respuestaCorrecta">
                             <p>Respuesta correcta:</p>
-                            <select form="data_p">
+                            <select form="data_p" name="d_respuesta_correcta_">
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
