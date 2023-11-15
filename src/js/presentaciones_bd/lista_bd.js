@@ -75,14 +75,18 @@ const actualizarListaDiapositivas = () => {
   const listaDiapositivas = document.querySelector('.white-list-items');
   listaDiapositivas.innerHTML = '';
 
-  // Actualiza la selección para incluir ambas clases
-  const todasLasDiapositivas = document.querySelectorAll('.d-container input[type="text"], .d-containerImagen input[type="text"]');
+  // Recorremos todas las diapositivas y les asignamos un ID único
+  const todasLasDiapositivas = document.querySelectorAll('.d-container input[type="text"].focus, .d-containerImagen input[type="text"].focus');
   todasLasDiapositivas.forEach(input => {
     const id = input.closest('.d-container, .d-containerImagen').getAttribute('data-id');
-    const nuevoLi = document.createElement('li');
-    nuevoLi.textContent = input.value.trim() || `Título`;
-    nuevoLi.setAttribute('data-id', id);
-    listaDiapositivas.appendChild(nuevoLi);
+    
+    // Añadimos un condicional para verificar si el input es el primer input dentro de su respectivo div .respuesta
+    if (input === input.closest('.d-container, .d-containerImagen').querySelector('input[type="text"]')) {
+      const nuevoLi = document.createElement('li');
+      nuevoLi.textContent = input.value.trim() || `Título`;
+      nuevoLi.setAttribute('data-id', id); // Asignamos la ID generada directamente
+      listaDiapositivas.appendChild(nuevoLi);
+    }
   });
 
   console.log('Lista de diapositivas actualizada.');

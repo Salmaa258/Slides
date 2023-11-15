@@ -89,16 +89,14 @@ const newTipoPregunta = (tipo) => {
     const idTemporalConTipo = `${tempId}-${tipo}`; // Añade el tipo después del ID temporal
 
     diapositivaContainer.setAttribute('data-id', idTemporalConTipo);
-    diapositivaContainer.querySelector('input[type="text"]').name = `d_titulo_${idTemporalConTipo}`;
-    diapositivaContainer.querySelector('textarea').name = `d_pregunta_${idTemporalConTipo}`;
-    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta A...';
-    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_a_${idTemporalConTipo}`;
-    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta B...';
-    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_b_${idTemporalConTipo}`;
-    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta C...';
-    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_c_${idTemporalConTipo}`;
-    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta D...';
-    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_d_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[placeholder="Haz click para añadir un título..."]').name = `d_titulo_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('textarea[placeholder="Introduce tu pregunta:"]').name = `d_pregunta_${idTemporalConTipo}`;
+
+    const respuestaInputs = diapositivaContainer.querySelectorAll('input[placeholder^="Respuesta"]');
+    respuestaInputs.forEach((input, index) => {
+        input.name = `d_respuesta_${String.fromCharCode(65 + index)}_${idTemporalConTipo}`;
+    });
+
     diapositivaContainer.querySelector('select').name = `d_respuesta_correcta_${idTemporalConTipo}`;
 
     diapositivasContainer.append(diapositivaContainer);
@@ -108,7 +106,7 @@ const newTipoPregunta = (tipo) => {
     ordenLista.push(idTemporalConTipo);
     actualizarListaDiapositivas();
 
-    mostrarDiapositiva(numDiapositivas - 1);
+    mostrarDiapositiva(idTemporalConTipo);
 };
 
 //Funcion para mostrar la confirmación del feedback
