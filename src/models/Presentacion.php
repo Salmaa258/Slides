@@ -228,7 +228,7 @@ class Presentacion
             LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
             LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
             LEFT JOIN tipoImagen ti ON dt.id = ti.diapositiva_id AND dt.presentacion_id = ti.presentacion_id
-            LEFT JOIN tipoPregunta tp ON dt.id = ti.diapositiva_id AND dt.presentacion_id = ti.presentacion_id
+            LEFT JOIN tipoPregunta tp ON dt.id = tp.diapositiva_id AND dt.presentacion_id = tp.presentacion_id
         WHERE p.id = ?
         ORDER BY dt.orden ASC;"
         );
@@ -240,7 +240,9 @@ class Presentacion
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             if ($row['nombre_imagen'] === null) {
 
-                if ($row['contenido'] === null) {
+                if ($row['pregunta'] !== null){ 
+                    array_push($diapositivas, new TipoPregunta($row['diapositiva_id'], $row['titulo'], $row['pregunta'], $row['respuesta_a'], $row['respuesta_b'], $row['respuesta_c'], $row['respuesta_d'], $row['respuesta_correcta']));    
+                } else if ($row['contenido'] === null) {
                     array_push($diapositivas, new TipoTitulo($row['diapositiva_id'], $row['titulo']));
                 } else {
                     array_push($diapositivas, new TipoContenido($row['diapositiva_id'], $row['titulo'], $row['contenido']));
