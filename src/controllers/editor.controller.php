@@ -89,7 +89,7 @@ if (isset($_POST['add_pin'])) {
 
     // Obtén la lista de IDs de las diapositivas existentes en la base de datos para esta presentación
     $diapositivasExistentes = Diapositiva::obtenerIdsDiapositivasPorPresentacion($conn, $id_presentacion);
-
+    
     // Compara y elimina las diapositivas que ya no existen
     foreach ($diapositivasExistentes as $idDiapositivaExistente) {
         if (!in_array($idDiapositivaExistente, $ordenDiapositivas)) {
@@ -101,7 +101,7 @@ if (isset($_POST['add_pin'])) {
                 }
 
                 // Elimina la diapositiva y realiza cualquier otro proceso de eliminación necesario
-                // $mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
+                $mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
 
                 // Elimina la imagen anterior si existe
                 if (!empty($nombreImagenAnterior)) {

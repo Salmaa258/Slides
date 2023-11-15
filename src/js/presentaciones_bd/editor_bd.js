@@ -27,8 +27,6 @@ const newTipoTitulo = (tipo) => {
     actualizarListaDiapositivas();
     
     mostrarDiapositiva(idTemporalConTipo);
-
-    console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
 let numDiapositivas = document.getElementById('diapositivas');
@@ -60,8 +58,6 @@ const newTipoContenido = (tipo) => {
     actualizarListaDiapositivas();
 
     mostrarDiapositiva(idTemporalConTipo);
-
-    console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
 // Crea y añade una nueva diapositiva que tiene un título, un área de texto y una imagen.
@@ -84,8 +80,6 @@ const newTipoImagen = (tipo) => {
     actualizarListaDiapositivas(); 
 
     mostrarDiapositiva(idTemporalConTipo);
-
-    console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
 // Crea y añade una nueva diapositiva de tipoPregunta.
@@ -284,7 +278,7 @@ const generalForm = document.querySelector('#data_p');
 const publicarButton = document.querySelector('#publicar_button button[form="data_p"]');
 publicarButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const inputUrl = publicarButton.parentElement.querySelector('input');
+        const inputUrl = publicarButton.parentElement.querySelector('input');
     inputUrl.value = 'true';
     generalForm.submit();
 });
