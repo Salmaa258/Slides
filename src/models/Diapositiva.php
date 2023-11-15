@@ -87,57 +87,83 @@ abstract class Diapositiva extends Presentacion
     }
 
     public static function getDiapositivaPorId(PDO $conn, $idDiapositiva): ?Diapositiva {
-        // Intentar obtener detalles de TipoContenido primero
+        // Intentar obtener detalles de TipoPregunta primero
         $stmt = $conn->prepare("
-            SELECT d.id, d.orden, tc.titulo, tc.contenido
+            SELECT d.id, d.orden, tp.titulo, tp.pregunta, tp.respuesta_a, tp.respuesta_b, tp.respuesta_c, tp.respuesta_d, tp.respuesta_correcta
             FROM diapositiva d
-            LEFT JOIN tipoContenido tc ON d.id = tc.diapositiva_id
+            LEFT JOIN tipoPregunta tp ON d.id = tp.diapositiva_id
             WHERE d.id = ?
         ");
         $stmt->bindParam(1, $idDiapositiva);
         $stmt->execute();
     
         $datos = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($datos && $datos['contenido'] !== null) {
-            // Es una instancia de TipoContenido
-            return new TipoContenido($datos['id'], $datos['titulo'], $datos['contenido']);
+        if ($datos && $datos['pregunta'] !== null) {
+            // Es una instancia de TipoPregunta
+            return new TipoPregunta(
+                $datos['id'],
+                $datos['titulo'],
+                $datos['pregunta'],
+                $datos['respuesta_a'],
+                $datos['respuesta_b'],
+                $datos['respuesta_c'],
+                $datos['respuesta_d'],
+                $datos['respuesta_correcta']
+            );
         } else {
-            // Si no es TipoContenido, intentar obtener TipoTitulo
+            // Si no es TipoPregunta, intentar obtener otros tipos aquí (TipoContenido, TipoTitulo, TipoImagen, etc.)
+            // Intentar obtener detalles de TipoContenido
             $stmt = $conn->prepare("
-                SELECT d.id, d.orden, tt.titulo
+                SELECT d.id, d.orden, tc.titulo, tc.contenido
                 FROM diapositiva d
-                LEFT JOIN tipoTitulo tt ON d.id = tt.diapositiva_id
+                LEFT JOIN tipoContenido tc ON d.id = tc.diapositiva_id
                 WHERE d.id = ?
             ");
             $stmt->bindParam(1, $idDiapositiva);
             $stmt->execute();
     
             $datos = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($datos && $datos['titulo'] !== null) {
-                // Es una instancia de TipoTitulo
-                return new TipoTitulo($datos['id'], $datos['titulo']);
+            if ($datos && $datos['contenido'] !== null) {
+                // Es una instancia de TipoContenido
+                return new TipoContenido($datos['id'], $datos['titulo'], $datos['contenido']);
             } else {
-                // Si no es TipoTitulo, intentar obtener TipoImagen
+                // Si no es TipoContenido, intentar obtener TipoTitulo
                 $stmt = $conn->prepare("
-                    SELECT d.id, d.orden, ti.titulo, ti.contenido, ti.nombre_imagen
+                    SELECT d.id, d.orden, tt.titulo
                     FROM diapositiva d
-                    LEFT JOIN tipoImagen ti ON d.id = ti.diapositiva_id
+                    LEFT JOIN tipoTitulo tt ON d.id = tt.diapositiva_id
                     WHERE d.id = ?
                 ");
                 $stmt->bindParam(1, $idDiapositiva);
                 $stmt->execute();
     
                 $datos = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($datos && $datos['nombre_imagen'] !== null) {
-                    // Es una instancia de TipoImagen
-                    return new TipoImagen($datos['id'], $datos['titulo'], $datos['contenido'], $datos['nombre_imagen']);
+                if ($datos && $datos['titulo'] !== null) {
+                    // Es una instancia de TipoTitulo
+                    return new TipoTitulo($datos['id'], $datos['titulo']);
+                } else {
+                    // Si no es TipoTitulo, intentar obtener TipoImagen
+                    $stmt = $conn->prepare("
+                        SELECT d.id, d.orden, ti.titulo, ti.contenido, ti.nombre_imagen
+                        FROM diapositiva d
+                        LEFT JOIN tipoImagen ti ON d.id = ti.diapositiva_id
+                        WHERE d.id = ?
+                    ");
+                    $stmt->bindParam(1, $idDiapositiva);
+                    $stmt->execute();
+    
+                    $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($datos && $datos['nombre_imagen'] !== null) {
+                        // Es una instancia de TipoImagen
+                        return new TipoImagen($datos['id'], $datos['titulo'], $datos['contenido'], $datos['nombre_imagen']);
+                    }
                 }
             }
         }
         
         return null; // No se encontró la diapositiva o no tiene tipo definido
     }
-
+    
     public static function obtenerIdsDiapositivasPorPresentacion(PDO $conn, int $id_presentacion): array
     {
         $ids = [];

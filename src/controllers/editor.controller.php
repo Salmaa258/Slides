@@ -68,6 +68,7 @@ if (isset($_POST['add_pin'])) {
     $id_presentacion = $_POST['presentacion_id'];
     $presentacionBD = Presentacion::getPresentacionBD($conn, $id_presentacion);
 
+
     $presentacionBD->setTitulo($_POST['p_titulo']);
     $presentacionBD->setDescripcion($_POST['p_descripcion']);
     $presentacionBD->setTema($_POST['tema']);
@@ -133,6 +134,7 @@ if (isset($_POST['add_pin'])) {
                 $respuestaD = $_POST['d_respuesta_d_' . $idDiapositiva] ?? '';
                 $respuestaCorrecta = $_POST['d_respuesta_correcta_' . $idDiapositiva] ?? '';
 
+
                 $editDiapositiva->setTitulo($titulo);
 
                 if ($editDiapositiva instanceof TipoContenido) {
@@ -174,14 +176,13 @@ if (isset($_POST['add_pin'])) {
                     $editDiapositiva->setContenido($contenido);
                 } elseif ($editDiapositiva instanceof TipoPregunta) {
                     // Manejar lógica específica para diapositivas de tipoPregunta
+
                     $editDiapositiva->setPregunta($pregunta);
                     $editDiapositiva->setRespuestaA($respuestaA);
                     $editDiapositiva->setRespuestaB($respuestaB);
                     $editDiapositiva->setRespuestaC($respuestaC);
                     $editDiapositiva->setRespuestaD($respuestaD);
                     $editDiapositiva->setRespuestaCorrecta($respuestaCorrecta);
-
-                   
                 }
                 $editDiapositiva->setOrden($orden);
                 $editDiapositiva->actualizarDiapositiva($conn, $id_presentacion);

@@ -117,95 +117,44 @@ class TipoPregunta extends Diapositiva
     }
 
     public function actualizarDiapositiva(PDO $conn, int $idPresentacion): void
-    {
-        $idDiapositiva = $this->getId();
+{
+    $idDiapositiva = $this->getId();
+    
+    // Obtener la información actual de la diapositiva tipoPregunta
+    $stmt = $conn->prepare("SELECT titulo, pregunta, respuesta_a, respuesta_b, respuesta_c, respuesta_d, respuesta_correcta FROM tipoPregunta WHERE presentacion_id = ? AND diapositiva_id = ?");
+    $stmt->bindParam(1, $idPresentacion);
+    $stmt->bindParam(2, $idDiapositiva);
+    $stmt->execute();
+    
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Obtener la información actual de la diapositiva tipoPregunta
-        $stmt = $conn->prepare("SELECT titulo, pregunta, respuesta_a, respuesta_b, respuesta_c, respuesta_d, respuesta_correcta FROM tipoPregunta WHERE presentacion_id = ? AND diapositiva_id = ?");
-        $stmt->bindParam(1, $idPresentacion);
-        $stmt->bindParam(2, $idDiapositiva);
-        $stmt->execute();
+    if ($row) {
+        // Comparar y actualizar solo si la diapositiva existe
+        if ($row['titulo'] !== $this->getTitulo() ||
+            $row['pregunta'] !== $this->getPregunta() ||
+            $row['respuesta_a'] !== $this->getRespuestaA() ||
+            $row['respuesta_b'] !== $this->getRespuestaB() ||
+            $row['respuesta_c'] !== $this->getRespuestaC() ||
+            $row['respuesta_d'] !== $this->getRespuestaD() ||
+            $row['respuesta_correcta'] !== $this->getRespuestaCorrecta()) {
+            
+            // Actualizar todos los campos si alguno ha cambiado
+            $stmt = $conn->prepare("UPDATE tipoPregunta SET titulo = ?, pregunta = ?, respuesta_a = ?, respuesta_b = ?, respuesta_c = ?, respuesta_d = ?, respuesta_correcta = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($row['titulo'] !== $this->getTitulo()) {
-            $newTitulo = $this->getTitulo();
-
-            $stmt = $conn->prepare("UPDATE tipoPregunta SET titulo = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
-
-            $stmt->bindParam(1, $newTitulo);
-            $stmt->bindParam(2, $id_presentacion);
-            $stmt->bindParam(3, $id_diapositiva);
+            $stmt->bindParam(1, $this->getTitulo());
+            $stmt->bindParam(2, $this->getPregunta());
+            $stmt->bindParam(3, $this->getRespuestaA());
+            $stmt->bindParam(4, $this->getRespuestaB());
+            $stmt->bindParam(5, $this->getRespuestaC());
+            $stmt->bindParam(6, $this->getRespuestaD());
+            $stmt->bindParam(7, $this->getRespuestaCorrecta());
+            $stmt->bindParam(8, $idPresentacion);
+            $stmt->bindParam(9, $idDiapositiva);
             $stmt->execute();
         }
-
-        if ($row['pregunta'] !== $this->getPregunta()) {
-            $newPregunta = $this->getPregunta();
-
-            $stmt = $conn->prepare("UPDATE tipoPregunta SET pregunta = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
-
-            $stmt->bindParam(1, $newPregunta);
-            $stmt->bindParam(2, $id_presentacion);
-            $stmt->bindParam(3, $id_diapositiva);
-            $stmt->execute();
-        }
-
-        if ($row['respuesta_a'] !== $this->getRespuestaA()) {
-            $newRespuesta_a = $this->getRespuestaA();
-
-            $stmt = $conn->prepare("UPDATE tipoPregunta SET respuesta_a = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
-
-            $stmt->bindParam(1, $newRespuesta_a);
-            $stmt->bindParam(2, $id_presentacion);
-            $stmt->bindParam(3, $id_diapositiva);
-            $stmt->execute();
-        }
-
-        if ($row['respuesta_b'] !== $this->getRespuestaB()) {
-            $newRespuesta_b = $this->getRespuestaB();
-
-            $stmt = $conn->prepare("UPDATE tipoPregunta SET respuesta_b = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
-
-            $stmt->bindParam(1, $newRespuesta_b);
-            $stmt->bindParam(2, $id_presentacion);
-            $stmt->bindParam(3, $id_diapositiva);
-            $stmt->execute();
-        }
-
-        if ($row['respuesta_c'] !== $this->getRespuestaC()) {
-            $newRespuesta_c = $this->getRespuestaC();
-
-            $stmt = $conn->prepare("UPDATE tipoPregunta SET respuesta_c = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
-
-            $stmt->bindParam(1, $newRespuesta_c);
-            $stmt->bindParam(2, $id_presentacion);
-            $stmt->bindParam(3, $id_diapositiva);
-            $stmt->execute();
-        }
-
-        if ($row['respuesta_d'] !== $this->getRespuestaD()) {
-            $newRespuesta_d = $this->getRespuestaD();
-
-            $stmt = $conn->prepare("UPDATE tipoPregunta SET respuesta_d = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
-
-            $stmt->bindParam(1, $newRespuesta_d);
-            $stmt->bindParam(2, $id_presentacion);
-            $stmt->bindParam(3, $id_diapositiva);
-            $stmt->execute();
-        }
-
-        if ($row['respuesta_correcta'] !== $this->getRespuestaCorrecta()) {
-            $newRespuesta_Correcta = $this->getRespuestaCorrecta();
-
-            $stmt = $conn->prepare("UPDATE tipoPregunta SET respuesta_correcta = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
-
-            $stmt->bindParam(1, $newRespuesta_Correcta);
-            $stmt->bindParam(2, $id_presentacion);
-            $stmt->bindParam(3, $id_diapositiva);
-            $stmt->execute();
-        }
-
     }
+}
+
 
     public function getDiapositivaHTML(): string
 {

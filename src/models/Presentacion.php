@@ -240,7 +240,7 @@ class Presentacion
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             if ($row['nombre_imagen'] === null) {
 
-                if ($row['pregunta'] !== null) {
+                if ($row['respuesta_correcta'] !== null) {
                     array_push($diapositivas, new TipoPregunta($row['diapositiva_id'], $row['titulo'], $row['pregunta'], $row['respuesta_a'], $row['respuesta_b'], $row['respuesta_c'], $row['respuesta_d'], $row['respuesta_correcta']));
                 } else if ($row['contenido'] === null) {
                     array_push($diapositivas, new TipoTitulo($row['diapositiva_id'], $row['titulo']));
