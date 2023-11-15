@@ -111,6 +111,26 @@ CREATE TABLE tipoImagen(
     ON DELETE CASCADE
 );
 
+CREATE TABLE tipoPregunta(
+  diapositiva_id  INT,
+  presentacion_id INT,
+  titulo          VARCHAR(255),
+  pregunta        VARCHAR(255),
+  respuesta_a     VARCHAR(255),
+  respuesta_b     VARCHAR(255),
+  respuesta_c     VARCHAR(255),
+  respuesta_d     VARCHAR(255),
+  respuesta_correcta VARCHAR(255),
+
+  PRIMARY KEY(diapositiva_id, presentacion_id),
+  FOREIGN KEY (diapositiva_id) 
+    REFERENCES diapositiva(id)
+    ON DELETE CASCADE,
+  FOREIGN KEY (presentacion_id) 
+    REFERENCES presentacion(id)
+    ON DELETE CASCADE
+);
+
 EOF
 SCRIPT
 
