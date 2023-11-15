@@ -72,7 +72,7 @@
                     <form action="../controllers/eliminar.controller.php" method="POST"
                         onclick="mostrarConfirmacionEliminar(event, this)">
                         <input type="hidden" name="id_presentacion" value="<?= $row['id'] ?>">
-                        <button type="submit" class="eliminar"><img src="../assets/icons/eliminar.svg"
+                        <button type="submit" class="eliminar"><img src="../assets/icons/eliminarHome.svg"
                                 alt="Eliminar">Eliminar</button>
                     </form>
                     <form id="publicar_form" action="../controllers/editor.controller.php" method="POST">
