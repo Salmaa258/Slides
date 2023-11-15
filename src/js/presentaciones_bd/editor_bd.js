@@ -167,7 +167,7 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
             } else if (tipoDiapositiva === 'tituloTexto') {
                 newTipoContenido('contenido');
             } else if (tipoDiapositiva === 'tituloTextoImagen') {
-                newTipoImagen('contenido');
+                newTipoImagen('imagen');
             } else if (tipoDiapositiva === 'pregunta') {
                 newTipoPregunta('pregunta');
             }
