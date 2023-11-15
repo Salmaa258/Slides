@@ -284,7 +284,7 @@ const copyButton = document.querySelector('#copyUrlButton');
 copyButton.addEventListener('click', (e) => {
     let url = document.querySelector('input[name="url"]').value;
     url = 'http://localhost:4200/src/views/preview.php?url=' + url;
-    navigator.clipboard.writeText(url);
+    window.open(url, '_blank')
     e.target.src = '../assets/icons/checkCopy.svg';
     setTimeout(() => {
         e.target.src = '../assets/icons/copy.svg';

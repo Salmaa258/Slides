@@ -84,7 +84,7 @@ const iconCopy = copyButton.querySelector('img');
 copyButton.addEventListener('click', (e) => {
     let url = document.querySelector('input[name="home_url"]').value;
     url = 'http://localhost:4200/src/views/preview.php?url=' + url;
-    navigator.clipboard.writeText(url);
+    window.open(url, '_blank')
     iconCopy.src = '../assets/icons/checkCopyHome.svg';
     setTimeout(() => {
         iconCopy.src = '../assets/icons/copyHome.svg';
