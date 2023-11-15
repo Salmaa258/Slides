@@ -53,10 +53,12 @@ if (isset($_POST['presentacion_id'])) {
     foreach ($diapositivasExistentes as $idDiapositivaExistente) {
         if (!in_array($idDiapositivaExistente, $ordenDiapositivas)) {
             $diapositivaAEliminar = Diapositiva::getDiapositivaPorId($conn, $idDiapositivaExistente);
-            if ($diapositivaAEliminar) {
+            if ($diapositivaAEliminar instanceof TipoImagen) {
                 // Obtén el nombre de la imagen anterior
                 $nombreImagenAnterior = $diapositivaAEliminar->getNombre_imagen();
 
+                // Puedes manejar la respuesta, como mostrar un mensaje de éxito o error
+            }
                 // Elimina la diapositiva y realiza cualquier otro proceso de eliminación necesario
                 $mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
 
@@ -68,8 +70,6 @@ if (isset($_POST['presentacion_id'])) {
                     }
                 }
 
-                // Puedes manejar la respuesta, como mostrar un mensaje de éxito o error
-            }
         }
     }
     $tiposDiapositivas = [];
