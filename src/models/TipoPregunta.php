@@ -190,20 +190,25 @@ class TipoPregunta extends Diapositiva
     {
         return '
         <div class="d-container" style="display: none;">
-            <h1 class="d_titulo_' . $this->getId() . '">' . $this->getTitulo() . '</h1>
-            <p class="d_pregunta_' . $this->getId() . '">' . $this->getPregunta() . '</p>
-            <select class="d_pregunta">
-                <option value="a">A: ' . $this->getRespuestaA() . '</option>
-                <option value="b">A: ' . $this->getRespuestaA() . '</option>
-                <option value="c">C: ' . $this->getRespuestaC() . '</option>
-                <option value="d">D: ' . $this->getRespuestaD() . '</option>
-            </select>
-            <h2 class="d_pregunta_' . $this->getId() . '">' . $this->getPregunta() . '</h2>
-            <span></span>
-            <input type="radio" name="pregunta1" value="a">A: ' . $this->getRespuestaA() . '
-            <input type="radio" name="pregunta1" value="b">B: ' . $this->getRespuestaB() 
-            <input type="radio" name="pregunta1" value="c"> c) Berlín<br>
-            <p class="d_respuesta_correcta_' . $this->getId() . '">Respuesta correcta: ' . $this->getRespuestaCorrecta() . '</p>
+            <h2 class="d_titulo_' . $this->getId() . '" rp='. $this->getRespuestaCorrecta() .'>' . $this->getTitulo() . '</h2>
+            <span class="d_pregunta">' . $this->getPregunta() . '</span>
+            <div class="pregunta">
+                <span>A: ' . $this->getRespuestaA() . '</span>
+                <input type="radio" name="pregunta1" value="a">
+            </div>
+            <div class="pregunta">
+                <span>B: ' . $this->getRespuestaB() . '</span>
+                <input type="radio" name="pregunta1" value="b">
+            </div>
+            <div class="pregunta">
+                <span>C: ' . $this->getRespuestaC() . '</span>
+                <input type="radio" name="pregunta1" value="c">
+            </div>
+            <div class="pregunta">
+                <span>D: ' . $this->getRespuestaD() . '</span>
+                <input type="radio" name="pregunta1" value="d">
+            </div>
+            <button onclick="checkAnswer(event)">Responder</button>
         </div>';
     }
 
