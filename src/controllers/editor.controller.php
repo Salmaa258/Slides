@@ -60,6 +60,7 @@ if (isset($_POST['presentacion_id'])) {
             }
         }
     }
+    $tiposDiapositivas = [];
 
     foreach ($ordenDiapositivas as $orden => $idDiapositiva) {
         ++$orden; // Incrementa antes de usar
@@ -87,28 +88,33 @@ if (isset($_POST['presentacion_id'])) {
             }
         } else {
             // Es una nueva diapositiva
-            $tempId = str_replace('new-', '', $idDiapositiva);
-            $titulo = $_POST['d_titulo_new-' . $tempId] ?? '';
-            $contenido = $_POST['d_contenido_new-' . $tempId] ?? '';
+            $idDiapositiva = str_replace('new-', '', $idDiapositiva); // Corregir la variable $tempId
+            $titulo = $_POST['d_titulo_' . $idDiapositiva] ?? '';
+            $titulo = is_string($titulo) ? $titulo : ''; // Asignar una cadena vacía si $titulo no es una cadena válida 
+            $contenido = $_POST['d_contenido_' . $idDiapositiva] ?? '';
 
+            // Crear una nueva diapositiva vacía del tipo correspondiente
+            $tipoDiapositiva = explode('-', $idDiapositiva)[1]; // Extrae el tipo de la ID temporal
+
+            // Almacena el tipo de diapositiva en el array
+            $tiposDiapositivas[] = $tipoDiapositiva;
+
+            // Antes de crear una nueva instancia de TipoImagen, asegúrate de que $nombre_imagen esté definida
             if ($tipoDiapositiva === 'imagen') {
-                // Verifica si se ha subido una imagen
-                if (isset($_FILES['d_imagen_new-' . $tempId])) {
+                // Verifica si se ha subido una imagen para la nueva diapositiva
+                if (isset($_FILES['d_imagen_new-' . $idDiapositiva]) && $_FILES['d_imagen_new-' . $id]['error'] == UPLOAD_ERR_OK) {
                     $imagen = $_FILES['d_imagen_new-' . $tempId];
                     $nombre_imagen = $imagen['name'];
-
                     $ext = pathinfo($nombre_imagen, PATHINFO_EXTENSION);
+
                     if (in_array($ext, ['png', 'jpg', 'jpeg', 'webp'])) {
+                        // Genera un nombre de archivo único para la imagen
+                        $unique_id = uniqid('', true);
+                        $nombre_imagen = "imagen_$idDiapositiva" . "_" . $unique_id . '.' . $ext;
+                        $ruta_imagen = createImagesFolder() . '/' . $nombre_imagen;
 
-                        $unique_id = uniqid();
-                        $unique_id = substr($unique_id, -3);
-                        $nombre_imagen = "imagen_$tempId" . "_" . $unique_id . '.' . $ext;
-                        $ruta_imagen = '../imagenes/' . $nombre_imagen;
-                        $url_temp = $_FILES['d_imagen_new-' . $tempId];
-
-                        move_uploaded_file($url_temp['tmp_name'], $ruta_imagen);
-
-
+                        // Mueve la imagen al directorio de imágenes
+                        move_uploaded_file($imagen['tmp_name'], $ruta_imagen);
                     } else {
                         // Si el tipo de archivo no es válido, puedes asignar un valor predeterminado o vacío al nombre de la imagen
                         $nombre_imagen = '';
@@ -116,22 +122,26 @@ if (isset($_POST['presentacion_id'])) {
                 } else {
                     $nombre_imagen = '';
                 }
+
+            }
+
+            // Ahora crea la diapositiva independientemente del tipo
+            if ($tipoDiapositiva === 'imagen') {
+                // Crea una nueva diapositiva de tipo imagen y la añade a la presentación
+                $nuevaDiapositiva = new TipoImagen(null, $titulo, $contenido, $nombre_imagen);
+            } elseif ($tipoDiapositiva === 'contenido') {
+                $nuevaDiapositiva = new TipoContenido(null, $titulo, $contenido);
+            } else {
+                $nuevaDiapositiva = new TipoTitulo(null, $titulo);
+            }
+
+            if (isset($nuevaDiapositiva)) {
+                $nuevaDiapositiva->setOrden($orden);
+                $nuevaDiapositiva->nuevaDiapositiva($conn, $id_presentacion);
             }
         }
-        if ($tipoDiapositiva === 'imagen') {
-            // Crea una nueva diapositiva de tipo imagen y la añade a la presentación
-            $nuevaDiapositiva = new TipoImagen(null, $titulo, $contenido, $nombre_imagen);
-        } elseif ($tipoDiapositiva === 'contenido') {
-            $nuevaDiapositiva = new TipoContenido(null, $titulo, $contenido);
-        } else {
-            $nuevaDiapositiva = new TipoTitulo(null, $titulo);
-        }
-
-        $nuevaDiapositiva->setOrden($orden);
-        $nuevaDiapositiva->nuevaDiapositiva($conn, $id_presentacion);
     }
-
-} else {
+}else {
     // Crear una nueva presentación
     $titulo = $_POST['p_titulo'] ?? '';
     $descripcion = $_POST['p_descripcion'] ?? '';

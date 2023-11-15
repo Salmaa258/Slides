@@ -15,7 +15,7 @@ const mostrarDiapositiva = (id) => {
   const todasLasDiapositivas = document.querySelectorAll('.d-container, .d-containerImagen');
   todasLasDiapositivas.forEach(diapositiva => {
     if (diapositiva.getAttribute('data-id') === id.toString()) {
-      diapositiva.style.display = 'flex';
+      diapositiva.style.display = 'block';
       console.log(`Diapositiva ${id} ahora está visible`);
     }
   });

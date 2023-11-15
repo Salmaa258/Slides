@@ -102,11 +102,11 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
 
     // Agregamos la Diapositiva seleccionada según el tipo recordado
     if (tipoDiapositiva === "titulo") {
-      newTipoTitulo();
+      newTipoTitulo(`titulo`);
     } else if (tipoDiapositiva === "tituloTexto") {
-      newTipoContenido();
+      newTipoContenido('contenido');
     } else if (tipoDiapositiva === "tituloTextoImagen") {
-      newTipoImagen();
+      newTipoImagen('imagen');
     }
 
         // Reseteamos el tipo de diapositiva
