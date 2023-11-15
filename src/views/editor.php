@@ -137,10 +137,13 @@ if ($url === 'null') {
     <div class="content-wrapper">
         <div class="white-list">
             <div class="white-list-header">Diapositivas</div>
-            <ul class="white-list-items">
-            <li>Titulo 1</li>
-            </ul>
-        </div>
+                <div class="white-list-items-container">
+                    <ul class="white-list-items">
+                        <li>Titulo 1</li>
+                    </ul>
+                </div>
+            </div>
+        
         <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
             <template id="d_titulo_template">
                 <div class="d-container">
