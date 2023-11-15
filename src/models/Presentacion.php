@@ -180,14 +180,16 @@ class Presentacion
     {
         $stmt = $conn->prepare(
             "SELECT dt.id as diapositiva_id, 
-            COALESCE(tt.titulo, tc.titulo, ti.titulo) AS titulo, 
+            COALESCE(tt.titulo, tc.titulo, ti.titulo, tp.titulo) AS titulo, 
             COALESCE(tc.contenido, ti.contenido) AS contenido,
-            ti.nombre_imagen
+            ti.nombre_imagen,
+            tp.pregunta, tp.respuesta_a, tp.respuesta_b, tp.respuesta_c, tp.respuesta_d, tp.respuesta_correcta 
         FROM presentacion p 
             LEFT JOIN diapositiva dt ON p.id = dt.presentacion_id
             LEFT JOIN tipoTitulo tt ON dt.id = tt.diapositiva_id AND dt.presentacion_id = tt.presentacion_id
             LEFT JOIN tipoContenido tc ON dt.id = tc.diapositiva_id AND dt.presentacion_id = tc.presentacion_id
             LEFT JOIN tipoImagen ti ON dt.id = ti.diapositiva_id AND dt.presentacion_id = ti.presentacion_id
+            LEFT JOIN tipoPregunta tp ON dt.id = ti.diapositiva_id AND dt.presentacion_id = ti.presentacion_id
         WHERE p.id = ?
         ORDER BY dt.orden ASC;"
         );
