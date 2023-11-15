@@ -186,7 +186,12 @@ p {
     bottom: 4%;
     gap: 0 2%;
     overflow-x: scroll;
-    overflow-y: hidden;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+}
+
+#miniaturas::-webkit-scrollbar {
+    display: none;
 }
 
 #miniaturas:hover .d-miniatura {

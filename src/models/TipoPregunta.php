@@ -140,14 +140,14 @@ class TipoPregunta extends Diapositiva
             
             // Actualizar todos los campos si alguno ha cambiado
             $stmt = $conn->prepare("UPDATE tipoPregunta SET titulo = ?, pregunta = ?, respuesta_a = ?, respuesta_b = ?, respuesta_c = ?, respuesta_d = ?, respuesta_correcta = ? WHERE presentacion_id = ? AND diapositiva_id = ?");
-
-            $stmt->bindParam(1, $this->getTitulo());
-            $stmt->bindParam(2, $this->getPregunta());
-            $stmt->bindParam(3, $this->getRespuestaA());
-            $stmt->bindParam(4, $this->getRespuestaB());
-            $stmt->bindParam(5, $this->getRespuestaC());
-            $stmt->bindParam(6, $this->getRespuestaD());
-            $stmt->bindParam(7, $this->getRespuestaCorrecta());
+            
+            $stmt->bindParam(1, $this->titulo);
+            $stmt->bindParam(2, $this->pregunta);
+            $stmt->bindParam(3, $this->respuestaA);
+            $stmt->bindParam(4, $this->respuestaB);
+            $stmt->bindParam(5, $this->respuestaC);
+            $stmt->bindParam(6, $this->respuestaD);
+            $stmt->bindParam(7, $this->respuestaCorrecta);
             $stmt->bindParam(8, $idPresentacion);
             $stmt->bindParam(9, $idDiapositiva);
             $stmt->execute();
@@ -192,13 +192,27 @@ class TipoPregunta extends Diapositiva
         <div class="d-container" style="display: none;">
             <h1 class="d_titulo_' . $this->getId() . '">' . $this->getTitulo() . '</h1>
             <p class="d_pregunta_' . $this->getId() . '">' . $this->getPregunta() . '</p>
-            <ul class="d_respuestas_' . $this->getId() . '">
-                <li>A: ' . $this->getRespuestaA() . '</li>
-                <li>B: ' . $this->getRespuestaB() . '</li>
-                <li>C: ' . $this->getRespuestaC() . '</li>
-                <li>D: ' . $this->getRespuestaD() . '</li>
-            </ul>
+            <select class="d_pregunta">
+                <option value="a">A: ' . $this->getRespuestaA() . '</option>
+                <option value="b">A: ' . $this->getRespuestaA() . '</option>
+                <option value="c">C: ' . $this->getRespuestaC() . '</option>
+                <option value="d">D: ' . $this->getRespuestaD() . '</option>
+            </select>
+            <h2 class="d_pregunta_' . $this->getId() . '">' . $this->getPregunta() . '</h2>
+            <span></span>
+            <input type="radio" name="pregunta1" value="a">A: ' . $this->getRespuestaA() . '
+            <input type="radio" name="pregunta1" value="b">B: ' . $this->getRespuestaB() 
+            <input type="radio" name="pregunta1" value="c"> c) Berlín<br>
             <p class="d_respuesta_correcta_' . $this->getId() . '">Respuesta correcta: ' . $this->getRespuestaCorrecta() . '</p>
+        </div>';
+    }
+
+    public function getMiniatura(): string
+    {
+        return '
+        <div class="d-miniatura" id_diapositiva="'. $this->getId() .'">
+            <h1>' . $this->getTitulo() . '</h1>
+            <h2>'. $this->getPregunta() .'</h2>
         </div>';
     }
 }

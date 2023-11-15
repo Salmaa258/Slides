@@ -6,10 +6,6 @@ define('VALID_ENTRY_POINT', true);
 include '../../config.php';
 
 require_once '../models/db.php';
-require_once '../models/Presentacion.php';
-require_once '../models/Diapositiva.php';
-require_once '../models/TipoTitulo.php';
-require_once '../models/TipoContenido.php';
 
 // Obtener la única instancia de la base de datos
 $db = Database::getInstance();
