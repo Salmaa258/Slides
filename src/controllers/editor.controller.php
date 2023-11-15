@@ -54,8 +54,20 @@ if (isset($_POST['presentacion_id'])) {
         if (!in_array($idDiapositivaExistente, $ordenDiapositivas)) {
             $diapositivaAEliminar = Diapositiva::getDiapositivaPorId($conn, $idDiapositivaExistente);
             if ($diapositivaAEliminar) {
+                // Obtén el nombre de la imagen anterior
+                $nombreImagenAnterior = $diapositivaAEliminar->getNombre_imagen();
+
                 // Elimina la diapositiva y realiza cualquier otro proceso de eliminación necesario
                 $mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
+
+                // Elimina la imagen anterior si existe
+                if (!empty($nombreImagenAnterior)) {
+                    $rutaImagenAnterior = createImagesFolder() . '/' . $nombreImagenAnterior;
+                    if (file_exists($rutaImagenAnterior)) {
+                        unlink($rutaImagenAnterior);
+                    }
+                }
+
                 // Puedes manejar la respuesta, como mostrar un mensaje de éxito o error
             }
         }
@@ -74,13 +86,40 @@ if (isset($_POST['presentacion_id'])) {
                 if ($editDiapositiva instanceof TipoContenido) {
                     $editDiapositiva->setContenido($contenido);
                 } elseif ($editDiapositiva instanceof TipoImagen) {
-                    if (isset($_FILES['d_imagen_' . $idDiapositiva])) {
+                    if (isset($_FILES['d_imagen_' . $idDiapositiva]) && $_FILES['d_imagen_' . $idDiapositiva]['error'] == UPLOAD_ERR_OK) {
                         $imagen = $_FILES['d_imagen_' . $idDiapositiva];
-                        // Asumiendo que tienes una función para manejar la carga de la imagen
-                        //$nombre_imagen = handleImageUpload($imagen);
-                        $editDiapositiva->setNombre_imagen($imagen['name']);
+                        $nombre_imagen = $imagen['name'];
+                        $ext = pathinfo($nombre_imagen, PATHINFO_EXTENSION);
+
+                        if (in_array($ext, ['png', 'jpg', 'jpeg', 'webp'])) {
+                            $unique_id = uniqid('', true);
+                            $nombre_imagen = "imagen_$idDiapositiva" . "_" . $unique_id . '.' . $ext;
+                            $ruta_imagen = createImagesFolder() . '/' . $nombre_imagen;
+
+                            move_uploaded_file($imagen['tmp_name'], $ruta_imagen);
+
+                            // Obtén el nombre de la imagen anterior
+                            $nombreImagenAnterior = $editDiapositiva->getNombre_imagen();
+
+                            // Actualiza el nombre de la imagen en la diapositiva
+                            $editDiapositiva->setNombre_imagen($nombre_imagen);
+
+                            // Elimina la imagen anterior si existe
+                            if (!empty($nombreImagenAnterior)) {
+                                $rutaImagenAnterior = createImagesFolder() . '/' . $nombreImagenAnterior;
+                                if (file_exists($rutaImagenAnterior)) {
+                                    unlink($rutaImagenAnterior);
+                                }
+                            }
+                        } else {
+                            $nombre_imagen = '';
+                        }
+                    } else {
+                        // Si no se ha enviado un archivo, conserva el nombre de imagen existente
+                        $nombre_imagen = $editDiapositiva->getNombre_imagen();
                     }
-                    $editDiapositiva->setContenido($contenido); // Si la imagen tiene contenido asociado
+
+                    $editDiapositiva->setContenido($contenido);
                 }
                 $editDiapositiva->setOrden($orden);
                 $editDiapositiva->actualizarDiapositiva($conn, $id_presentacion);

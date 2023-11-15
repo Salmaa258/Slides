@@ -138,6 +138,8 @@ class TipoImagen extends Diapositiva
                 name="d_contenido_' . $this->getId() . '" placeholder="Haz click para añadir un texto">' . $this->getContenido() . '</textarea>
                 <div class="imagenDiv">
                     ' . $imagenHtml . '
+                    <input class="imagen" type="file" form="data_p" name="d_imagen_' . $this->getId() . '"
+                                accept="image/jpeg, image/png, image/jpg" />
                 </div>
             </div>
         </div>';
