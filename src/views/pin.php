@@ -19,6 +19,10 @@ $conn = $db->getConnection();
 
 $url = $_GET['url'];
 $presentacion = Presentacion::getPresentacionByURL($conn, $url);
+if ($presentacion === null) {
+    header("Location: ../views/home.php");
+    exit;
+}
 
 ?>
 
