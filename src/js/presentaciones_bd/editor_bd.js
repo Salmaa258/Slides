@@ -59,7 +59,7 @@ const newTipoContenido = (tipo) => {
     ordenLista.push(idTemporalConTipo);
     actualizarListaDiapositivas();
 
-    mostrarDiapositiva(numDiapositivas - 1);
+    mostrarDiapositiva(idTemporalConTipo);
 
     console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
@@ -83,7 +83,7 @@ const newTipoImagen = (tipo) => {
     ordenLista.push(idTemporalConTipo); 
     actualizarListaDiapositivas(); 
 
-    mostrarDiapositiva(numDiapositivas - 1);
+    mostrarDiapositiva(idTemporalConTipo);
 
     console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
@@ -115,7 +115,7 @@ const newTipoPregunta = (tipo) => {
     ordenLista.push(idTemporalConTipo);
     actualizarListaDiapositivas();
 
-    mostrarDiapositiva(numDiapositivas - 1);
+    mostrarDiapositiva(idTemporalConTipo);
 };
 
 //Funcion para mostrar la confirmación del feedback
