@@ -191,9 +191,9 @@ if (isset($_POST['add_pin'])) {
         } else {
             // Es una nueva diapositiva
             $idDiapositiva = str_replace('new-', '', $idDiapositiva); // Corregir la variable $tempId
-            $titulo = $_POST['d_titulo_' . $idDiapositiva] ?? '';
+            $titulo = $_POST['d_titulo_new-' . $idDiapositiva] ?? '';
             $titulo = is_string($titulo) ? $titulo : ''; // Asignar una cadena vacía si $titulo no es una cadena válida 
-            $contenido = $_POST['d_contenido_' . $idDiapositiva] ?? '';
+            $contenido = $_POST['d_contenido_new_' . $idDiapositiva] ?? '';
 
             $pregunta = $_POST['d_pregunta_new-' . $idDiapositiva] ?? '';
             $respuestaA = $_POST['d_respuesta_A_new-' . $idDiapositiva] ?? '';
@@ -201,8 +201,6 @@ if (isset($_POST['add_pin'])) {
             $respuestaC = $_POST['d_respuesta_C_new-' . $idDiapositiva] ?? '';
             $respuestaD = $_POST['d_respuesta_D_new-' . $idDiapositiva] ?? '';
             $respuestaCorrecta = $_POST['d_respuesta_correcta_new-' . $idDiapositiva] ?? '';
-
-                
 
             // Crear una nueva diapositiva vacía del tipo correspondiente
             $tipoDiapositiva = explode('-', $idDiapositiva)[1]; // Extrae el tipo de la ID temporal
