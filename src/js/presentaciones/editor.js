@@ -2,9 +2,10 @@ const diapositivasContainer = document.getElementById('diapositivas');
 const diapositivaTitulo = document.getElementById('d_titulo_template');
 const diapositivaTituloTexto = document.getElementById('d_titulo_texto_template');
 const diapositivaTituloTextoImagen = document.getElementById('d_titulo_texto_imagen_template');
+const diapositivaPregunta = document.getElementById('d_pregunta_template');
 
 // Este contador incrementará con cada nueva diapositiva
-let newDiapositivaId = 1; 
+let newDiapositivaId = 1;
 
 // Función para generar un ID único para nuevas diapositivas
 const generateNewDiapositivaId = () => `new-${newDiapositivaId++}`;
@@ -72,10 +73,40 @@ const newTipoImagen = (tipo) => {
 
     diapositivasContainer.append(diapositivaContainer);
 
-    ocultarTodasLasDiapositivas(); 
-    mostrarDiapositiva(idTemporalConTipo); 
-    ordenLista.push(idTemporalConTipo); 
-    actualizarListaDiapositivas(); 
+    ocultarTodasLasDiapositivas();
+    mostrarDiapositiva(idTemporalConTipo);
+    ordenLista.push(idTemporalConTipo);
+    actualizarListaDiapositivas();
+
+    mostrarDiapositiva(numDiapositivas - 1);
+};
+
+// Crea y añade una nueva diapositiva de tipoPregunta.
+const newTipoPregunta = (tipo) => {
+    const diapositiva = document.getElementById('d_pregunta_template').content.cloneNode(true);
+    const diapositivaContainer = diapositiva.querySelector('.d-container');
+    const tempId = generateNewDiapositivaId();
+    const idTemporalConTipo = `${tempId}-${tipo}`; // Añade el tipo después del ID temporal
+
+    diapositivaContainer.setAttribute('data-id', idTemporalConTipo);
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_titulo_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('textarea').name = `d_pregunta_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta A...';
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_a_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta B...';
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_b_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta C...';
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_c_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta D...';
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_d_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('select').name = `d_respuesta_correcta_${idTemporalConTipo}`;
+
+    diapositivasContainer.append(diapositivaContainer);
+
+    ocultarTodasLasDiapositivas();
+    mostrarDiapositiva(idTemporalConTipo);
+    ordenLista.push(idTemporalConTipo);
+    actualizarListaDiapositivas();
 
     mostrarDiapositiva(numDiapositivas - 1);
 };
@@ -100,14 +131,16 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
         dialog.style.display = 'none';
         overlay.style.display = 'none';
 
-    // Agregamos la Diapositiva seleccionada según el tipo recordado
-    if (tipoDiapositiva === "titulo") {
-      newTipoTitulo(`titulo`);
-    } else if (tipoDiapositiva === "tituloTexto") {
-      newTipoContenido('contenido');
-    } else if (tipoDiapositiva === "tituloTextoImagen") {
-      newTipoImagen('imagen');
-    }
+        // Agregamos la Diapositiva seleccionada según el tipo recordado
+        if (tipoDiapositiva === "titulo") {
+            newTipoTitulo('titulo');
+        } else if (tipoDiapositiva === "tituloTexto") {
+            newTipoContenido('contenido');
+        } else if (tipoDiapositiva === "tituloTextoImagen") {
+            newTipoImagen('imagen');
+        } else if (tipoDiapositiva === "pregunta") {
+            newTipoPregunta('pregunta');
+        }
 
         // Reseteamos el tipo de diapositiva
         tipoDiapositiva = '';
@@ -128,6 +161,8 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
                 newTipoContenido('contenido');
             } else if (tipoDiapositiva === 'tituloTextoImagen') {
                 newTipoImagen('imagen');
+            } else if (tipoDiapositiva === 'pregunta') {
+                newTipoPregunta('pregunta');
             }
         }
 
@@ -135,7 +170,7 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
         tipoDiapositiva = '';
     });
 
-  return false; // Evita que el evento del enlace se propague
+    return false; // Evita que el evento del enlace se propague
 };
 
 //Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Titulo"
@@ -150,7 +185,12 @@ const mostrarConfirmacionNuevaDiapositivaTituloTexto = (event) => {
 
 //Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Titulo + Texto + Imagen"
 const mostrarConfirmacionNuevaDiapositivaTituloTextoImagen = (event) => {
-  mostrarConfirmacionNuevaDiapositiva(event, "tituloTextoImagen");
+    mostrarConfirmacionNuevaDiapositiva(event, "tituloTextoImagen");
+};
+
+//Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Pregunta + Respuesta"
+const mostrarConfirmacionNuevaDiapositivaPregunta = (event) => {
+    mostrarConfirmacionNuevaDiapositiva(event, "pregunta");
 };
 
 
@@ -191,12 +231,12 @@ const setClaro = () => {
 
     const whiteListItems = document.querySelector('.white-list-items');
     if (whiteListItems) {
-      whiteListItems.style.backgroundColor = 'white';
-      whiteListItems.style.color = 'black';
-      const listItems = whiteListItems.querySelectorAll('li');
-      listItems.forEach(item => {
-        item.style.color = 'black';
-      });
+        whiteListItems.style.backgroundColor = 'white';
+        whiteListItems.style.color = 'black';
+        const listItems = whiteListItems.querySelectorAll('li');
+        listItems.forEach(item => {
+            item.style.color = 'black';
+        });
     }
 };
 
@@ -207,12 +247,12 @@ const setOscuro = () => {
 
     const whiteListItems = document.querySelector('.white-list-items');
     if (whiteListItems) {
-      whiteListItems.style.backgroundColor = '';
-      whiteListItems.style.color = '';
-      const listItems = whiteListItems.querySelectorAll('li');
-      listItems.forEach(item => {
-        item.style.color = '';
-      });
+        whiteListItems.style.backgroundColor = '';
+        whiteListItems.style.color = '';
+        const listItems = whiteListItems.querySelectorAll('li');
+        listItems.forEach(item => {
+            item.style.color = '';
+        });
     }
 };
 

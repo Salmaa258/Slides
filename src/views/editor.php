@@ -12,6 +12,7 @@ require_once '../models/Diapositiva.php';
 require_once '../models/TipoTitulo.php';
 require_once '../models/TipoContenido.php';
 require_once '../models/TipoImagen.php';
+require_once '../models/TipoPregunta.php';
 
 // Obtener la única instancia de la base de datos
 $db = Database::getInstance();
@@ -80,9 +81,10 @@ if ($url === 'null') {
                         <img src="../assets/icons/home.svg" alt="Icono Presentación" />
                     </a>
                 </div>
-                <form method="POST" id="data_p" enctype="multipart/form-data" action="../controllers/editor.controller.php">
-                    <input type="text" class="input focus" maxlength="150" name="p_descripcion" value="<?= $descripcion ?>"
-                        placeholder="Escribe una descripción..." autocomplete="off" />
+                <form method="POST" id="data_p" enctype="multipart/form-data"
+                    action="../controllers/editor.controller.php">
+                    <input type="text" class="input focus" maxlength="150" name="p_descripcion"
+                        value="<?= $descripcion ?>" placeholder="Escribe una descripción..." autocomplete="off" />
                     <input type="hidden" name="ordenDiapositivas" id="ordenDiapositivas" value="">
                 </form>
 
@@ -94,9 +96,10 @@ if ($url === 'null') {
                     </button>
                     <div class="dropdown-content">
                         <span onclick="mostrarConfirmacionNuevaDiapositivaTitulo(event)">Título</span>
+                        <span onclick="mostrarConfirmacionNuevaDiapositivaPregunta(event)">Pregunta + Respuesta</span>
                         <span onclick="mostrarConfirmacionNuevaDiapositivaTituloTexto(event)">Título + Texto</span>
-                        <span onclick="mostrarConfirmacionNuevaDiapositivaTituloTextoImagen(event)">Título + Texto + Imagen</span>
-
+                        <span onclick="mostrarConfirmacionNuevaDiapositivaTituloTextoImagen(event)">Título + Texto +
+                            Imagen</span>
                     </div>
                 </div>
                 <span>Añadir diapositiva</span>
@@ -137,18 +140,18 @@ if ($url === 'null') {
     <div class="content-wrapper">
         <div class="white-list">
             <div class="white-list-header">Diapositivas</div>
-                <div class="white-list-items-container">
-                    <ul class="white-list-items">
-                        <li>Titulo 1</li>
-                    </ul>
-                </div>
+            <div class="white-list-items-container">
+                <ul class="white-list-items">
+                    <li>Titulo 1</li>
+                </ul>
             </div>
-        
+        </div>
         <div id="diapositivas" tema="<?= $tema ?>" lastDiapositivaId="<?= $lastDiapositivaId ?>">
             <template id="d_titulo_template">
                 <div class="d-container">
                     <div class="delete-slide-icon">
-                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest('.d-container'))">
+                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
+                            onclick="confirmDelete(event, this.closest('.d-container'))">
                     </div>
                     <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
@@ -157,7 +160,8 @@ if ($url === 'null') {
             <template id="d_titulo_texto_template">
                 <div class="d-container">
                     <div class="delete-slide-icon-content">
-                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest('.d-container'))">
+                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
+                            onclick="confirmDelete(event, this.closest('.d-container'))">
                     </div>
                     <input class="focus" type="text" form="data_p" maxlength="128" autocomplete="off"
                         placeholder="Haz click para añadir un título..." />
@@ -166,19 +170,48 @@ if ($url === 'null') {
                 </div>
             </template>
             <template id="d_titulo_texto_imagen_template">
-                    <div class="d-containerImagen">
-                        <div class="delete-slide-icon-content">
-                            <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest('.d-containerImagen'))">
+                <div class="d-containerImagen">
+                    <div class="delete-slide-icon-content">
+                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
+                            onclick="confirmDelete(event, this.closest('.d-containerImagen'))">
+                    </div>
+                    <input class="focus" type="text" form="data_p" autocomplete="off"
+                        placeholder="Haz click para añadir un título..." />
+                    <div class="d-containerImgText">
+                        <textarea class="focus" form="data_p" autocomplete="off"
+                            placeholder="Haz click para añadir un texto"></textarea>
+                        <input class="imagen" type="file" form="data_p" name="d_imagen_"
+                            accept="image/jpeg, image/png, image/jpg" />
+                    </div>
+                </div>
+            </template>
+            <template id="d_pregunta_template">
+                <div class="d-container">
+                    <div class="delete-slide-icon-content">
+                        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar"
+                            onclick="confirmDelete(event, this.closest('.d-container'))">
+                    </div>
+                    <input class="focus" type="text" form="data_p" autocomplete="off"
+                        placeholder="Haz click para añadir un título..." />
+                    <textarea id="textareaPregunta" form="data_p" rows="4" maxlength="128" placeholder="Introduce tu pregunta:"></textarea>
+                    <div class="respuestas">
+                        <div class="respuesta">
+                            <input type="text" form="data_p" placeholder="Respuesta A..." />
+                            <input type="text" form="data_p" placeholder="Respuesta B..." />
+                            <input type="text" form="data_p" placeholder="Respuesta C..." />
+                            <input type="text" form="data_p" placeholder="Respuesta D..." />
                         </div>
-                        <input class="focus" type="text" form="data_p" autocomplete="off"
-                            placeholder="Haz click para añadir un título..." />
-                        <div class="d-containerImgText">
-                            <textarea class="focus" form="data_p" autocomplete="off"
-                                placeholder="Haz click para añadir un texto"></textarea>
-                            <input class="imagen" type="file" form="data_p" name="d_imagen_"
-                                accept="image/jpeg, image/png, image/jpg" />
+                        <div class="respuestaCorrecta">
+                            <p>Respuesta correcta:</p>
+                            <select form="data_p">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
                         </div>
                     </div>
+                </div>
             </template>
 
 

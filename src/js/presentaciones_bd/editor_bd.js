@@ -2,6 +2,7 @@ const diapositivasContainer = document.getElementById('diapositivas');
 const diapositivaTitulo = document.getElementById('d_titulo_template');
 const diapositivaTituloTexto = document.getElementById('d_titulo_texto_template');
 const diapositivaTituloTextoImagen = document.getElementById('d_titulo_texto_imagen_template');
+const diapositivaPregunta = document.getElementById('d_pregunta_template');
 
 // Este contador incrementará con cada nueva diapositiva
 let newDiapositivaId = 1; 
@@ -87,6 +88,36 @@ const newTipoImagen = (tipo) => {
     console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
 
+// Crea y añade una nueva diapositiva de tipoPregunta.
+const newTipoPregunta = (tipo) => {
+    const diapositiva = document.getElementById('d_pregunta_template').content.cloneNode(true);
+    const diapositivaContainer = diapositiva.querySelector('.d-container');
+    const tempId = generateNewDiapositivaId();
+    const idTemporalConTipo = `${tempId}-${tipo}`; // Añade el tipo después del ID temporal
+
+    diapositivaContainer.setAttribute('data-id', idTemporalConTipo);
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_titulo_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('textarea').name = `d_pregunta_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta A...';
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_a_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta B...';
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_b_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta C...';
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_c_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('input[type="text"]').placeholder = 'Respuesta D...';
+    diapositivaContainer.querySelector('input[type="text"]').name = `d_respuesta_d_${idTemporalConTipo}`;
+    diapositivaContainer.querySelector('select').name = `d_respuesta_correcta_${idTemporalConTipo}`;
+
+    diapositivasContainer.append(diapositivaContainer);
+
+    ocultarTodasLasDiapositivas();
+    mostrarDiapositiva(idTemporalConTipo);
+    ordenLista.push(idTemporalConTipo);
+    actualizarListaDiapositivas();
+
+    mostrarDiapositiva(numDiapositivas - 1);
+};
+
 //Funcion para mostrar la confirmación del feedback
 const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
     event.preventDefault();
@@ -114,6 +145,8 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
       newTipoContenido('contenido');
     } else if (tipoDiapositiva === "tituloTextoImagen") {
       newTipoImagen('imagen');
+    } else if (tipoDiapositiva === "pregunta") {
+        newTipoPregunta();
     }
 
         // Reseteamos el tipo de diapositiva
@@ -135,6 +168,8 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
                 newTipoContenido('contenido');
             } else if (tipoDiapositiva === 'tituloTextoImagen') {
                 newTipoImagen('contenido');
+            } else if (tipoDiapositiva === 'pregunta') {
+                newTipoPregunta('pregunta');
             }
         }
 
@@ -158,6 +193,11 @@ const mostrarConfirmacionNuevaDiapositivaTituloTexto = (event) => {
 //Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Titulo + Texto + Imagen"
 const mostrarConfirmacionNuevaDiapositivaTituloTextoImagen = (event) => {
   mostrarConfirmacionNuevaDiapositiva(event, "tituloTextoImagen");
+};
+
+//Llamada a la función que muestra el feedback pasando el tipo de diapositiva "Pregunta + Respuesta"
+const mostrarConfirmacionNuevaDiapositivaPregunta = (event) => {
+    mostrarConfirmacionNuevaDiapositiva(event, "pregunta");
 };
 
 

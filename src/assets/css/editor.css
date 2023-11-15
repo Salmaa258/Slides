@@ -1,11 +1,13 @@
 @font-face {
     font-family: 'Gabarito';
-    src: url('../fonts/Gabarito-VariableFont_wght.ttf') format('truetype'); /* Ajusta la ruta y el formato según tu archivo */
+    src: url('../fonts/Gabarito-VariableFont_wght.ttf') format('truetype');
+    /* Ajusta la ruta y el formato según tu archivo */
 }
 
 @font-face {
     font-family: 'Open-Sans';
-    src: url('../fonts/OpenSans-VariableFont_wdthwght.ttf') format('truetype'); /* Ajusta la ruta y el formato según tu archivo */
+    src: url('../fonts/OpenSans-VariableFont_wdthwght.ttf') format('truetype');
+    /* Ajusta la ruta y el formato según tu archivo */
 }
 
 #diapositivas[tema='oscuro'] {
@@ -230,21 +232,25 @@ a {
 .dropdown {
     display: inline-block;
 }
+
 .dropdown-content {
     display: none;
     position: absolute;
     overflow: auto;
     margin-top: 1%;
 }
+
 .dropdown-content {
     border-radius: 8px;
 }
+
 .dropdown-content span {
     display: block;
     padding: 8px;
     background-color: #eef0f4;
     color: black;
 }
+
 .dropdown-content span:hover {
     color: #ffffff;
     background-color: #00a4bd;
@@ -323,8 +329,10 @@ a {
     display: flex;
     justify-content: flex-end;
     cursor: pointer;
-    opacity: 0.7;  /* Lo hacemos un poco transparente para que no sea demasiado llamativo */
-    transition: opacity 0.3s;  /* Una transición suave para el hover */
+    opacity: 0.7;
+    /* Lo hacemos un poco transparente para que no sea demasiado llamativo */
+    transition: opacity 0.3s;
+    /* Una transición suave para el hover */
     width: 100%;
     align-items: flex-start;
     height: 40%;
@@ -334,14 +342,17 @@ a {
     display: flex;
     justify-content: flex-end;
     cursor: pointer;
-    opacity: 0.7;  /* Lo hacemos un poco transparente para que no sea demasiado llamativo */
-    transition: opacity 0.3s;  /* Una transición suave para el hover */
+    opacity: 0.7;
+    /* Lo hacemos un poco transparente para que no sea demasiado llamativo */
+    transition: opacity 0.3s;
+    /* Una transición suave para el hover */
     width: 100%;
     align-items: flex-start;
 }
 
 .delete-slide-icon:hover {
-    opacity: 1;  /* Al pasar el ratón por encima, el ícono se vuelve totalmente opaco */
+    opacity: 1;
+    /* Al pasar el ratón por encima, el ícono se vuelve totalmente opaco */
 }
 
 /*Dialog*/
@@ -356,7 +367,8 @@ dialog {
     z-index: 9999;
 }
 
-#confirmarGuardar, #confirmarEliminar {
+#confirmarGuardar,
+#confirmarEliminar {
     background-color: #a7a7a7;
     border-radius: 10px;
     position: fixed;
@@ -381,7 +393,7 @@ dialog {
 }
 
 #btn-aceptar:hover,
-#btn-cancelar:hover, 
+#btn-cancelar:hover,
 #btn-aceptar-eliminar:hover,
 #btn-cancelar-eliminar:hover,
 #btn_aceptar_error:hover {
@@ -389,7 +401,7 @@ dialog {
     cursor: pointer;
 }
 
-#btn-aceptar-exito, 
+#btn-aceptar-exito,
 #btn-aceptar-exito-eliminar,
 #btn-aceptar-error {
     background-color: #304a6e;
@@ -402,7 +414,8 @@ dialog {
     float: right;
 }
 
-#btn-aceptar-exito:hover, #btn-aceptar-exito-eliminar:hover {
+#btn-aceptar-exito:hover,
+#btn-aceptar-exito-eliminar:hover {
     background-color: #223650;
     cursor: pointer;
 }
@@ -413,13 +426,16 @@ dialog {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Color de fondo oscuro con opacidad */
-    z-index: 9998; /* Asegura que la superposición esté por encima del contenido */
-    display: none; /* Inicialmente oculta la superposición */
-  }
-  
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Color de fondo oscuro con opacidad */
+    z-index: 9998;
+    /* Asegura que la superposición esté por encima del contenido */
+    display: none;
+    /* Inicialmente oculta la superposición */
+}
 
-  /*Diapostiva de tipoImagen*/
+
+/*Diapostiva de tipoImagen*/
 .d-containerImagen {
     display: flex;
     aspect-ratio: 16/9;
@@ -432,6 +448,7 @@ dialog {
     background-color: var(--background);
     height: 100%;
 }
+
 .d-containerImagen input[type="text"] {
     display: flex;
     width: 100%;
@@ -487,7 +504,7 @@ dialog {
 }
 
 
-.imagenDiv{
+.imagenDiv {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -496,7 +513,7 @@ dialog {
 }
 
 
-.imagenDiv .imagen{
+.imagenDiv .imagen {
     display: flex;
     align-items: center;
     height: 15%;
@@ -520,12 +537,80 @@ dialog {
     margin-top: 5%;
 }
 
-#mensajeNoImg{
+#mensajeNoImg {
     margin-top: 5%;
     font-size: 20px;
     color: var(--border);
 }
 
-.imgEliminar{
+.imgEliminar {
     position: absolute;
+}
+
+#textareaPregunta {
+    display: flex;
+    flex-direction: row;
+    height: 15%;
+    width: 100%;
+    resize: none;
+    font-size: 25px;
+    font-family: Open-Sans;
+    padding: 10px;
+    border: solid 2px var(--border);
+    outline: none;
+    box-sizing: border-box;
+    background: none;
+    color: var(--border);
+    margin-top: 2%;
+
+}
+
+.respuesta{
+    display: flex;
+    width: 60%;
+    justify-content: flex-start;
+    flex-direction: column;
+    font-size: 80%;
+    font-family: Open-Sans;
+    margin: 15px 0px;
+    box-sizing: border-box;
+    padding: 5px;
+    background: none;
+    color: var(--border);
+    outline: none;
+    border: solid 2px var(--border);
+    height: 80%;
+}
+
+.respuestaCorrecta{
+    display: flex;
+    width: 30%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 150%;
+    font-family: Open-Sans;
+    margin: 15px 0px;
+    box-sizing: border-box;
+    padding: 5px;
+    background: none;
+    color: var(--border);
+    outline: none;
+    border: solid 2px var(--border);
+    height: 50%;
+}
+
+.respuestas {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 2%;
+}
+
+select {
+    width: 20%;
+    height: 20%;
+    font-size: 80%;
+    cursor: pointer;
+    border: solid 2px var(--border);
 }
