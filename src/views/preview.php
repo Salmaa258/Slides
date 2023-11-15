@@ -19,10 +19,24 @@ $db = Database::getInstance();
 // Obtener la conexión a la base de datos
 $conn = $db->getConnection();
 $presentacion;
+$requiredPin = 'none';
 $exitButton = '';
 
 if (isset($_GET['url'])) {
     $presentacion = Presentacion::getPresentacionByURL($conn, $_GET['url']);
+    $id_presentacion = $presentacion->getId();
+    $pin = $presentacion->getPin();
+    if ($pin !== 'null') {
+        if (isset($_POST["pin"])) {
+            if (!$presentacion::checkPin($conn, $id_presentacion, $_POST["pin"])) {
+                header("Location: ../views/pin.php?url=" . $_GET['url'] . "");
+                exit;
+            }
+        } else {
+            header("Location: ../views/pin.php?url=" . $_GET['url'] . "");
+            exit;
+        }
+    }
 } else {
     $presentacion = Presentacion::getPresentacionBD($conn, $_POST['id_presentacion']);
     $exitButton = '<a href="javascript: history.go(-1)"><img src="../assets/icons/exit.svg"></a>';
@@ -52,6 +66,14 @@ $firstDiapositiva = isset($_POST['diapositiva_id']) ? $_POST['diapositiva_id'] :
             <?= $exitButton ?>
         </div>
         <button onclick="siguiente()"><img src="../assets/icons/rightArrow.svg"></button>
+    </div>
+    <div id="miniaturas">
+        <?php
+        $diapositivas = $presentacion->getDiapositivas();
+        foreach ($diapositivas as $diapositiva) {
+            echo $diapositiva->getMiniatura();
+        }
+        ?>
     </div>
     <div id="diapositivas" firstDiapositiva="<?= $firstDiapositiva ?>">
         <?php

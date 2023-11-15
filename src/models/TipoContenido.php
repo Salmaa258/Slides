@@ -87,10 +87,8 @@ class TipoContenido extends Diapositiva
     public function getDiapositivaHTML(): string
     {
         return '
-        <div class="d-container" data-id="' . $this->getId() . '">
-            <div class="delete-slide-icon-content">
-                <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest(\'.d-container\'))">
-            </div>
+        <div class="d-container" data-id="' . $this->getId() . '">    
+        <img src="../assets/icons/eliminar.svg" alt="Eliminar Diapositiva" id="imgEliminar" onclick="confirmDelete(event, this.closest(\'.d-container\'))">
         <input class="focus" type="text" form="data_p" value="' . $this->getTitulo() . '" autocomplete="off"
         name="d_titulo_' . $this->getId() . '" placeholder="Haz click para añadir un título..." />
         <textarea class="focus" form="data_p" autocomplete="off"
@@ -104,6 +102,15 @@ class TipoContenido extends Diapositiva
         <div class="d-container" style="display: none;">
             <h1 class="d_titulo_' . $this->getId() . '">' . $this->getTitulo() . '</h1>
             <p class="d_contenido_' . $this->getId() . '">' . $this->getContenido() . '</p>
+        </div>';
+    }
+
+    public function getMiniatura(): string
+    {
+        return '
+        <div class="d-miniatura" id_diapositiva="'. $this->getId() .'">
+            <h1>' . $this->getTitulo() . '</h1>
+            <p>' . $this->getContenido() . '</p>
         </div>';
     }
 }

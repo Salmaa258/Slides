@@ -59,7 +59,7 @@ const newTipoContenido = (tipo) => {
     ordenLista.push(idTemporalConTipo);
     actualizarListaDiapositivas();
 
-    mostrarDiapositiva(numDiapositivas - 1);
+    mostrarDiapositiva(idTemporalConTipo);
 
     console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
@@ -83,7 +83,7 @@ const newTipoImagen = (tipo) => {
     ordenLista.push(idTemporalConTipo); 
     actualizarListaDiapositivas(); 
 
-    mostrarDiapositiva(numDiapositivas - 1);
+    mostrarDiapositiva(idTemporalConTipo);
 
     console.log(`Nueva diapositiva de tipo: ${tipo}`);
 };
@@ -115,7 +115,7 @@ const newTipoPregunta = (tipo) => {
     ordenLista.push(idTemporalConTipo);
     actualizarListaDiapositivas();
 
-    mostrarDiapositiva(numDiapositivas - 1);
+    mostrarDiapositiva(idTemporalConTipo);
 };
 
 //Funcion para mostrar la confirmación del feedback
@@ -146,7 +146,7 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
     } else if (tipoDiapositiva === "tituloTextoImagen") {
       newTipoImagen('imagen');
     } else if (tipoDiapositiva === "pregunta") {
-        newTipoPregunta();
+        newTipoPregunta('pregunta');
     }
 
         // Reseteamos el tipo de diapositiva
@@ -167,7 +167,7 @@ const mostrarConfirmacionNuevaDiapositiva = (event, tipo) => {
             } else if (tipoDiapositiva === 'tituloTexto') {
                 newTipoContenido('contenido');
             } else if (tipoDiapositiva === 'tituloTextoImagen') {
-                newTipoImagen('contenido');
+                newTipoImagen('imagen');
             } else if (tipoDiapositiva === 'pregunta') {
                 newTipoPregunta('pregunta');
             }
@@ -285,12 +285,7 @@ const publicarButton = document.querySelector('#publicar_button button[form="dat
 publicarButton.addEventListener('click', (e) => {
     e.preventDefault();
     const inputUrl = publicarButton.parentElement.querySelector('input');
-    if (inputUrl.value === 'null') {
-        const url = generaUrl();
-        inputUrl.value = url;
-    } else {
-        inputUrl.value = 'null';
-    }
+    inputUrl.value = 'true';
     generalForm.submit();
 });
 
@@ -305,3 +300,18 @@ copyButton.addEventListener('click', (e) => {
         e.target.src = '../assets/icons/copy.svg';
     }, 1000);
 });
+
+// Evento que establece true el input modifyPin, para indicar que se quiere modificar el PIN.
+const pin_button = document.querySelector('#pin_button');
+pin_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    const modifyPin = pin_button.querySelector('input');
+    modifyPin.value = 'true';
+    generalForm.submit();
+});
+
+// Función para cerrar los dialog de PIN.
+const closePinDialog = (e) => {
+    const dialog = e.target.parentElement;
+    dialog.style.display = 'none';
+}

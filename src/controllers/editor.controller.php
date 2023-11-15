@@ -14,6 +14,7 @@ require_once '../models/TipoImagen.php';
 $db = Database::getInstance();
 $conn = $db->getConnection();
 $id_presentacion;
+$editPin = '';
 
 // Función para verificar y crear la carpeta de imágenes
 function createImagesFolder()
@@ -35,13 +36,53 @@ function handleImageUpload($imagen)
 }
 
 
-if (isset($_POST['presentacion_id'])) {
+if (isset($_POST['add_pin'])) {
+    $id = $_POST['id_presentacion'];
+    $pin = $_POST['add_pin'];
+
+    Presentacion::setPin($conn, $id, $pin);
+
+    $id_presentacion = $id;
+} else if (isset($_POST['drop_pin'])) {
+    $id = $_POST['id_presentacion'];
+    $pin = $_POST['drop_pin'];
+
+    if (Presentacion::checkPin($conn, $id, $pin)) {
+        Presentacion::setPin($conn, $id, 'null');
+    }
+
+    $id_presentacion = $id;
+} else if (isset($_POST['home_url']) && isset($_POST['home_id_presentacion'])) {
+    $id = $_POST['home_id_presentacion'];
+    $changeUrl = $_POST['home_url'];
+
+    $presentacionBD = Presentacion::getPresentacionBD($conn, $id);
+    if ($changeUrl === 'true') {
+        $presentacionBD->publica();
+    }
+    $presentacionBD->actualizarInfo($conn);
+    header("Location: ../views/home.php");
+    exit;
+} else if (isset($_POST['presentacion_id'])) {
     $id_presentacion = $_POST['presentacion_id'];
     $presentacionBD = Presentacion::getPresentacionBD($conn, $id_presentacion);
 
     $presentacionBD->setTitulo($_POST['p_titulo']);
     $presentacionBD->setDescripcion($_POST['p_descripcion']);
     $presentacionBD->setTema($_POST['tema']);
+    
+    if ($_POST['url'] === 'true') {
+        $presentacionBD->publica();
+    }
+    
+    $hasPin = $presentacionBD->getPin() !== 'null';
+    if ($_POST['modifyPin'] === 'true') {
+        if ($hasPin) {
+            $editPin = '&p=drop';
+        } else {
+            $editPin = '&p=new';
+        }
+    }
     $presentacionBD->actualizarInfo($conn);
 
     $ordenDiapositivas = isset($_POST['ordenDiapositivas']) ? explode(',', $_POST['ordenDiapositivas']) : [];
@@ -55,10 +96,12 @@ if (isset($_POST['presentacion_id'])) {
             $diapositivaAEliminar = Diapositiva::getDiapositivaPorId($conn, $idDiapositivaExistente);
             if ($diapositivaAEliminar) {
                 // Obtén el nombre de la imagen anterior
-                $nombreImagenAnterior = $diapositivaAEliminar->getNombre_imagen();
+                if ($diapositivaAEliminar instanceof TipoImagen) {
+                    $nombreImagenAnterior = $diapositivaAEliminar->getNombre_imagen();
+                }
 
                 // Elimina la diapositiva y realiza cualquier otro proceso de eliminación necesario
-                $mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
+                // $mensaje = $diapositivaAEliminar->eliminarDiapositiva($conn, $id_presentacion);
 
                 // Elimina la imagen anterior si existe
                 if (!empty($nombreImagenAnterior)) {
@@ -180,15 +223,20 @@ if (isset($_POST['presentacion_id'])) {
             }
         }
     }
-}else {
+} else {
     // Crear una nueva presentación
     $titulo = $_POST['p_titulo'] ?? '';
     $descripcion = $_POST['p_descripcion'] ?? '';
     $tema = $_POST['tema'] ?? '';
-    $url = $_POST['url'];
+
     $diapositivas = [];
 
-    $newPresentacion = new Presentacion(null, $titulo, $descripcion, $tema, $url, $diapositivas);
+    $newPresentacion = new Presentacion(null, $titulo, $descripcion, $tema, 'null', 'null', $diapositivas);
+    
+    if ($_POST['url'] === 'true') {
+        $newPresentacion->publica();
+    }
+    
     $newPresentacion->guardarNuevaPresentacion($conn);
     $id_presentacion = $newPresentacion->getId();
 
@@ -258,6 +306,6 @@ if (isset($_POST['presentacion_id'])) {
 
 
 // Redirigir al usuario de vuelta a la página de creación de presentaciones
-header("Location: ../views/editor.php?presentacion_id=" . $id_presentacion);
+header("Location: ../views/editor.php?presentacion_id=" . $id_presentacion . $editPin);
 exit;
 

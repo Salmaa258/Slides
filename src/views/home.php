@@ -37,12 +37,18 @@
         // Obtener la conexión a la base de datos
         $conn = $db->getConnection();
 
-        $query = "SELECT id, titulo FROM presentacion";
+        $query = "SELECT id, titulo, url FROM presentacion";
         $result = $conn->query($query);
+        $copy = 'flex';
 
 
         // Generar dinámicamente los divs con class="caja"
         while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
+            <?php
+            if ($row['url'] === 'null') {
+                $copy = 'none';
+            }
+            ?>
             <div class="caja">
                 <p>
                     <?= htmlspecialchars($row['titulo']) ?>
@@ -69,6 +75,14 @@
                         <button type="submit" class="eliminar"><img src="../assets/icons/eliminar.svg"
                                 alt="Eliminar">Eliminar</button>
                     </form>
+                    <form id="publicar_form" action="../controllers/editor.controller.php" method="POST">
+                        <input type="hidden" name="home_id_presentacion" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="home_url" value="<?= $row['url'] ?>">
+                        <button type="submit" class="eliminar"><img src="../assets/icons/publicadaHome.svg"
+                                alt="Publicar">Publicar</button>
+                    </form>
+                    <button id="copyUrlButton" class="clonar clickable" style="display:<?= $copy ?>;"><img
+                            src="../assets/icons/copyHome.svg" alt="Clonar">Copiar URL</button>
                 </div>
             </div>
         <?php endwhile; ?>
