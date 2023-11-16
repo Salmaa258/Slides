@@ -109,7 +109,7 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 === Base de datos
 La base de datos se compone de 7 clases, presentacion, diapositiva, tema, tipoTitulo, tipoContenido, tipoImagen y tipoPregunta.
 
-image::images/bd.png[width=70%]   
+image::images/bd.png[width=50%]   
 
 La clase *presentacion* está compuesta de:
 
