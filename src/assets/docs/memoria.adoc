@@ -17,7 +17,7 @@
 == INTRODUCCIÓN
 //Introducción miembros del equipo
 === Objetivo de la aplicación
-El objetivo es crear una aplicación que permita crear una o más presentaciones con diferentes tipos de diapositivas.
+El objetivo es crear una aplicación que permita crear una o más presentaciones con diferentes tipos de diapositivas. Va dirigida a todo tipo de público de una edad entre los 12 y los 65 años.  
 
 == PLANIFICACIÓN Y SEGUIMIENTO
 === Semana 1
@@ -89,24 +89,41 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 - Diseño Figma pantalla Previsualización.
 - Funcionalidad Previsualización de las presentaciones.
 
-
 === Semana 4
+
+==== Alfred
+
+
+==== Salma
+- Refactorizar código de la pantalla crear Presentación, listado.
+- Creación del modelo de tipoPregunta.
+- Creación en la bbdd de la tabla tipoPregunta.
+- Creación de la diapositiva de tipoPregunta.
+- Funcionalidad de guardado y lectura en la diapositiva de tipoPregunta.
+
+
+==== Emilio
+
 
 == DISEÑO
 === Base de datos
-La base de datos se compone de 3 clases, presentacion, diapositiva y tipoDiapositiva.
+La base de datos se compone de 7 clases, presentacion, diapositiva, tema, tipoTitulo, tipoContenido, tipoImagen y tipoPregunta.
 
-image::images/db.png[]
+image::../images/bd.png[width=70%]   
 
 La clase *presentacion* está compuesta de:
 
 * Un identificador de tipo autonumerico.
 
-* Un titulo, tipo String con máximo de 50 carácteres.
+* Un titulo, tipo String con máximo de 255 carácteres.
 
 * Una descripción, String con máximo de 255 carácteres.
 
-* La fecha de creación de tipo TimeStamp.
+* Un tema, tipo String con máximo de 10 carácteres.
+
+* Una url, tipo String con máximo de 10 carácteres.
+
+* Un pin, de tipo String con máximo de 8 carácteres. 
 
 La clase *diapositiva* está compuesta de:
 
@@ -114,18 +131,67 @@ La clase *diapositiva* está compuesta de:
 
 * Referencia al identificador de la clase presentación.
 
-* Referencia al identificador de la clase tipoDiapositiva.
+* Un orden, de tipo Int.
 
-La clase *tipoDiapositiva* está compuesta de:
+La clase *tema* está compuesta de:
 
 * Un identificador de tipo autonumerico.
 
-* El tipo de la diapositiva, de tipo solo Título o Título + Contenido. 
+La clase *tipoTitulo* está compuesta de:
+
+* Referencia al identificador de la clase diapositiva.
+
+* Referencia al identificador de la clase presentación.
+
+* Un título, de tipo String con máximo de 255 carácteres.
+
+La clase *tipoContenido* está compuesta de:
+
+* Referencia al identificador de la clase diapositiva.
+
+* Referencia al identificador de la clase presentación.
+
+* Un título, de tipo String con máximo de 255 carácteres.
+
+* Un contenido, de tipo String con máximo de 1280 carácteres.
+
+La clase *tipoImagen* está compuesta de:
+
+* Referencia al identificador de la clase diapositiva.
+
+* Referencia al identificador de la clase presentación.
+
+* Un título, de tipo String con máximo de 255 carácteres.
+
+* Un contenido, de tipo String con máximo de 1280 carácteres.
+
+* Un nombre de la imagen, de tipo String con máximo de 255 carácteres.
+
+La clase *tipoPregunta* está compuesta de:
+
+* Referencia al identificador de la clase diapositiva.
+
+* Referencia al identificador de la clase presentación.
+
+* Un título, de tipo String con máximo de 255 carácteres.
+
+* Una pregunta, de tipo String con máximo de 255 carácteres.
+
+* Una respuestaA, de tipo String con máximo de 255 carácteres.
+
+* Una respuestaB, de tipo String con máximo de 255 carácteres.
+
+* Una respuestaC, de tipo String con máximo de 255 carácteres.
+
+* Una respuestaD, de tipo String con máximo de 255 carácteres.
+
+* Una respuesta correcta, de tipo String con máximo de 255 carácteres.
+
 
 === Interfícies
 
 ==== Sketching
-
+Link a Figma https://www.figma.com/file/aAWb0YlNiNHMsdyzinLiPz/Home?type=design&node-id=0%3A1&mode=design&t=BGmqAhu9DtudaGBT-1[aquí]
 
 ==== Figma
 Link a Figma https://www.figma.com/file/aAWb0YlNiNHMsdyzinLiPz/Home?type=design&node-id=0%3A1&mode=design&t=BGmqAhu9DtudaGBT-1[aquí]
@@ -133,49 +199,23 @@ Link a Figma https://www.figma.com/file/aAWb0YlNiNHMsdyzinLiPz/Home?type=design&
 === Guía de estilos
 Link a Figma https://www.figma.com/file/aAWb0YlNiNHMsdyzinLiPz/Home?type=design&node-id=0%3A1&mode=design&t=BGmqAhu9DtudaGBT-1[aquí]
 
-== DESARROLLO
-[underline]#Vagrantfile#
-
-image::images/1vagrantfile.png[]
-
-image::images/2vagrantfile.png[]
-
-[underline]#crear_p.html#
-
-image::images/1crear_p.png[]
-
-image::images/2crear_p.png[]
-
-[underline]#save_p.js#
-
-image::images/save_p.png[]
-
-[underline]#crear_p.js#
-
-image::images/crear_p.png[]
-
-image::images/3crear_p.png[]
-
-[underline]#save_p.php#
-
-image::images/1save_p.png[]
-
-image::images/2save_p.png[]
-
-[underline]#Fuentes y css#
-
-image::images/fuentes.png[]
-
-image::images/css.png[]
-
-[underline]#Home.js#
-
-image::images/3js_home.png[]
-
-[underline]#Eliminar.php#
-
-image::images/eliminar.png[]
 
 == CONCLUSIÓN
+En conclusión, durante el desarrollo de la aplicación hemos aprendido a diseñar y desarrollar una aplicación web desde su planificación hasta su mantenimiento. Además hemos mejorado nuestras habilidades técnicas, aprendiendo a solucionar errores durante el proceso. 
+
+    
 === Línias futuras
+- Poder mostrar correctamente las diapositivas con sus respectivas respuesas y su respuesta correcta.
+- Mejorar diseño de la aplicación. 
+
+
 === Webgrafía
+
+* https://www.w3schools.com/html/
+
+* https://www.w3schools.com/css/
+
+* https://developer.mozilla.org/es/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox
+
+
+
