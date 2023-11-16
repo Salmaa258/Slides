@@ -103,6 +103,11 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 
 
 ==== Emilio
+- Creación de diseños Figma de PIN, Publicar, Preview y Home.
+- Funcionalidad de publicar presentaciones en Editor y Home.
+- Funcionalidad de miniaturas en Preview.
+- Funcionalidad de bloquar presentaciones con PIN.
+
 
 
 == DISEÑO
