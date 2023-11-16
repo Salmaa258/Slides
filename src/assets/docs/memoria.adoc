@@ -96,7 +96,12 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 === Semana 4
 
 ==== Alfred
-
+- Implementar editar diapositiva TipoPregunta.
+- Refractorizar para arreglar guardado en BD de TipoPregunta.
+- Arreglar funcion clase TipoPregunta para recoger los datos de la BD de la tabla TipoPregunta.
+- Arreglar errores que han ido surgiendo en la implementacion.
+- Arrelgar el cambio para mostrar respuesta correctas e incorrecta.
+- Figma diapositiva TipoPregunta.
 
 ==== Salma
 - Refactorizar código de la pantalla crear Presentación, listado.
