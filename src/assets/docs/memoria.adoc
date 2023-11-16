@@ -57,6 +57,10 @@ El objetivo es crear una aplicación que permita crear una o más presentaciones
 
 
 ==== Emilio
+- Creación de Modelo Vista Controlador.
+- Refactorización de guardar y editar.
+- Refactorización de BD.
+- Refactorización de eliminar y cargar presentación en Home.
 
 
 === Semana 3
